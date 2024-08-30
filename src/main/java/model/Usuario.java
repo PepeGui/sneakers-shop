@@ -1,8 +1,7 @@
 package model;
 
-import com.sun.org.apache.xpath.internal.operations.String;
-
-public class UsuarioDao {
+public class Usuario {
+    private int id;
     private String nome;
     private String email;
     private String senha;
@@ -10,7 +9,8 @@ public class UsuarioDao {
     private String grupo;
     private boolean ativo;
 
-    public UsuarioDao(String nome, String email, String senha, long cpf, String grupo, boolean ativo) {
+    public Usuario(int id, String nome, String email, String senha, long cpf, String grupo, boolean ativo) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -53,6 +53,14 @@ public class UsuarioDao {
 
     public String getGrupo() {
         return grupo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setGrupo(String grupo) {
