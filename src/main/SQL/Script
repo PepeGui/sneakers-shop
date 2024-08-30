@@ -1,0 +1,10 @@
+criação da tabela usuraio
+        create table usuario(
+         id int not null primary key,
+         nome varchar(255),
+         email varchar(255),
+         senha varchar(23),
+         cpf long,
+         grupo varchar(255),
+         ativo boolean
+        )
