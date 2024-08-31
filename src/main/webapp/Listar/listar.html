@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<html lang="pt-br" xmlns:c="">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque</title>
+    <link rel="stylesheet" href="listar.css">
+</head>
+<body> <h3>Estoque</h3>
+<table cellspacing="0" cellpading="0">
+    <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>alterar</th>
+        <th>Hab/Des</th>
+        <th></th>
+    </tr>
+    <c:forEach var="ingrediente" items="${ingredientes}">
+        <tr>
+            <td id="nome">joao</td>
+            <td id="email">joao@gmail.com</td>
+            <td id="status">Ativo</td>
+            <td id="alterat">Alterar</td>
+            <td id="hab/des">
+                <div class="switch__container">
+                <input id="switch-shadow" class="switch switch--shadow" type="checkbox" />
+                <label for="switch-shadow"></label>
+            </div></td>
+
+            <input type="hidden" name="id" value="${ingrediente.IDIngrediente}">
+            <td>
+                    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <rect x="0.00317383" width="60" height="60" fill="url(#pattern0_403_55)"/>
+                        <defs>
+                            <pattern id="pattern0_403_55" patternContentUnits="objectBoundingBox" width="1" height="1">
+                                <use xlink:href="#image0_403_55" transform="scale(0.0111111)"/>
+                            </pattern>
+                        </defs>
+                    </svg>
+                </a>
+                <a href="/delete-ingrediente?id=${ingrediente.IDIngrediente}">
+                    <button type="submit">
+                        <img src="/images/Trash.png" alt="">
+                    </button>
+                </a>
+            </td>
+        </tr>
+    </c:forEach>
+
+</table>
+<div>
+    <a href="/ADM/AREA-ADM1/Area-adm1.html"><button>Sair</button></a>
+    <a href="/ADM/AdicionarIngrediente/AdicionarIngrediente.html"><button class="sherek">Adicionar</button></a>
+</div>
+</body>
+</html>
