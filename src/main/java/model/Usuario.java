@@ -19,6 +19,16 @@ public class Usuario {
         this.ativo = ativo;
     }
 
+    public Usuario(String email, String senha) {
+        this.email = email;
+        this.senha = senha;
+    }
+
+    public Usuario() {
+    }
+
+
+
     public String getNome() {
         return nome;
     }
