@@ -18,6 +18,24 @@ public class Usuario {
         this.grupo = grupo;
         this.ativo = ativo;
     }
+    public Usuario(String nome, String email, String senha, long cpf, String grupo, boolean ativo) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.cpf = cpf;
+        this.grupo = grupo;
+        this.ativo = ativo;
+    }
+
+    public Usuario(String email, String senha) {
+        this.email = email;
+        this.senha = senha;
+    }
+
+    public Usuario() {
+    }
+
+
 
     public String getNome() {
         return nome;
