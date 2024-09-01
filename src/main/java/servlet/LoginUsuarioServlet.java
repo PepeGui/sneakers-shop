@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.rmi.ServerException;
 
 @WebServlet("/login-usuario")
-public class LoginUsuarioServler extends HttpServlet {
+public class LoginUsuarioServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServerException, IOException {
         String email = req.getParameter("email");
@@ -20,7 +20,8 @@ public class LoginUsuarioServler extends HttpServlet {
         System.out.println(email);
         System.out.println(senha);
 
-        Usuario usuario = new Usuario();
+        Usuario usuario = new Usuario(email,senha);
+
 
     }
 }

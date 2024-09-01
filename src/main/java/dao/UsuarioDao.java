@@ -7,11 +7,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class UsuarioDao {
-    public void createUsuario(Usuario pUser){
+
+    private static final String SQL = "SELECT * FROM USUARIO";
+    private static final String DB_URL = "jdbc:h2:~/test";
+    private static final String DB_USERNAME = "sa";
+    private static final String DB_PASSWORD = "sa";
+
+    public static void createItemPedido(Usuario pUser){
 
         String SQL = "INSERT INTO usuario (nome, email, senha, cpf, grupo, ativo) VALUES (?,?,?,?,?,?)";
 
@@ -83,5 +88,25 @@ public class UsuarioDao {
             return false;
 
         }
+    }
+
+    public List<Usuario> getAllUsuarios() {
+        List<Usuario> usuarios = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String email = resultSet.getString("EMAIL");
+                String senha = resultSet.getString("SENHA");
+                usuarios.add(new Usuario(email, senha));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
+        }
+
+        return usuarios;
     }
 }

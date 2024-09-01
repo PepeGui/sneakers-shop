@@ -1,4 +1,4 @@
-criação da tabela usuraio
+criação da tabela usuario
         create table usuario(
          id int not null primary key,
          nome varchar(255),

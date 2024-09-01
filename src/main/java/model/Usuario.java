@@ -35,8 +35,6 @@ public class Usuario {
     public Usuario() {
     }
 
-
-
     public String getNome() {
         return nome;
     }
