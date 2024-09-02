@@ -98,8 +98,8 @@ public class UsuarioDao {
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
-                String email = resultSet.getString("EMAIL");
-                String senha = resultSet.getString("SENHA");
+                String email = resultSet.getString("email");
+                String senha = resultSet.getString("senha");
                 usuarios.add(new Usuario(email, senha));
             }
 
@@ -108,5 +108,30 @@ public class UsuarioDao {
         }
 
         return usuarios;
+    }
+
+    public boolean verificarLogin(Usuario u) {
+        String SQL = "SELECT COUNT(*) FROM usuario WHERE email = ? AND senha = ?";
+
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, u.getEmail());
+            preparedStatement.setString(2, u.getSenha());
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next() && resultSet.getInt(1) > 0) {
+                    return true; // Usuário encontrado, login bem-sucedido
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
+        }
+        return false; // Usuário não encontrado, login falhou
+    }
+
+    public void createUsuario(Usuario pUser) {
+
+        String SQL = "INSERT INTO usuario (nome, email, senha, cpf, grupo, ativo) VALUES (?,?,?,?,?,?)";
     }
 }
