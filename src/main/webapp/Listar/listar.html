@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page contentType="text/html; charset=UTF-8" %>
 <html lang="pt-br" xmlns:c="">
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,13 +10,19 @@
     <title>Estoque</title>
     <link rel="stylesheet" href="listar.css">
 </head>
-<body> <h3>Estoque</h3>
-<table cellspacing="0" cellpading="0">
+<body>
+
+<h3>Estoque</h3>
+<div>
+    <img src="/src/main/webapp/Img/Plus.png" alt="">
+</div>
+
+<table cellspacing="0" cellpadding="0">
     <tr>
         <th>Nome</th>
         <th>Email</th>
         <th>Status</th>
-        <th>alterar</th>
+        <th>Alterar</th>
         <th>Hab/Des</th>
         <th></th>
     </tr>
@@ -30,34 +34,32 @@
             <td id="alterat">Alterar</td>
             <td id="hab/des">
                 <div class="switch__container">
-                <input id="switch-shadow" class="switch switch--shadow" type="checkbox" />
-                <label for="switch-shadow"></label>
-            </div></td>
-
+                    <input id="switch-shadow" class="switch switch--shadow" type="checkbox" />
+                    <label for="switch-shadow"></label>
+                </div>
+            </td>
             <input type="hidden" name="id" value="${ingrediente.IDIngrediente}">
             <td>
-                    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <rect x="0.00317383" width="60" height="60" fill="url(#pattern0_403_55)"/>
-                        <defs>
-                            <pattern id="pattern0_403_55" patternContentUnits="objectBoundingBox" width="1" height="1">
-                                <use xlink:href="#image0_403_55" transform="scale(0.0111111)"/>
-                            </pattern>
-                        </defs>
-                    </svg>
-                </a>
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0.00317383" width="60" height="60" fill="url(#pattern0_403_55)"/>
+                    <defs>
+                        <pattern id="pattern0_403_55" patternContentUnits="objectBoundingBox" width="1" height="1">
+                            <use xlink:href="#image0_403_55" transform="scale(0.0111111)"/>
+                        </pattern>
+                    </defs>
+                </svg>
                 <a href="/delete-ingrediente?id=${ingrediente.IDIngrediente}">
-                    <button type="submit">
-                        <img src="/images/Trash.png" alt="">
-                    </button>
+                    <button type="submit"></button>
                 </a>
             </td>
         </tr>
     </c:forEach>
-
 </table>
-<div>
+
+<div class="buttons-container">
     <a href="/ADM/AREA-ADM1/Area-adm1.html"><button>Sair</button></a>
     <a href="/ADM/AdicionarIngrediente/AdicionarIngrediente.html"><button class="sherek">Adicionar</button></a>
 </div>
+
 </body>
 </html>

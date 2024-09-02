@@ -6,64 +6,78 @@
 p, h1, h2, h3, h4, a, button {
   font-family: 'font-inter';
 }
-*{
+
+* {
     margin: 0;
     padding: 0;
 }
-body{
+
+body {
     width: 100vw;
     background-color: #d7d7d7;
     font-family: "Inter", sans-serif;
     font-size: 28px;
 }
-h3{
+
+h3 {
     text-align: center;
     margin-top: 2em;
     font-weight: 600;
 }
-table{
+
+table {
     background-color: white;
-     width: 80%;
-     margin: 2em auto;
-     border-radius: 10px;
-     border-collapse: separate;
-     overflow: hidden;
+    width: 80%;
+    margin: 2em auto;
+    border-radius: 10px;
+    border-collapse: separate;
+    overflow: hidden;
 }
-table tr th{
-    color:white;
+
+table tr th {
+    color: white;
     background-color: #a91c1c;
     height: 2em;
     font-weight: 200;
 }
-table tr td{
+
+table tr td {
     height: 4em;
     text-align: center;
     border-bottom: 1px solid black;
     font-size: 16px;
 }
-td svg{
+
+td svg {
     width: 50px;
 }
-div{
-    justify-content: end;
+
+.buttons-container {
     display: flex;
+    justify-content: end;
     width: 80%;
     margin: 0 auto;
 }
-button{
-    color:#a91c1c;
+
+button {
+    color: #a91c1c;
     border: none;
     background-color: transparent;
     padding: 0.7em;
     border-radius: 10px;
     font-size: 16px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.sherek{
-    cursor:pointer;
+.sherek {
+    cursor: pointer;
     background-color: #a91c1c;
     color: white;
+}
+
+.switch__container {
+    display: flex;
+    justify-content: center;
 }
 
 .switch {
@@ -82,8 +96,8 @@ button{
 
 .switch--shadow + label {
   padding: 2px;
-  width: 120px;
-  height: 60px;
+  width: 65px;
+  height: 35px;
   background-color: #dddddd;
   border-radius: 60px;
 }
@@ -97,14 +111,16 @@ button{
   bottom: 1px;
   content: '';
 }
+
 .switch--shadow + label:before {
   right: 1px;
-  background-color: green;
+  background-color: red;
   border-radius: 60px;
   transition: all 0.4s;
 }
+
 .switch--shadow + label:after {
-  width: 62px;
+  width: 44px;
   background-color: #fff;
   border-radius: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -112,8 +128,9 @@ button{
 }
 
 .switch--shadow:checked + label:before {
-  background-color: red;
+  background-color: green;
 }
+
 .switch--shadow:checked + label:after {
-  transform: translateX(60px);
+  transform: translateX(25px);
 }
