@@ -97,9 +97,14 @@ public class UsuarioDao {
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String nome = resultSet.getString("nome");
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
-                usuarios.add(new Usuario(email, senha));
+                String cpf = resultSet.getString("cpf");
+                String grupo = resultSet.getString("grupo");
+                String ativo = resultSet.getString("ativo");
+                usuarios.add(new Usuario(Integer.parseInt(id), nome, email, senha, Long.parseLong(cpf), grupo, Boolean.parseBoolean(ativo)));
             }
 
         } catch (Exception e) {
@@ -128,4 +133,5 @@ public class UsuarioDao {
         }
         return false; // Usuário não encontrado, login falhou
     }
+
 }
