@@ -10,18 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioDao {
-
-    private static final String SQL = "SELECT * FROM USUARIO";
+    private static final String SQL_Select = "SELECT * FROM USUARIO";
     private static final String DB_URL = "jdbc:h2:~/test";
     private static final String DB_USERNAME = "sa";
     private static final String DB_PASSWORD = "sa";
 
-    public static void createItemPedido(Usuario pUser){
+    public static void createUsuario(Usuario pUser){
 
         String SQL = "INSERT INTO usuario (nome, email, senha, cpf, grupo, ativo) VALUES (?,?,?,?,?,?)";
 
         try {
-            Connection con = DriverManager.getConnection("jdbc:h2:~/test", "sa","sa");
+            Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
 
             System.out.println("success in database connection insert usuario");
 
@@ -52,7 +51,7 @@ public class UsuarioDao {
         String SQL = "SELECT * FROM USUARIO WHERE EMAIL = ?";
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
             System.out.println("success in database connection verificação de Email");
 
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
@@ -94,7 +93,7 @@ public class UsuarioDao {
         List<Usuario> usuarios = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_Select);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -128,10 +127,5 @@ public class UsuarioDao {
             System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
         }
         return false; // Usuário não encontrado, login falhou
-    }
-
-    public void createUsuario(Usuario pUser) {
-
-        String SQL = "INSERT INTO usuario (nome, email, senha, cpf, grupo, ativo) VALUES (?,?,?,?,?,?)";
     }
 }
