@@ -27,10 +27,10 @@ public class LoginUsuarioServlet extends HttpServlet {
             UsuarioService usuarioService = new UsuarioService();
 
             if (usuarioService.verificarLogin(usuario)){
-                resp.sendRedirect("Principal/principal.html");
+                resp.sendRedirect("Principal/principal.jsp");
             }else {
                 req.setAttribute("errorMessage", "Login inválido. Verifique o login e a senha!");
-                req.getRequestDispatcher("Login/login.html").forward(req, resp);
+                req.getRequestDispatcher("login.jsp").forward(req, resp);
             }
 
         }catch (Exception err){

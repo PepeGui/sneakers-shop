@@ -18,7 +18,7 @@
             <label for="senha">Senha</label>
             <input type="password" id="senha" name="senha" required>
         </div>
-        <button type="submit">Entrar</button>
+         <a href="../Principal/principal.html"><button>Entrar</button></a>
     </form>
 </div>
 </body>
