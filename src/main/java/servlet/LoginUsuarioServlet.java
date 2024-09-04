@@ -30,7 +30,7 @@ public class LoginUsuarioServlet extends HttpServlet {
                 resp.sendRedirect("Principal/principal.html");
             }else {
                 req.setAttribute("errorMessage", "Login inválido. Verifique o login e a senha!");
-                req.getRequestDispatcher("login.html").forward(req, resp);
+                req.getRequestDispatcher("Login/login.html").forward(req, resp);
             }
 
         }catch (Exception err){
