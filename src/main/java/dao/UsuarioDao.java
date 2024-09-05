@@ -46,6 +46,46 @@ public class UsuarioDao {
             e.getStackTrace();
         }
     }
+
+    public static void updateUser(Usuario user, String novaSenha, String confirmaSenha) {
+        if (!novaSenha.equals(confirmaSenha)) {
+            System.out.println("As senhas não coincidem!");
+            return;
+        }
+
+        // Encripta a senha
+
+
+        // Comando SQL para atualizar o nome, CPF e senha, mas não o email
+        String SQL = "UPDATE USERS SET NOME = ?, CPF = ?, SENHA = ? WHERE ID = ?";
+
+        try {
+            // Conexão com o banco de dados
+            Connection con = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+            System.out.println("Conexão bem-sucedida com o banco de dados");
+
+            // Prepara a instrução SQL
+            PreparedStatement preparedStatement = con.prepareStatement(SQL);
+
+            // Define os parâmetros da query
+            preparedStatement.setString(1, user.getNome());
+            //preparedStatement.setString(2, user.getCpf());
+            //preparedStatement.setString(3, hashedPassword);
+            preparedStatement.setInt(4, user.getId());
+
+            // Executa a query de atualização
+            preparedStatement.executeUpdate();
+
+            System.out.println("Dados do usuário atualizados com sucesso!");
+
+            // Fecha a conexão
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Falha na conexão com o banco de dados");
+            e.printStackTrace();
+        }
+    }
+
     public Boolean VerificacaoEmail(Usuario pUser) {
 
         String SQL = "SELECT * FROM USUARIO WHERE EMAIL = ?";

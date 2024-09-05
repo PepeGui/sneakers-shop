@@ -7,11 +7,10 @@ import java.util.Base64;
 
 public class Criptografia {
 
-    // Método para gerar uma chave AES
     public static SecretKey gerarChaveAES(int tamanho) throws Exception {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-        keyGenerator.init(tamanho);
-        return keyGenerator.generateKey();
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(tamanho); // Tamanho da chave (128, 192 ou 256 bits)
+        return keyGen.generateKey();
     }
 
     // Método para criptografar
