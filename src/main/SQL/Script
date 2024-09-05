@@ -3,7 +3,7 @@ criação da tabela usuario
          id int not null auto_increment primary key,
          nome varchar(255),
          email varchar(255),
-         senha varchar(23),
+         senha varchar(255),
          cpf long,
          grupo varchar(255),
          ativo boolean

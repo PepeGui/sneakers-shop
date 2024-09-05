@@ -21,16 +21,30 @@ public class CadastrarUsuarioServlet extends HttpServlet {
         String nome = request.getParameter("nome");
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
-        String confirmarSenha = request.getParameter("confirmarSenha");
+        String confirmarSenha = request.getParameter("confirmar-password");
         String cpf = request.getParameter("cpf");
         String grupo = request.getParameter("grupo");
 
         if(senha.equals(confirmarSenha)) {
             Usuario user = new Usuario(nome, email, senha, Long.parseLong(cpf), grupo, true);
-            boolean resultadoCadastrado = new CadastrarUsuario().CadastrarUser(user);
-        }
-        //request.setAttribute("pedido", pedido);
+            CadastrarUsuario cadastrarUsuario = new CadastrarUsuario();
+            boolean resultadoCadastrado = cadastrarUsuario.CadastrarUser(user);
+            if(resultadoCadastrado == true) {
+                System.out.println("passou aqui if ");
+                response.sendRedirect("/find-all-usuarios");
+            }
+            else
+            {
+                System.out.println("passou aqui if else");
+                request.getRequestDispatcher("/Cadastro-Usuario/Cadastro.jsp").forward(request, response);
 
-        request.getRequestDispatcher("/").forward(request, response);
+            }
+        }
+        else {
+            System.out.println("passou aqui else");
+            request.getRequestDispatcher("/Cadastro-Usuario/Cadastro.jsp").forward(request, response);
+        }
+            //request.setAttribute("pedido", pedido);
+
     }
 }

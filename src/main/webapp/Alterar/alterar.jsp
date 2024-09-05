@@ -1,10 +1,12 @@
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link rel="stylesheet" href="Cadastro.css">
+    <link rel="stylesheet" href="/Cadastro-Usuario/Cadastro.css">
 </head>
 <body>
 <div class="cadastro-container">

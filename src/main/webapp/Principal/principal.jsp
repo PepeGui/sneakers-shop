@@ -15,7 +15,7 @@
     </div>
 
     <div>
-        <a href="../Listar/listar.jsp"><button class="submit">Listar Usuários</button></a>
+        <a href="/find-all-usuarios"><button class="submit">Listar Usuários</button></a>
     </div>
 
     <div>

@@ -17,7 +17,7 @@ public class UsuarioDao {
 
     public static void createUsuario(Usuario pUser){
 
-        String SQL = "INSERT INTO usuario (nome, email, senha, cpf, grupo, ativo) VALUES (?,?,?,?,?,?)";
+        String SQL = "insert INTO usuario (nome, email, senha, cpf, grupo, ativo) VALUES (?,?,?,?,?,?)";
 
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
@@ -26,13 +26,16 @@ public class UsuarioDao {
 
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
 
+            System.out.println(pUser.getNome()+"/"+pUser.getEmail()+"/"+pUser.getSenha()+"/"+pUser.getCpf()+"/"+pUser.getGrupo()+"/"+pUser.isAtivo());
+
             preparedStatement.setString(1, pUser.getNome());
             preparedStatement.setString(2,pUser.getEmail());
             preparedStatement.setString(3, pUser.getSenha());
             preparedStatement.setLong(4, pUser.getCpf());
             preparedStatement.setString(5, pUser.getGrupo());
-            preparedStatement.setBoolean(6,pUser.isAtivo());
+            preparedStatement.setBoolean(6,true);
 
+            System.out.println("passou aqui 2");
             preparedStatement.execute();
 
             System.out.println("success in insert usuario");
@@ -113,12 +116,12 @@ public class UsuarioDao {
             if (users.size() > 0) {
                 System.out.println("usuario já cadastrado");
                 connection.close();
-                return true;
+                return false;
             }
 
             System.out.println("usuario não cadastrado");
             connection.close();
-            return false;
+            return true;
 
         } catch (Exception e) {
 
@@ -135,6 +138,34 @@ public class UsuarioDao {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_Select);
              ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String nome = resultSet.getString("nome");
+                String email = resultSet.getString("email");
+                String senha = resultSet.getString("senha");
+                String cpf = resultSet.getString("cpf");
+                String grupo = resultSet.getString("grupo");
+                String ativo = resultSet.getString("ativo");
+                usuarios.add(new Usuario(Integer.parseInt(id), nome, email, senha, Long.parseLong(cpf), grupo, Boolean.parseBoolean(ativo)));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
+        }
+
+        return usuarios;
+    }
+    public List<Usuario> buscaUsuariosPorNome(String pNome) {
+        List<Usuario> usuarios = new ArrayList<>();
+        String SQL = "SELECT * FROM USUARIO WHERE NOME = ?";
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+             preparedStatement.setString(1, pNome);
+
+             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 String id = resultSet.getString("id");
