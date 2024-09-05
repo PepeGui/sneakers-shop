@@ -43,7 +43,7 @@
             <td id="nome">${usuario.nome}</td>
             <td id="email">${usuario.email}</td>
             <td id="status">${usuario.ativo ? 'Ativo' : 'Inativo'}</td>
-            <td id="alterar"><a href="/Alterar/alterar.jsp">Alterar</a></td>
+            <td id="alterar"><a href="/tela-alterar?id=${usuario.id}">Alterar</a></td>
             <td id="hab/des">
                 <div class="switch__container">
                     <input id="switch-shadow-${usuario.id}" class="switch switch--shadow" type="checkbox" ${usuario.ativo ? 'checked' : ''} />

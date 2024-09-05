@@ -12,6 +12,7 @@
 <div class="cadastro-container">
     <h2>Cadastro</h2>
     <form  action="/criar-usuario" method="POST">
+
         <div class="input-group">
             <label for="nome">Nome completo</label>
             <input type="text" id="nome" name="nome" required>

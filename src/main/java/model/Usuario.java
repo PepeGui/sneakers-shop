@@ -32,6 +32,10 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public Usuario(int id) {
+        this.id = id;
+    }
+
     public Usuario() {
     }
 

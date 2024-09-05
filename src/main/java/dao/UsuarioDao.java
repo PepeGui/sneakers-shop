@@ -184,6 +184,36 @@ public class UsuarioDao {
 
         return usuarios;
     }
+    public Usuario buscaUsuariosPorID(Usuario pUsuario) {
+        List<Usuario> usuarios = new ArrayList<>();
+        String SQL = "SELECT * FROM USUARIO WHERE ID = ?";
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            System.out.println("success in database connection buscaUsuariosPorID");
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setInt(1, pUsuario.getId());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String nome = resultSet.getString("nome");
+                String email = resultSet.getString("email");
+                String senha = resultSet.getString("senha");
+                String cpf = resultSet.getString("cpf");
+                String grupo = resultSet.getString("grupo");
+                String ativo = resultSet.getString("ativo");
+                usuarios.add(new Usuario(Integer.parseInt(id), nome, email, senha, Long.parseLong(cpf), grupo, Boolean.parseBoolean(ativo)));
+            }
+            System.out.println("success in buscaUsuariosPorID");
+
+        } catch (Exception e) {
+            System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
+        }
+
+        return usuarios.getFirst();
+    }
 
     public boolean verificarLogin(Usuario u) {
         String SQL = "SELECT COUNT(*) FROM usuario WHERE email = ? AND senha = ?";
@@ -203,6 +233,33 @@ public class UsuarioDao {
             System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
         }
         return false; // Usuário não encontrado, login falhou
+    }
+    public static void alterarUsuario(Usuario pUser) {
+
+        String SQL = "UPDATE Usuario SET nome = ?, email = ?, senha = ?, cpf = ?, grupo = ?) WHERE ID = ?";
+
+        try {
+            Connection con = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+            System.out.println("Conexão bem-sucedida com o banco de dados");
+
+            PreparedStatement preparedStatement = con.prepareStatement(SQL);
+
+            preparedStatement.setString(1, pUser.getNome());
+            preparedStatement.setString(2,pUser.getEmail());
+            preparedStatement.setString(3, pUser.getSenha());
+            preparedStatement.setLong(4, pUser.getCpf());
+            preparedStatement.setString(5, pUser.getGrupo());
+            preparedStatement.setInt(6,pUser.getId());
+
+            preparedStatement.executeUpdate();
+
+            System.out.println("Dados do usuário atualizados com sucesso!");
+
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Falha na conexão com o banco de dados");
+            e.printStackTrace();
+        }
     }
 
 }
