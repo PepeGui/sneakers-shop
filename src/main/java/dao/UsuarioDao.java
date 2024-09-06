@@ -262,4 +262,20 @@ public class UsuarioDao {
         }
     }
 
+    public boolean mudarStatus(Usuario usuario){
+        String SQL = "UPDATE USUARIO SET ATIVO = ? WHERE ID = ?";
+
+        try{
+            Connection con = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+            System.out.println("Conexão bem-sucedida com o banco de dados");
+
+            PreparedStatement preparedStatement = con.prepareStatement(SQL);
+
+
+        }catch(Exception err){
+
+        }
+        return false;
+    }
+
 }
