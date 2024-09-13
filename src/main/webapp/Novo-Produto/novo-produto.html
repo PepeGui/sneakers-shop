@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="/Novo-Produto/novo-produto.css">
+</head>
+<body>
+<div class="cadastro-container">
+    <h2>Cadastro De Produto</h2>
+    <form  action="/" method="POST">
+
+        <div class="input-group">
+            <label for="nome">Nome Do Produto</label>
+            <input type="text" id="nome" name="nome" required>
+        </div>
+        <div class="input-group">
+            <label for="preco">Preço</label>
+            <input type="number" id="preco" name="preco" required>
+        </div>
+        <div class="input-group">
+            <label for="estoque">Estoque</label>
+            <input type="number" id="estoque" name="estoque" required>
+        </div>
+        <div class="input-group">
+            <label for="descricao">Descrição Do Produto</label>
+            <input type="text" id="descricao" name="descricao" required>
+        </div>
+        <div class="input-group">
+            <label for="cpf">Avaliação</label>
+            <input type="text" id="cpf" name="cpf" required>
+        </div>
+        <div class="input-group">
+           <a href="/AD-IMG/ad-img.html"> <button type="submit">Adicionar Imagens</button></a>
+        </div>
+        <button type="submit">Finalizar</button>
+    </form>
+</div>
+</body>
+</html>

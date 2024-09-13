@@ -2,6 +2,7 @@ package dao;
 
 import model.Usuario;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -29,7 +30,7 @@ public class UsuarioDao {
 
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
 
-            System.out.println(pUser.getNome()+"/"+pUser.getEmail()+"/"+pUser.getSenha()+"/"+pUser.getCpf()+"/"+pUser.getGrupo()+"/"+pUser.isAtivo());
+            System.out.println(pUser.getNome()+"/"+pUser.getEmail()+"/"+pUser.getSenha()+"/"+pUser.getCpf()+"/"+pUser.getGrupo()+"/"+pUser.getStatus());
 
             preparedStatement.setString(1, pUser.getNome());
             preparedStatement.setString(2,pUser.getEmail());
