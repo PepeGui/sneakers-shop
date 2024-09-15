@@ -8,3 +8,21 @@ criação da tabela usuario
          grupo varchar(255),
          ativo boolean
         )
+
+        CREATE TABLE Tenis (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            nome VARCHAR(200) NOT NULL,
+            avaliacao DECIMAL(2,1) CHECK (avaliacao BETWEEN 1 AND 5),
+            descricao TEXT NOT NULL,
+            preco DECIMAL(10, 2) NOT NULL,
+            estoque INT NOT NULL,
+            data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+
+        CREATE TABLE ImagemTenis (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            produto_id INT,
+            caminho VARCHAR(255) NOT NULL, -- Caminho da imagem no sistema
+            principal BOOLEAN DEFAULT FALSE, -- Define se a imagem é a principal
+            FOREIGN KEY (produto_id) REFERENCES Produto(id) ON DELETE CASCADE
+        );
