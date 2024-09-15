@@ -30,7 +30,7 @@ public class UsuarioDao {
 
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
 
-            System.out.println(pUser.getNome()+"/"+pUser.getEmail()+"/"+pUser.getSenha()+"/"+pUser.getCpf()+"/"+pUser.getGrupo()+"/"+pUser.getStatus());
+            System.out.println(pUser.getNome()+"/"+pUser.getEmail()+"/"+pUser.getSenha()+"/"+pUser.getCpf()+"/"+pUser.getGrupo()+"/"+pUser.getAtivo());
 
             preparedStatement.setString(1, pUser.getNome());
             preparedStatement.setString(2,pUser.getEmail());
@@ -270,35 +270,22 @@ public class UsuarioDao {
         String SQL = "UPDATE USUARIO SET ATIVO = ? WHERE ID = ?";
         boolean sucesso = false;
 
-        int id = usuario.getId();
-        String status;
-        if (!usuario.getStatus()) {
-            status = "inativo";    
-        }
-        else {
-            status = "ativo";
-        }
-        
-
         try (Connection con = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
              PreparedStatement preparedStatement = con.prepareStatement(SQL)) {
 
-            // Exemplo com BOOLEAN: 
-            // Converta o status em booleano, se sua coluna for BOOLEAN
-            boolean statusBoolean = "ativo".equalsIgnoreCase(status);
-
-            preparedStatement.setBoolean(1, statusBoolean); // Se ATIVO for BOOLEAN
-            preparedStatement.setInt(2, id);
+            preparedStatement.setBoolean(1, usuario.getAtivo());  // Usa o status booleano do objeto
+            preparedStatement.setInt(2, usuario.getId());
 
             int rowsAffected = preparedStatement.executeUpdate();
             sucesso = (rowsAffected > 0);
 
         } catch (SQLException e) {
-            e.printStackTrace(); // Imprime a stack trace para depuração
+            e.printStackTrace(); // Log para depuração
         }
 
         return sucesso;
     }
+
 }
 
     

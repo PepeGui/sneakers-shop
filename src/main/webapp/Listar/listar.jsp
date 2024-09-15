@@ -12,6 +12,28 @@
     <title>Tabela de Usuários</title>
     <link rel="stylesheet" href="/Listar/listar.css">
 </head>
+<script>
+    function alterarStatus(id, status) {
+        const xhr = new XMLHttpRequest();
+        const url = "/alterarStatus";  // O servlet que processa a mudança de status
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    console.log("Status alterado com sucesso!");
+                } else {
+                    alert("Erro ao alterar status!");
+                }
+            }
+        };
+
+        // Envia o ID do usuário e o novo status (true para ativo, false para inativo)
+        xhr.send("id=" + id + "&status=" + (status ? "ativo" : "inativo"));
+    }
+</script>
+
 <body>
 
 <h3>Tabela de Usuários</h3>
@@ -46,12 +68,15 @@
             <td id="alterar"><a href="/tela-alterar?id=${usuario.id}">Alterar</a></td>
             <td id="hab/des">
                 <div class="switch__container">
-                    <input id="switch-shadow-${usuario.id}" class="switch switch--shadow" type="checkbox" ${usuario.ativo ? 'checked' : ''} />
+                    <input id="switch-shadow-${usuario.id}" class="switch switch--shadow" type="checkbox"
+                           ${usuario.ativo ? 'checked' : ''}
+                           onchange="alterarStatus(${usuario.id}, this.checked)" />
                     <label for="switch-shadow-${usuario.id}"></label>
                 </div>
             </td>
         </tr>
     </c:forEach>
+
 </table>
 
 <div class="buttons-container">

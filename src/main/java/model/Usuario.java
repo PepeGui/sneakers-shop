@@ -7,24 +7,24 @@ public class Usuario {
     private String senha;
     private long cpf;
     private String grupo;
-    private boolean status;
+    private boolean ativo;
 
-    public Usuario(int id, String nome, String email, String senha, long cpf, String grupo, boolean status) {
+    public Usuario(int id, String nome, String email, String senha, long cpf, String grupo, boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.cpf = cpf;
         this.grupo = grupo;
-        this.status = status;
+        this.ativo = ativo;
     }
-    public Usuario(String nome, String email, String senha, long cpf, String grupo, boolean status) {
+    public Usuario(String nome, String email, String senha, long cpf, String grupo, boolean ativo) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.cpf = cpf;
         this.grupo = grupo;
-        this.status = status;
+        this.ativo = ativo;
     }
 
     public Usuario(String email, String senha) {
@@ -87,11 +87,11 @@ public class Usuario {
         this.grupo = grupo;
     }
 
-    public boolean getStatus() {
-        return status;
+    public boolean getAtivo() {
+        return ativo;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 }

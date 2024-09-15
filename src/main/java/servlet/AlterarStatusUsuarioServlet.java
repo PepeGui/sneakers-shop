@@ -16,27 +16,32 @@ public class AlterarStatusUsuarioServlet extends HttpServlet {
     UsuarioDao usuarioDao = new UsuarioDao();
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String id = request.getParameter("id");
         String novoStatus = request.getParameter("status");
 
-        Usuario u = new Usuario(Integer.parseInt(id));
-        
         if (id == null || novoStatus == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID ou status ausente");
             return;
         }
-        
+
+        Usuario u = new Usuario(Integer.parseInt(id));
+        u.setAtivo("ativo".equalsIgnoreCase(novoStatus));  // Define o status baseado no parâmetro recebido
+
         try {
-            usuarioDao.alterarStatus(u);
-            response.sendRedirect("listaUsuarios.jsp");
+            boolean sucesso = usuarioDao.alterarStatus(u);
+            if (sucesso) {
+                response.setStatus(HttpServletResponse.SC_OK);
+            } else {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao atualizar o status");
+            }
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao atualizar o status");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao processar o ID");
         }
     }
-
-    
 }
+
+
