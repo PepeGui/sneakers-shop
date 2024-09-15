@@ -2,12 +2,16 @@ package dao;
 
 import model.Usuario;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.print.DocFlavor.STRING;
 
 public class UsuarioDao {
     private static final String SQL_Select = "SELECT * FROM USUARIO";
@@ -26,7 +30,7 @@ public class UsuarioDao {
 
             PreparedStatement preparedStatement = con.prepareStatement(SQL);
 
-            System.out.println(pUser.getNome()+"/"+pUser.getEmail()+"/"+pUser.getSenha()+"/"+pUser.getCpf()+"/"+pUser.getGrupo()+"/"+pUser.isAtivo());
+            System.out.println(pUser.getNome()+"/"+pUser.getEmail()+"/"+pUser.getSenha()+"/"+pUser.getCpf()+"/"+pUser.getGrupo()+"/"+pUser.getStatus());
 
             preparedStatement.setString(1, pUser.getNome());
             preparedStatement.setString(2,pUser.getEmail());
@@ -262,20 +266,39 @@ public class UsuarioDao {
         }
     }
 
-    public boolean mudarStatus(Usuario usuario){
+    public boolean alterarStatus(Usuario usuario) {
         String SQL = "UPDATE USUARIO SET ATIVO = ? WHERE ID = ?";
+        boolean sucesso = false;
 
-        try{
-            Connection con = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
-            System.out.println("Conexão bem-sucedida com o banco de dados");
-
-            PreparedStatement preparedStatement = con.prepareStatement(SQL);
-
-
-        }catch(Exception err){
-
+        int id = usuario.getId();
+        String status;
+        if (!usuario.getStatus()) {
+            status = "inativo";    
         }
-        return false;
-    }
+        else {
+            status = "ativo";
+        }
+        
 
+        try (Connection con = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+             PreparedStatement preparedStatement = con.prepareStatement(SQL)) {
+
+            // Exemplo com BOOLEAN: 
+            // Converta o status em booleano, se sua coluna for BOOLEAN
+            boolean statusBoolean = "ativo".equalsIgnoreCase(status);
+
+            preparedStatement.setBoolean(1, statusBoolean); // Se ATIVO for BOOLEAN
+            preparedStatement.setInt(2, id);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            sucesso = (rowsAffected > 0);
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Imprime a stack trace para depuração
+        }
+
+        return sucesso;
+    }
 }
+
+    

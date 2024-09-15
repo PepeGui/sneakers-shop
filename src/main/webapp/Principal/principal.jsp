@@ -11,7 +11,7 @@
 <div class="login-container">
     <div>
         <form action="listarProdutos.jsp" method="GET">
-            <button type="submit">Listar Produtos</button>
+            <a href="/Produtos/produtos.html"><button type="submit">Listar Produtos</button>><a href="/find-all-usuarios"></a>
         </form>
     </div>
 
