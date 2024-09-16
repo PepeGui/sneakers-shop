@@ -6,6 +6,10 @@
 
   <display-name>sneaker-shop</display-name>
 
+  <session-config>
+    <session-timeout>30</session-timeout> <!-- Tempo em minutos -->
+  </session-config>
+
   <listener>
     <listener-class>org.h2.server.web.DbStarter</listener-class>
   </listener>

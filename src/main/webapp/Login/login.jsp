@@ -19,7 +19,8 @@
             <label for="senha">Senha</label>
             <input type="password" id="senha" name="senha" required>
         </div>
-         <a href="../Principal/principal.html"><button>Entrar</button></a>
+        <!-- O botão está agora dentro do formulário e não possui link -->
+        <button type="submit">Entrar</button>
     </form>
 </div>
 </body>

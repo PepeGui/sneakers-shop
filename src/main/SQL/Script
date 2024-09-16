@@ -21,8 +21,8 @@ criação da tabela usuario
 
         CREATE TABLE ImagemTenis (
             id INT PRIMARY KEY AUTO_INCREMENT,
-            produto_id INT,
+            tenis_id INT,
             caminho VARCHAR(255) NOT NULL, -- Caminho da imagem no sistema
             principal BOOLEAN DEFAULT FALSE, -- Define se a imagem é a principal
-            FOREIGN KEY (produto_id) REFERENCES Produto(id) ON DELETE CASCADE
+            FOREIGN KEY (tenis_id) REFERENCES Tenis(id) ON DELETE CASCADE
         );

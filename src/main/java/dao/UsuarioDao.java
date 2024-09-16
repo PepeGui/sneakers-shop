@@ -136,6 +136,34 @@ public class UsuarioDao {
         }
     }
 
+    public Usuario buscarUsuarioPorEmail(String email) {
+        Usuario usuario = null;
+
+        String sql = "SELECT * FROM USUARIO WHERE EMAIL = ?";
+
+        try (Connection con = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                // Cria o objeto Usuario com os dados do banco
+                usuario = new Usuario();
+                usuario.setId(rs.getInt("ID"));
+                usuario.setEmail(rs.getString("EMAIL"));
+                usuario.setSenha(rs.getString("SENHA"));
+                usuario.setGrupo(rs.getString("GRUPO"));  // Incluindo o grupo (Administrador/Estoquista)
+                // Preencha outros atributos do usuário conforme necessário
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return usuario; // Retorna o objeto Usuario, ou null se não encontrado
+    }
+
     public List<Usuario> getAllUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
 

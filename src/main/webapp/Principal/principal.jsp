@@ -1,6 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
-<%@ page contentType="text/html; charset=UTF-8" %>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +12,15 @@
 <div class="login-container">
     <div>
         <form action="listarProdutos.jsp" method="GET">
-            <a href="/Produtos/produtos.html"><button type="submit">Listar Produtos</button>><a href="/find-all-usuarios"></a>
+            <button type="submit">Listar Produtos</button>
         </form>
     </div>
 
-    <div>
-        <a href="/find-all-usuarios"><button class="submit">Listar Usuários</button></a>
-    </div>
+    <c:if test="${usuarioLogado.grupo == 'Administrador'}">
+        <div>
+            <a href="/find-all-usuarios"><button class="submit">Listar Usuários</button></a>
+        </div>
+    </c:if>
 
     <div>
         <form action="listarPedidos.jsp" method="GET">
