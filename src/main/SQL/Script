@@ -16,7 +16,7 @@ criação da tabela usuario
             descricao TEXT NOT NULL,
             preco DECIMAL(10, 2) NOT NULL,
             estoque INT NOT NULL,
-            data_cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            ativo BOOLEAN;
         );
 
         CREATE TABLE ImagemTenis (

@@ -2,6 +2,7 @@ package dao;
 
 import model.ImagemTenis;
 import model.Tenis;
+import model.Usuario;
 
 import java.sql.*;
 
@@ -48,5 +49,25 @@ public class TenisDao {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean alterarStatus(Tenis t) {
+        String SQL = "UPDATE TENIS SET ATIVO = ? WHERE ID = ?";
+        boolean sucesso = false;
+
+        try (Connection con = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+             PreparedStatement preparedStatement = con.prepareStatement(SQL)) {
+
+            preparedStatement.setBoolean(1, t.isAtivo());  // Usa o status booleano do objeto
+            preparedStatement.setInt(2, t.getId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            sucesso = (rowsAffected > 0);
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Log para depuração
+        }
+
+        return sucesso;
     }
 }

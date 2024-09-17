@@ -10,6 +10,7 @@ public class Tenis {
     private double preco;
     private int estoque;
     private List<ImagemTenis> imagens;  // Lista de imagens associadas ao produto
+    private boolean ativo;
 
     // Construtores, Getters e Setters
     public Tenis() {
@@ -23,6 +24,10 @@ public class Tenis {
         this.preco = preco;
         this.estoque = estoque;
 
+    }
+
+    public Tenis(int id){
+        this.id = id;
     }
 
     public int getId() {
@@ -80,4 +85,13 @@ public class Tenis {
     public void setImagens(List<ImagemTenis> imagens) {
         this.imagens = imagens;
     }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
 }
