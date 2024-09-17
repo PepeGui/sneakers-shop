@@ -1,28 +1,28 @@
 criação da tabela usuario
-        create table usuario(
-         id int not null auto_increment primary key,
-         nome varchar(255),
-         email varchar(255),
-         senha varchar(255),
-         cpf long,
-         grupo varchar(255),
-         ativo boolean
-        )
+       CREATE TABLE usuario (
+           id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+           nome VARCHAR(255),
+           email VARCHAR(255) UNIQUE NOT NULL,
+           senha VARCHAR(255) NOT NULL,
+           cpf CHAR(11) UNIQUE NOT NULL,
+           grupo VARCHAR(255),
+           ativo BOOLEAN
+       );
 
-        CREATE TABLE Tenis (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            nome VARCHAR(200) NOT NULL,
-            avaliacao DECIMAL(2,1) CHECK (avaliacao BETWEEN 1 AND 5),
-            descricao TEXT NOT NULL,
-            preco DECIMAL(10, 2) NOT NULL,
-            estoque INT NOT NULL,
-            ativo BOOLEAN;
-        );
+       CREATE TABLE Tenis (
+           id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+           nome VARCHAR(200) NOT NULL,
+           avaliacao DECIMAL(2,1) CHECK (avaliacao BETWEEN 1 AND 5),
+           descricao TEXT NOT NULL,
+           preco DECIMAL(10, 2) NOT NULL,
+           estoque INT NOT NULL,
+           ativo BOOLEAN NOT NULL DEFAULT TRUE
+       );
 
-        CREATE TABLE ImagemTenis (
-            id INT PRIMARY KEY AUTO_INCREMENT,
-            tenis_id INT,
-            caminho VARCHAR(255) NOT NULL, -- Caminho da imagem no sistema
-            principal BOOLEAN DEFAULT FALSE, -- Define se a imagem é a principal
-            FOREIGN KEY (tenis_id) REFERENCES Tenis(id) ON DELETE CASCADE
-        );
+       CREATE TABLE ImagemTenis (
+           id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+           tenis_id INT NOT NULL,
+           caminho VARCHAR(255) NOT NULL, -- Caminho da imagem no sistema
+           principal BOOLEAN DEFAULT FALSE, -- Define se a imagem é a principal
+           FOREIGN KEY (tenis_id) REFERENCES Tenis(id) ON DELETE CASCADE
+       );
