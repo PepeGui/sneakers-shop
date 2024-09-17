@@ -1,5 +1,6 @@
 package servlet;
 
+import controller.AlterarUsuario;
 import controller.CadastrarUsuario;
 import dao.UsuarioDao;
 import model.Usuario;
@@ -28,8 +29,8 @@ public class AlterarUsuarioServlet extends HttpServlet {
 
         if(senha.equals(confirmarSenha)) {
             Usuario user = new Usuario(Integer.parseInt(id), nome, email, senha, Long.parseLong(cpf), grupo, true);
-            CadastrarUsuario cadastrarUsuario = new CadastrarUsuario();
-            boolean resultadoAlteracao = cadastrarUsuario.CadastrarUser(user);
+            AlterarUsuario alterarUsuario = new AlterarUsuario();
+            boolean resultadoAlteracao = alterarUsuario.AlterarUsuario(user);
             if(resultadoAlteracao == true) {
                 System.out.println("passou aqui if ");
                 response.sendRedirect("/find-all-usuarios");
@@ -37,14 +38,14 @@ public class AlterarUsuarioServlet extends HttpServlet {
             else
             {
                 System.out.println("passou aqui if else");
-                request.setAttribute("usuarios", id);
+                request.setAttribute("id", id);
                 request.getRequestDispatcher("/tela-alterar").forward(request, response);
 
             }
         }
         else {
             System.out.println("passou aqui else");
-            request.setAttribute("usuarios", id);
+            request.setAttribute("id", id);
             request.getRequestDispatcher("/tela-alterar").forward(request, response);
         }
     }

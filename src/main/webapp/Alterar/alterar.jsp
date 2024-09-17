@@ -36,7 +36,7 @@
             <label for="grupo">Grupo</label>
             <input type="text" id="grupo" name="grupo" value=${usuario.grupo} required>
         </div>
-        <input type="hidden" name="id" value = ${usuario.id}">
+        <input type="hidden" id="id" name="id" value = ${usuario.id}>
         <button type="submit">Finalizar</button>
     </form>
 </div>
