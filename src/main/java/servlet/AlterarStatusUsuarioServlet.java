@@ -34,6 +34,7 @@ public class AlterarStatusUsuarioServlet extends HttpServlet {
             boolean sucesso = usuarioDao.alterarStatus(u);
             if (sucesso) {
                 response.setStatus(HttpServletResponse.SC_OK);
+                request.getRequestDispatcher("/Listar/listar.jsp").forward(request, response);
             } else {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao atualizar o status");
             }
