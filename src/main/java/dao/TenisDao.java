@@ -5,18 +5,20 @@ import model.Tenis;
 import model.Usuario;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class TenisDao {
 
-    private static final String SQL_Select = "SELECT * FROM USUARIO";
+    private static final String SQL_Select = "SELECT * FROM TENIS";
     private static final String DB_URL = "jdbc:h2:~/test";
     private static final String DB_USERNAME = "sa";
     private static final String DB_PASSWORD = "sa";
 
     public boolean createTenis(Tenis tenis) {
-        String sqlProduto = "INSERT INTO Produto (nome, avaliacao, descricao, preco, estoque) VALUES (?, ?, ?, ?, ?)";
-        String sqlImagem = "INSERT INTO ImagemProduto (tenis_id, caminho, principal) VALUES (?, ?, ?)";
+        String sqlProduto = "INSERT INTO TENIS (nome, avaliacao, descricao, preco, estoque) VALUES (?, ?, ?, ?, ?)";
+        String sqlImagem = "INSERT INTO IMAGEMTENIS (tenis_id, caminho, principal) VALUES (?, ?, ?)";
 
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
         PreparedStatement psProduto = con.prepareStatement(sqlProduto, Statement.RETURN_GENERATED_KEYS)) {
@@ -70,4 +72,59 @@ public class TenisDao {
 
         return sucesso;
     }
+
+    public List<Tenis> getAllTenis() {
+        List<Tenis> tenisList = new ArrayList<>();
+        String SQL_SELECT_ALL = "SELECT * FROM TENIS";
+
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_Select);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Tenis tenis = new Tenis();
+                tenis.setId(resultSet.getInt("ID"));
+                tenis.setNome(resultSet.getString("NOME"));
+                tenis.setDescricao(resultSet.getString("DESCRICAO"));
+                tenis.setPreco(resultSet.getDouble("PRECO"));
+                tenis.setEstoque(resultSet.getInt("ESTOQUE"));
+                tenis.setAtivo(resultSet.getBoolean("ATIVO"));
+                tenisList.add(tenis);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return tenisList;
+    }
+
+    public List<Tenis> buscarTenisPorNome(String nome) {
+        List<Tenis> tenisList = new ArrayList<>();
+        String SQL_SELECT_BY_NAME = "SELECT * FROM TENIS WHERE NOME LIKE ?";
+
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_BY_NAME)) {
+
+            preparedStatement.setString(1, "%" + nome + "%"); // Wildcard para busca
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Tenis tenis = new Tenis();
+                    tenis.setId(resultSet.getInt("ID"));
+                    tenis.setNome(resultSet.getString("NOME"));
+                    tenis.setDescricao(resultSet.getString("DESCRICAO"));
+                    tenis.setPreco(resultSet.getDouble("PRECO"));
+                    tenis.setEstoque(resultSet.getInt("ESTOQUE"));
+                    tenis.setAtivo(resultSet.getBoolean("ATIVO"));
+                    tenisList.add(tenis);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return tenisList;
+    }
+
 }

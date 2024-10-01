@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Produto</title>
-    <link rel="stylesheet" href="/Novo-Produto/novo-produto.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/Novo-Produto/novo-produto.css">
 </head>
 <body>
 
 <div class="cadastro-container">
     <h2>Cadastro de Produto</h2>
-    <form action="/" method="POST">
+    <!-- O form agora usa o contexto do servlet -->
+    <form action="<%= request.getContextPath() %>/cadastrarTenis" method="POST" enctype="multipart/form-data">
         <div class="input-group">
             <label for="nome">Nome do Produto</label>
             <input type="text" id="nome" name="nome" required>
@@ -31,13 +32,19 @@
             <label for="avaliacao">Avaliação</label>
             <input type="text" id="avaliacao" name="avaliacao" required>
         </div>
-        <a class="addImg" href="/Novo-Produto/AD-IMG/ad-img.html">Adicionar Imagens</a>
+
+        <!-- Campo para upload de imagem -->
+        <div class="input-group">
+            <label for="imagem">Adicionar Imagem</label>
+            <input type="file" id="imagem" name="imagem" accept="image/*" required>
+        </div>
 
         <button type="submit">Finalizar</button>
     </form>
 
+
     <div class="back-button">
-        <a href="/Produtos/produto.html">Voltar</a>
+        <a href="<%= request.getContextPath() %>/Produtos/produto.jsp">Voltar</a>
     </div>
 </div>
 

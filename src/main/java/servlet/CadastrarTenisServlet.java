@@ -74,13 +74,13 @@ public class CadastrarTenisServlet extends HttpServlet {
         boolean sucesso = tenisDao.createTenis(tenis);
 
         if (sucesso) {
-            response.sendRedirect("listaTeniss.jsp");
+            response.sendRedirect("/find-all-tenis");
         } else {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao cadastrar tenis");
         }
     }
 
-    // Método auxiliar para extrair o nome do arquivo
+    // Metodo auxiliar para extrair o nome do arquivo
     private String extractFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         String[] items = contentDisp.split(";");
