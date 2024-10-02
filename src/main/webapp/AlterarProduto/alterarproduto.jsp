@@ -11,7 +11,7 @@
 <body>
 <div class="cadastro-container">
     <h2>Alterar</h2>
-    <form action="/alterar-usuario" method="POST">
+    <form action="/alterar-tenis" method="POST">
         <div class="input-group">
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome" value = ${tenis.nome}  required>

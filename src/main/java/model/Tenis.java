@@ -12,7 +12,13 @@ public class Tenis {
     private List<ImagemTenis> imagens; // Lista de imagens associadas ao tênis
     private boolean ativo;
 
+    public Tenis(){
 
+    }
+
+    public Tenis(int id){
+        this.id = id;
+    }
 
     public Tenis(String nome, double preco, int estoque, String descricao, double avaliacao, boolean ativo) {
         this.nome = nome;
@@ -70,7 +76,8 @@ public class Tenis {
     public void setAvaliacao(double avaliacao) {
         this.avaliacao = avaliacao;
     }
-    public boolean getAtivo() {
+
+    public boolean isAtivo() {
         return ativo;
     }
 
