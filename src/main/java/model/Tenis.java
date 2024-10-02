@@ -5,31 +5,24 @@ import java.util.List;
 public class Tenis {
     private int id;
     private String nome;
-    private double avaliacao;  // De 1 a 5, incrementos de 0.5
-    private String descricao;
     private double preco;
     private int estoque;
-    private List<ImagemTenis> imagens;  // Lista de imagens associadas ao produto
+    private String descricao;
+    private double avaliacao;
+    private List<ImagemTenis> imagens; // Lista de imagens associadas ao tênis
     private boolean ativo;
 
-    // Construtores, Getters e Setters
-    public Tenis() {
-    }
 
-    public Tenis(int id, String nome, double avaliacao, String descricao, double preco, int estoque) {
-        this.id = id;
+
+    public Tenis(String nome, double preco, int estoque, String descricao, double avaliacao, boolean ativo) {
         this.nome = nome;
-        this.avaliacao = avaliacao;
-        this.descricao = descricao;
         this.preco = preco;
         this.estoque = estoque;
-
+        this.descricao = descricao;
+        this.avaliacao = avaliacao;
+        this.ativo = ativo;
     }
-
-    public Tenis(int id){
-        this.id = id;
-    }
-
+    // Getters e Setters para os campos, incluindo a lista de imagens
     public int getId() {
         return id;
     }
@@ -44,22 +37,6 @@ public class Tenis {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public double getAvaliacao() {
-        return avaliacao;
-    }
-
-    public void setAvaliacao(double avaliacao) {
-        this.avaliacao = avaliacao;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public double getPreco() {
@@ -78,15 +55,22 @@ public class Tenis {
         this.estoque = estoque;
     }
 
-    public List<ImagemTenis> getImagens() {
-        return imagens;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setImagens(List<ImagemTenis> imagens) {
-        this.imagens = imagens;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
-    public boolean isAtivo() {
+    public double getAvaliacao() {
+        return avaliacao;
+    }
+
+    public void setAvaliacao(double avaliacao) {
+        this.avaliacao = avaliacao;
+    }
+    public boolean getAtivo() {
         return ativo;
     }
 
@@ -94,4 +78,12 @@ public class Tenis {
         this.ativo = ativo;
     }
 
+    public List<ImagemTenis> getImagens() {
+        return imagens;
+    }
+
+    public void setImagens(List<ImagemTenis> imagens) {
+        this.imagens = imagens;
+    }
 }
+

@@ -1,13 +1,40 @@
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Sneakers Shop</title>
     <link rel="stylesheet" href="/Produtos/produto.css">
 </head>
+<script>
+    function alterarStatus(id, status) {
+        const xhr = new XMLHttpRequest();
+        const url = "/alterarStatus";  // O servlet que processa a mudança de status
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    console.log("Status alterado com sucesso!");
+                } else {
+                    alert("Erro ao alterar status!");
+                }
+            }
+        };
+
+        // Envia o ID do usuário e o novo status (true para ativo, false para inativo)
+        xhr.send("id=" + id + "&status=" + (status ? "ativo" : "inativo"));
+    }
+</script>
+
 <body>
 <header>
     <h1 class="brand-name">Sneakers-Shop</h1>
@@ -34,6 +61,7 @@
             <th>Estoque</th>
             <th>Valor</th>
             <th>Status</th>
+            <th>Hab/Des</th>
             <th>Opções</th>
         </tr>
         </thead>
@@ -44,8 +72,16 @@
                 <td>${tenis.nome}</td>
                 <td>${tenis.estoque}</td>
                 <td>R$ ${tenis.preco}</td>
-                <td><input type="checkbox" ${tenis.ativo ? 'checked' : ''}> Ativo</td>
-                <td><a href="/novo-produto.jsp?id=${tenis.id}"><button>Editar</button></a></td>
+                <td id="status">${tenis.ativo ? 'Ativo' : 'Inativo'}</td>
+                <td id="hab/des">
+                                <div class="switch__container">
+                                    <input id="switch-shadow-${tenis.id}" class="switch switch--shadow" type="checkbox"
+                                           ${tenis.ativo ? 'checked' : ''}
+                                           onchange="alterarStatus(${tenis.id}, this.checked)" />
+                                    <label for="switch-shadow-${tenis.id}"></label>
+                                </div>
+                            </td>
+                <td><a href="/AlterarProduto/alterarproduto.jsp?id=${tenis.id}"><button>Editar</button></a></td>
             </tr>
         </c:forEach>
         </tbody>

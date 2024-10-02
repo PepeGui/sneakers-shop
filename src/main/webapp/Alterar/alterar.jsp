@@ -5,12 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
+    <title>Alterar</title>
     <link rel="stylesheet" href="/Cadastro-Usuario/Cadastro.css">
 </head>
 <body>
 <div class="cadastro-container">
-    <h2>Cadastro</h2>
+    <h2>Alterar</h2>
     <form action="/alterar-usuario" method="POST">
         <div class="input-group">
             <label for="nome">Nome completo</label>

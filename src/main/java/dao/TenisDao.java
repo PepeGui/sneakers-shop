@@ -126,5 +126,43 @@ public class TenisDao {
 
         return tenisList;
     }
+    public boolean atualizarTenis(Tenis tenis) {
+        String sqlProduto = "UPDATE Produto SET nome = ?, avaliacao = ?, descricao = ?, preco = ?, estoque = ? WHERE id = ?";
+        String sqlImagem = "UPDATE ImagemProduto SET caminho = ?, principal = ? WHERE id = ? AND tenis_id = ?";
+
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+
+            // Atualizar dados do tênis
+            try (PreparedStatement psProduto = con.prepareStatement(sqlProduto)) {
+                psProduto.setString(1, tenis.getNome());
+                psProduto.setDouble(2, tenis.getAvaliacao());
+                psProduto.setString(3, tenis.getDescricao());
+                psProduto.setDouble(4, tenis.getPreco());
+                psProduto.setInt(5, tenis.getEstoque());
+                psProduto.setInt(6, tenis.getId()); // O ID do tênis a ser atualizado
+
+                psProduto.executeUpdate();
+            }
+
+            // Atualizar as imagens associadas ao tênis
+            for (ImagemTenis imagem : tenis.getImagens()) {
+                try (PreparedStatement psImagem = con.prepareStatement(sqlImagem)) {
+                    psImagem.setString(1, imagem.getCaminho());
+                    psImagem.setBoolean(2, imagem.isPrincipal());
+                    psImagem.setInt(3, imagem.getId()); // ID da imagem
+                    psImagem.setInt(4, tenis.getId());  // ID do tênis
+
+                    psImagem.executeUpdate();
+                }
+            }
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 }
