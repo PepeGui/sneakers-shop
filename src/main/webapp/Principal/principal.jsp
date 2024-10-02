@@ -11,7 +11,7 @@
 <body>
 <div class="login-container">
     <div>
-        <form action="listarProdutos.jsp" method="GET">
+        <form action="/find-all-tenis" method="GET">
             <button type="submit">Listar Produtos</button>
         </form>
     </div>

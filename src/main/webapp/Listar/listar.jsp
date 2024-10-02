@@ -55,8 +55,9 @@
     <tr>
         <th>Nome</th>
         <th>Email</th>
-        <th>Status</th>
         <th>Alterar</th>
+        <th>Grupo</th>
+        <th>Status</th>
         <th>Hab/Des</th>
         <th></th>
     </tr>
@@ -65,6 +66,7 @@
             <td id="nome">${usuario.nome}</td>
             <td id="email">${usuario.email}</td>
             <td id="status">${usuario.ativo ? 'Ativo' : 'Inativo'}</td>
+            <td id="grupo">${usuario.grupo}</td>
             <td id="alterar"><a href="/tela-alterar?id=${usuario.id}">Alterar</a></td>
             <td id="hab/des">
                 <div class="switch__container">
