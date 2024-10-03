@@ -28,6 +28,16 @@ public class Tenis {
         this.avaliacao = avaliacao;
         this.ativo = ativo;
     }
+    public Tenis(int id, String nome, double preco, int estoque, String descricao, double avaliacao, boolean ativo) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+        this.estoque = estoque;
+        this.descricao = descricao;
+        this.avaliacao = avaliacao;
+        this.ativo = ativo;
+    }
+
     // Getters e Setters para os campos, incluindo a lista de imagens
     public int getId() {
         return id;

@@ -11,7 +11,7 @@
 <body>
 <div class="cadastro-container">
     <h2>Alterar</h2>
-    <form action="/alterar-tenis" method="POST">
+    <form action="/alterar-Tenis" method="POST">
         <div class="input-group">
             <label for="nome">Nome</label>
             <input type="text" id="nome" name="nome" value = ${tenis.nome}  required>
@@ -32,10 +32,7 @@
             <label for="avaliacao">Avaliação</label>
             <input type="text" id="avaliacao" name="avaliacao" value = ${tenis.avaliacao} required>
         </div>
-        <div class="input-group">
-            <label for="imagem">Imagens</label>
-            <input type="text" id="imagem" name="imagem" value=${tenis.imagem} required>
-        </div>
+
         <input type="hidden" id="id" name="id" value = ${tenis.id}>
         <button type="submit">Finalizar</button>
     </form>

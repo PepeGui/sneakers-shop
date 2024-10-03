@@ -81,7 +81,7 @@
                                     <label for="switch-shadow-${tenis.id}"></label>
                                 </div>
                             </td>
-                <td><a href="/AlterarProduto/alterarproduto.jsp?id=${tenis.id}"><button>Editar</button></a></td>
+                <td><a href="/tela-alterarTenis?id=${tenis.id}"><button>Editar</button></a></td>
             </tr>
         </c:forEach>
         </tbody>

@@ -2,7 +2,7 @@ package dao;
 
 import model.ImagemTenis;
 import model.Tenis;
-import model.Usuario;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -127,8 +127,8 @@ public class TenisDao {
         return tenisList;
     }
     public boolean atualizarTenis(Tenis tenis) {
-        String sqlProduto = "UPDATE Produto SET nome = ?, avaliacao = ?, descricao = ?, preco = ?, estoque = ? WHERE id = ?";
-        String sqlImagem = "UPDATE ImagemProduto SET caminho = ?, principal = ? WHERE id = ? AND tenis_id = ?";
+        String sqlProduto = "UPDATE TENIS SET nome = ?, avaliacao = ?, descricao = ?, preco = ?, estoque = ? WHERE id = ?";
+        String sqlImagem = "UPDATE ImagemTenis SET caminho = ?, principal = ? WHERE id = ? AND tenis_id = ?";
 
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
 
@@ -164,5 +164,35 @@ public class TenisDao {
         }
     }
 
+    public Tenis buscaTenisPorID(Tenis pTenis) {
+        List<Tenis> tenis = new ArrayList<>();
+        String SQL = "SELECT * FROM TENIS WHERE ID = ?";
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            System.out.println("success in database connection buscaTenisPorID");
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setInt(1, pTenis.getId());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String nome = resultSet.getString("nome");
+                String descricao = resultSet.getString("descricao");
+                String preco = resultSet.getString("preco");
+                String estoque = resultSet.getString("estoque");
+                String avaliacao = resultSet.getString("avaliacao");
+                String ativo = resultSet.getString("ativo");
+                tenis.add(new Tenis(Integer.parseInt(id), nome, Double.parseDouble(preco), Integer.parseInt(estoque), descricao, Double.parseDouble(avaliacao), Boolean.parseBoolean(ativo)));
+            }
+            System.out.println("success in buscaTenisPorID");
+
+        } catch (Exception e) {
+            System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
+        }
+
+        return tenis.getFirst();
+    }
 
 }

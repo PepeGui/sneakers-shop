@@ -71,7 +71,7 @@ public class AlterarTenisServlet extends HttpServlet {
 
             if (atualizado) {
                 // Redireciona para a página de sucesso ou lista de produtos
-                response.sendRedirect("/Produtos/produto.jsp");
+                response.sendRedirect("/find-all-tenis");
             } else {
                 // Envia uma mensagem de erro se a atualização falhar
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao atualizar o produto.");
