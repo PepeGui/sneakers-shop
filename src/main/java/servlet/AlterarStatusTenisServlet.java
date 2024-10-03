@@ -13,30 +13,33 @@ import model.Tenis;
 @WebServlet("/alterarStatusTenis")
 public class AlterarStatusTenisServlet extends HttpServlet{
     TenisDao tenisDao = new TenisDao();
+    private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-       
-        String id = req.getParameter("id");
-        String novoStatus = req.getParameter("status");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        if (id == null || novoStatus == null){
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID ou status ausente");
+        String id = request.getParameter("id");
+        String novoStatus = request.getParameter("status");
+
+        if (id == null || novoStatus == null) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID ou status ausente");
             return;
         }
 
-        Tenis t = new Tenis(Integer.parseInt(id));
-        t.setAtivo("ativo".equals(novoStatus));
+        Tenis u = new Tenis(Integer.parseInt(id));
+        u.setAtivo("ativo".equalsIgnoreCase(novoStatus));  // Define o status baseado no parâmetro recebido
 
-        try{
-            boolean sucesso = tenisDao.alterarStatus(t);
-            if(sucesso){
-                resp.setStatus(HttpServletResponse.SC_OK);
+        try {
+            boolean sucesso = tenisDao.alterarStatus(u);
+            if (sucesso) {
+                response.setStatus(HttpServletResponse.SC_OK);
+                request.getRequestDispatcher("/Tenis/tenis.jsp").forward(request, response);
             } else {
-                resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao atualizar o status");
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao atualizar o status");
             }
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             e.printStackTrace();
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao processar o ID");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao processar o ID");
         }
     }
 }

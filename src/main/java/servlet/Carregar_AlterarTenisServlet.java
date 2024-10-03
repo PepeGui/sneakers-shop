@@ -32,6 +32,6 @@ import java.util.List;
         }
         request.setAttribute("tenis", tenis);
 
-        request.getRequestDispatcher("/AlterarProduto/alterarproduto.jsp").forward(request,response);
+        request.getRequestDispatcher("/AlterarTenis/alterartenis.jsp").forward(request,response);
         }
     }

@@ -35,6 +35,6 @@ public class ListarTenisServlet extends HttpServlet {
         req.setAttribute("tenisList", tenisList);
 
         // Redireciona para a página JSP que lista os tênis
-        req.getRequestDispatcher("/Produtos/produto.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Tenis/tenis.jsp").forward(req, resp);
     }
 }

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<html lang="pt-BR">
+<html lang="pt-br" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alterar Produto</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/Novo-Produto/novo-produto.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/Novo-Tenis/novo-tenis.css">
 </head>
 <body>
 <div class="cadastro-container">
@@ -26,12 +26,23 @@
         </div>
         <div class="input-group">
                     <label for="descricao">Descrição</label>
-                    <input type="text" id="descricao" name="descricao" value = ${tenis.descricao} required>
+                    <input type="text" id="descricao" name="descricao" value = "${tenis.descricao}" required>
         </div>
         <div class="input-group">
             <label for="avaliacao">Avaliação</label>
             <input type="text" id="avaliacao" name="avaliacao" value = ${tenis.avaliacao} required>
         </div>
+
+        <div class="input-group">
+            <label for="imagem">Imagens</label>
+            <input type="text" id="imagem" name="imagem" value="${tenis.imagens[0].caminho}" required>
+        </div>
+        <c:if test="${not empty tenis.imagens}">
+        <div class="input-group">
+        <label for="imagem">Imagens</label>
+        <input type="text" id="imagem" name="imagem" value="${tenis.imagens[0].caminho}" required>
+        </div>
+        </c:if>
 
         <input type="hidden" id="id" name="id" value = ${tenis.id}>
         <button type="submit">Finalizar</button>

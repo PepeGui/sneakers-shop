@@ -17,21 +17,21 @@ public class TenisDao {
     private static final String DB_PASSWORD = "sa";
 
     public boolean createTenis(Tenis tenis) {
-        String sqlProduto = "INSERT INTO TENIS (nome, avaliacao, descricao, preco, estoque) VALUES (?, ?, ?, ?, ?)";
+        String sqlTenis = "INSERT INTO TENIS (nome, avaliacao, descricao, preco, estoque) VALUES (?, ?, ?, ?, ?)";
         String sqlImagem = "INSERT INTO IMAGEMTENIS (tenis_id, caminho, principal) VALUES (?, ?, ?)";
 
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-        PreparedStatement psProduto = con.prepareStatement(sqlProduto, Statement.RETURN_GENERATED_KEYS)) {
+        PreparedStatement psTenis = con.prepareStatement(sqlTenis, Statement.RETURN_GENERATED_KEYS)) {
 
-            psProduto.setString(1, tenis.getNome());
-            psProduto.setDouble(2, tenis.getAvaliacao());
-            psProduto.setString(3, tenis.getDescricao());
-            psProduto.setDouble(4, tenis.getPreco());
-            psProduto.setInt(5, tenis.getEstoque());
+            psTenis.setString(1, tenis.getNome());
+            psTenis.setDouble(2, tenis.getAvaliacao());
+            psTenis.setString(3, tenis.getDescricao());
+            psTenis.setDouble(4, tenis.getPreco());
+            psTenis.setInt(5, tenis.getEstoque());
 
-            psProduto.executeUpdate();
+            psTenis.executeUpdate();
 
-            ResultSet rs = psProduto.getGeneratedKeys();
+            ResultSet rs = psTenis.getGeneratedKeys();
             if (rs.next()) {
                 int tenisId = rs.getInt(1);
 
@@ -78,7 +78,7 @@ public class TenisDao {
         String SQL_SELECT_ALL = "SELECT * FROM TENIS";
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_Select);
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -88,7 +88,13 @@ public class TenisDao {
                 tenis.setDescricao(resultSet.getString("DESCRICAO"));
                 tenis.setPreco(resultSet.getDouble("PRECO"));
                 tenis.setEstoque(resultSet.getInt("ESTOQUE"));
+                tenis.setAvaliacao(resultSet.getDouble("AVALIACAO"));
                 tenis.setAtivo(resultSet.getBoolean("ATIVO"));
+
+                // Buscar e associar imagens ao tênis
+                List<ImagemTenis> imagens = getImagensPorTenisId(tenis.getId());
+                tenis.setImagens(imagens);
+
                 tenisList.add(tenis);
             }
 
@@ -98,6 +104,7 @@ public class TenisDao {
 
         return tenisList;
     }
+
 
     public List<Tenis> buscarTenisPorNome(String nome) {
         List<Tenis> tenisList = new ArrayList<>();
@@ -127,13 +134,13 @@ public class TenisDao {
         return tenisList;
     }
     public boolean atualizarTenis(Tenis tenis) {
-        String sqlProduto = "UPDATE TENIS SET nome = ?, avaliacao = ?, descricao = ?, preco = ?, estoque = ? WHERE id = ?";
+        String sqlTenis = "UPDATE TENIS SET nome = ?, avaliacao = ?, descricao = ?, preco = ?, estoque = ? WHERE id = ?";
         String sqlImagem = "UPDATE ImagemTenis SET caminho = ?, principal = ? WHERE id = ? AND tenis_id = ?";
 
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
 
             // Atualizar dados do tênis
-            try (PreparedStatement psProduto = con.prepareStatement(sqlProduto)) {
+            try (PreparedStatement psProduto = con.prepareStatement(sqlTenis)) {
                 psProduto.setString(1, tenis.getNome());
                 psProduto.setDouble(2, tenis.getAvaliacao());
                 psProduto.setString(3, tenis.getDescricao());
@@ -193,6 +200,32 @@ public class TenisDao {
         }
 
         return tenis.getFirst();
+    }
+
+    public List<ImagemTenis> getImagensPorTenisId(int tenisId) {
+        List<ImagemTenis> imagens = new ArrayList<>();
+        String SQL_SELECT_IMAGENS = "SELECT * FROM IMAGEMTENIS WHERE TENIS_ID = ?";
+
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_IMAGENS)) {
+
+            preparedStatement.setInt(1, tenisId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    ImagemTenis imagem = new ImagemTenis();
+                    imagem.setId(resultSet.getInt("ID"));
+                    imagem.setTenisId(resultSet.getInt("TENIS_ID"));
+                    imagem.setCaminho(resultSet.getString("CAMINHO"));
+                    imagem.setPrincipal(resultSet.getBoolean("PRINCIPAL"));
+                    imagens.add(imagem);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return imagens;
     }
 
 }

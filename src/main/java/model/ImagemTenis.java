@@ -2,7 +2,7 @@ package model;
 
 public class ImagemTenis {
     private int id;
-    private int produtoId;  // Referência ao produto
+    private int tenisId;  // Referência ao tenis
     private String caminho; // Caminho da imagem no sistema
     private boolean principal; // Se é a imagem principal
 
@@ -10,9 +10,9 @@ public class ImagemTenis {
     public ImagemTenis() {
     }
 
-    public ImagemTenis(int id, int produtoId, String caminho, boolean principal) {
+    public ImagemTenis(int id, int tenisId, String caminho, boolean principal) {
         this.id = id;
-        this.produtoId = produtoId;
+        this.tenisId = tenisId;
         this.caminho = caminho;
         this.principal = principal;
     }
@@ -25,12 +25,12 @@ public class ImagemTenis {
         this.id = id;
     }
 
-    public int getProdutoId() {
-        return produtoId;
+    public int getTenisId() {
+        return tenisId;
     }
 
-    public void setProdutoId(int produtoId) {
-        this.produtoId = produtoId;
+    public void setTenisId(int tenisId) {
+        this.tenisId = tenisId;
     }
 
     public String getCaminho() {
