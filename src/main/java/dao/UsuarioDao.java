@@ -11,7 +11,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.crypto.SecretKey;
 import javax.print.DocFlavor.STRING;
+
+import controller.Criptografia;
 
 public class UsuarioDao {
     private static final String SQL_Select = "SELECT * FROM USUARIO";
@@ -21,7 +24,7 @@ public class UsuarioDao {
 
     public static void createUsuario(Usuario pUser){
 
-        String SQL = "insert INTO usuario (nome, email, senha, cpf, grupo, ativo) VALUES (?,?,?,?,?,?)";
+        String SQL = "insert INTO usuario (nome, email, senha, cpf, grupo, ativo,chave_aes) VALUES (?,?,?,?,?,?,?)";
 
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
@@ -38,6 +41,7 @@ public class UsuarioDao {
             preparedStatement.setLong(4, pUser.getCpf());
             preparedStatement.setString(5, pUser.getGrupo());
             preparedStatement.setBoolean(6,true);
+            preparedStatement.setString(7, pUser.getChaveAES());
 
             System.out.println("passou aqui 2");
             preparedStatement.execute();
@@ -244,23 +248,38 @@ public class UsuarioDao {
             System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
         }
 
-        return usuarios.getFirst();
+        return usuarios.get(0);
     }
 
     public boolean verificarLogin(Usuario u) {
-        String SQL = "SELECT COUNT(*) FROM usuario WHERE email = ? AND senha = ?";
+        String SQL = "SELECT * FROM usuario WHERE email = ?";
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
 
             preparedStatement.setString(1, u.getEmail());
-            preparedStatement.setString(2, u.getSenha());
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next() && resultSet.getInt(1) > 0) {
-                    return true; // Usuário encontrado, login bem-sucedido
-                }
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<Usuario> usuarios = new ArrayList<>();
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String nome = resultSet.getString("nome");
+                String email = resultSet.getString("email");
+                String senha = resultSet.getString("senha");
+                String cpf = resultSet.getString("cpf");
+                String grupo = resultSet.getString("grupo");
+                String ativo = resultSet.getString("ativo");
+                String chaveAES = resultSet.getString("chave_aes");
+                usuarios.add(new Usuario(Integer.parseInt(id), nome, email, senha, Long.parseLong(cpf), grupo, Boolean.parseBoolean(ativo),chaveAES));
             }
+            Criptografia crip = new Criptografia();
+            for(Usuario usuario : usuarios){
+                SecretKey chaveAES = crip.converterStringParaChave(usuario.getChaveAES(), "AES");
+                String senhaDescriptografada = crip.descriptografar(usuario.getSenha(), chaveAES);
+                if(u.getSenha().equals(senhaDescriptografada))
+                    return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
         }
@@ -268,7 +287,7 @@ public class UsuarioDao {
     }
     public boolean  alterarUsuario(Usuario pUser) {
 
-        String SQL = "UPDATE USUARIO SET nome = ?, email = ?, senha = ?, cpf = ?, grupo = ? WHERE ID = ?";
+        String SQL = "UPDATE USUARIO SET nome = ?, email = ?, senha = ?, cpf = ?, grupo = ?, chave_aes = ? WHERE ID = ?";
         boolean sucesso = false;
 
         try {
@@ -282,7 +301,9 @@ public class UsuarioDao {
             preparedStatement.setString(3, pUser.getSenha());
             preparedStatement.setLong(4, pUser.getCpf());
             preparedStatement.setString(5, pUser.getGrupo());
-            preparedStatement.setInt(6,pUser.getId());
+            preparedStatement.setString(6, pUser.getChaveAES());
+            preparedStatement.setInt(7,pUser.getId());
+
 
             int rowsAffected = preparedStatement.executeUpdate();
             sucesso = (rowsAffected > 0);

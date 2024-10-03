@@ -10,7 +10,7 @@
 <body>
 <div class="login-container">
     <h2>Login</h2>
-    <form action="/login-usuario" method="POST">
+    <form action="/login-usuario" method="GET">
         <div class="input-group">
             <label for="email">Usuário</label>
             <input type="text" id="email" name="email" required>

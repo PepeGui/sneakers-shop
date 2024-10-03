@@ -9,6 +9,9 @@ criação da tabela usuario
            ativo BOOLEAN
        );
 
+       ALTER TABLE USUARIO
+       ADD COLUMN CHAVE_AES VARCHAR(500);
+
        CREATE TABLE Tenis (
            id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
            nome VARCHAR(200) NOT NULL,

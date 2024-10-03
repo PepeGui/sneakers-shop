@@ -1,5 +1,6 @@
 package servlet;
 
+import dao.UsuarioDao;
 import model.Usuario;
 import service.UsuarioService;
 
@@ -13,22 +14,21 @@ import java.io.IOException;
 @WebServlet("/login-usuario")
 public class LoginUsuarioServlet extends HttpServlet {
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             String email = req.getParameter("email");
             String senha = req.getParameter("senha");
 
             Usuario usuario = new Usuario(email, senha);
-            UsuarioService usuarioService = new UsuarioService();
+            UsuarioDao usuarioDao = new UsuarioDao();
 
             // Verifica o login
-            if (usuarioService.verificarLogin(usuario)) {
-                // Cria ou obtém a sessão do usuário
-                HttpSession session = req.getSession();
-                session.setAttribute("usuarioLogado", usuario);  // Armazena o objeto Usuario na sessão
+            if (usuarioDao.verificarLogin(usuario)) {
+                usuario = usuarioDao.buscarUsuarioPorEmail(email);
+                req.setAttribute("usuario", usuario);  // Armazena o objeto Usuario na sessão
 
                 // Redireciona para a página principal
-                resp.sendRedirect("Principal/principal.jsp");
+                req.getRequestDispatcher("Principal/principal.jsp").forward(req,resp);
             } else {
                 // Login falhou, redireciona para a página de login com uma mensagem de erro
                 req.setAttribute("errorMessage", "Login inválido. Verifique o login e a senha!");

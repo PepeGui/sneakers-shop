@@ -8,6 +8,15 @@ public class Usuario {
     private long cpf;
     private String grupo;
     private boolean ativo;
+    private String chaveAES;
+
+    public String getChaveAES() {
+        return chaveAES;
+    }
+
+    public void setChaveAES(String chaveAES) {
+        this.chaveAES = chaveAES;
+    }
 
     public Usuario(int id, String nome, String email, String senha, long cpf, String grupo, boolean ativo) {
         this.id = id;
@@ -17,6 +26,16 @@ public class Usuario {
         this.cpf = cpf;
         this.grupo = grupo;
         this.ativo = ativo;
+    }
+    public Usuario(int id, String nome, String email, String senha, long cpf, String grupo, boolean ativo, String chaveAES) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.cpf = cpf;
+        this.grupo = grupo;
+        this.ativo = ativo;
+        this.chaveAES = chaveAES;
     }
     public Usuario(String nome, String email, String senha, long cpf, String grupo, boolean ativo) {
         this.nome = nome;

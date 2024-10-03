@@ -21,6 +21,7 @@ public class AlterarUsuario {
                 // Criptografando a senha
                 String senhaCriptografada = crip.criptografar(pUser.getSenha(), chaveAES);
                 pUser.setSenha(senhaCriptografada);
+                pUser.setChaveAES(crip.converterChaveParaString(chaveAES));
             }
 
             if(cad.isCPFValido(String.valueOf(pUser.getCpf()))) {

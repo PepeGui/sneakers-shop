@@ -10,23 +10,26 @@
 </head>
 <body>
 <div class="login-container">
-    <div>
-        <form action="/find-all-tenis" method="GET">
-            <button type="submit">Listar Produtos</button>
-        </form>
-    </div>
+    <c:if test="${usuario.grupo eq 'Estoquista'}">
+        <div>
+            <form action="/find-all-tenis" method="GET">
+                <button type="submit">Listar Produtos</button>
+            </form>
+        </div>
+    </c:if>
 
-    <c:if test="${usuarioLogado.grupo == 'Administrador'}">
+    <c:if test="${usuario.grupo eq 'Admin'}">
         <div>
             <a href="/find-all-usuarios"><button class="submit">Listar Usuários</button></a>
         </div>
     </c:if>
-
-    <div>
-        <form action="listarPedidos.jsp" method="GET">
-            <button type="submit">Listar Pedidos</button>
-        </form>
-    </div>
+    <c:if test="${usuario.grupo == 'Estoquista'}">
+        <div>
+            <form action="listarPedidos.jsp" method="GET">
+                <button type="submit">Listar Pedidos</button>
+            </form>
+        </div>
+    </c:if>
 </div>
 </body>
 </html>

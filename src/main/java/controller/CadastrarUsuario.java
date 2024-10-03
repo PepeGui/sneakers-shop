@@ -18,6 +18,7 @@ public class CadastrarUsuario {
             // Criptografando a senha
             String senhaCriptografada = crip.criptografar(pUser.getSenha(), chaveAES);
             pUser.setSenha(senhaCriptografada);
+            pUser.setChaveAES(crip.converterChaveParaString(chaveAES));
 
             if(usuarioDao.VerificacaoEmail(pUser) && isCPFValido(String.valueOf(pUser.getCpf()))) {
                 usuarioDao.createUsuario(pUser);
