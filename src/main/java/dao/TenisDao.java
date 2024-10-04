@@ -92,8 +92,8 @@ public class TenisDao {
                 tenis.setAtivo(resultSet.getBoolean("ATIVO"));
 
                 // Buscar e associar imagens ao tênis
-                List<ImagemTenis> imagens = getImagensPorTenisId(tenis.getId());
-                tenis.setImagens(imagens);
+                //List<ImagemTenis> imagens = getImagensPorTenisId(tenis.getId());
+                //tenis.setImagens(imagens);
 
                 tenisList.add(tenis);
             }

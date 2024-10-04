@@ -24,7 +24,7 @@ public class UsuarioDao {
 
     public static void createUsuario(Usuario pUser){
 
-        String SQL = "insert INTO usuario (nome, email, senha, cpf, grupo, ativo,chave_aes) VALUES (?,?,?,?,?,?,?)";
+        String SQL = "insert INTO usuario (nome, email, senha, cpf, grupo, ativo, chave_aes) VALUES (?,?,?,?,?,?,?)";
 
         try {
             Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
