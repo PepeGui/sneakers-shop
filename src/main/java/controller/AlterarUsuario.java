@@ -14,8 +14,9 @@ public class AlterarUsuario {
 
             Usuario lUser = new Usuario();
             lUser = usuarioDao.buscaUsuariosPorID(pUser);
+            String senhaDescrip = crip.descriptografar(lUser.getSenha(),crip.converterStringParaChave(lUser.getChaveAES(),"AES"));
 
-            if(lUser.getSenha() != pUser.getSenha()){
+            if(pUser.getSenha() != senhaDescrip){
                 // Gerando uma chave AES de 128 bits
                 SecretKey chaveAES = crip.gerarChaveAES(128);
                 // Criptografando a senha
