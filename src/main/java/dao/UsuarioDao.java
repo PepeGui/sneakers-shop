@@ -240,7 +240,8 @@ public class UsuarioDao {
                 String cpf = resultSet.getString("cpf");
                 String grupo = resultSet.getString("grupo");
                 String ativo = resultSet.getString("ativo");
-                usuarios.add(new Usuario(Integer.parseInt(id), nome, email, senha, Long.parseLong(cpf), grupo, Boolean.parseBoolean(ativo)));
+                String chaveAES = resultSet.getString("chave_aes");
+                usuarios.add(new Usuario(Integer.parseInt(id), nome, email, senha, Long.parseLong(cpf), grupo, Boolean.parseBoolean(ativo),chaveAES));
             }
             System.out.println("success in buscaUsuariosPorID");
 
