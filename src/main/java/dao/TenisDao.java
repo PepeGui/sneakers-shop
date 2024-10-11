@@ -95,6 +95,14 @@ public class TenisDao {
                 List<ImagemTenis> imagens = getImagensPorTenisId(tenis.getId());
                 tenis.setImagens(imagens);
 
+                // Definir a imagem principal, se houver
+                for (ImagemTenis img : imagens) {
+                    if (img.isPrincipal()) {
+                        tenis.setImagem(img.getCaminho());
+                        break;
+                    }
+                }
+
                 tenisList.add(tenis);
             }
 

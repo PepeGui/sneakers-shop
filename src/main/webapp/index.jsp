@@ -30,7 +30,7 @@
             <c:forEach var="tenis" items="${tenis}">
                 <div class="product-item">
                     <!-- Exibe a imagem do tênis -->
-                    <img id="imagem" src="/Img/${tenis.imagem}" alt="${tenis.nome}" class="product-image">
+                    <img id="imagem" src="/${tenis.imagem}" alt="${tenis.nome}" class="product-image">
                     <h3 class="product-name">${tenis.nome}</h3>
                     <p class="product-price">R$ ${tenis.preco}</p>
                     <!-- Link para os detalhes do produto -->

@@ -62,7 +62,10 @@ public class CadastrarTenisServlet extends HttpServlet {
 
                 // Adiciona a imagem ao tenis
                 ImagemTenis imagem = new ImagemTenis();
-                imagem.setCaminho(fileName);  // Apenas o nome do arquivo
+                // Defina o caminho completo da imagem, incluindo o diretório "uploads"
+                String relativePath = "uploads" + File.separator + fileName;  // Caminho relativo à aplicação
+                imagem.setCaminho(relativePath);  // Salva o caminho com a pasta
+
                 imagem.setPrincipal(principal);
                 imagens.add(imagem);
             }

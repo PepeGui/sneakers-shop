@@ -11,6 +11,7 @@ public class Tenis {
     private double avaliacao;
     private List<ImagemTenis> imagens; // Lista de imagens associadas ao tênis
     private boolean ativo;
+    private String imagem;
 
     public Tenis(){
 
@@ -38,7 +39,15 @@ public class Tenis {
         this.ativo = ativo;
     }
 
+
     // Getters e Setters para os campos, incluindo a lista de imagens
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
     public int getId() {
         return id;
     }
