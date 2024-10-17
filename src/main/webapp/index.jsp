@@ -20,7 +20,7 @@
         <h1>Sneaker-Shop</h1>
         <div class="header-icons">
             <img src="/Img/Carrinho.png" alt="Carrinho" title="Carrinho">
-            <img src="/Img/User.png" alt="Usuário" title="Minha Conta">
+            <img src="/Img/User.png" alt="Usuário" title="Minha Conta" class="user-button" onclick="openUserOptions()">
         </div>
     </header>
 
@@ -29,19 +29,61 @@
         <div class="product-list">
             <c:forEach var="tenis" items="${tenis}">
                 <div class="product-item">
-                    <!-- Exibe a imagem do tênis -->
+                    <%--<!-- Exibe a imagem do tênis -->
                     <img id="imagem" src="/${tenis.imagem}" alt="${tenis.nome}" class="product-image">
                     <h3 class="product-name">${tenis.nome}</h3>
                     <p class="product-price">R$ ${tenis.preco}</p>
                     <!-- Link para os detalhes do produto -->
-                    <a href="detalhes.jsp?id=${tenis.id}" class="product-details">Ver Detalhes</a>
+                    <a href="detalhes.jsp?id=${tenis.id}" class="product-details">Ver Detalhes</a>--%>
                 </div>
             </c:forEach>
         </div>
     </section>
 
+    <!-- Modal para as opções de usuário -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUserOptions()">&times;</span>
+            <h2>Minha Conta</h2>
+            <button onclick="openLoginModal()">Login</button>
+            <button onclick="window.location.href='/Cadastro-Cliente/cadastro-cliente.jsp'">Cadastrar-se</button>
+        </div>
+    </div>
+
+    <!-- Modal para login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Login</h2>
+            <form action="loginServlet" method="POST">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="senha" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2024 Sneaker-Shop. Todos os direitos reservados.</p>
     </footer>
+
+    <script>
+        function openUserOptions() {
+            document.getElementById('userModal').style.display = 'flex';
+        }
+
+        function closeUserOptions() {
+            document.getElementById('userModal').style.display = 'none';
+        }
+
+        function openLoginModal() {
+            closeUserOptions();
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

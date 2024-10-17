@@ -29,3 +29,19 @@ criação da tabela usuario
            principal BOOLEAN DEFAULT FALSE, -- Define se a imagem é a principal
            FOREIGN KEY (tenis_id) REFERENCES Tenis(id) ON DELETE CASCADE
        );
+
+       CREATE TABLE cliente (
+                  id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                  genero VARCHAR(255),
+                  data de nascimento DATE NOT NULL,
+                  nome VARCHAR(255),
+                  email VARCHAR(255) UNIQUE NOT NULL,
+                  senha VARCHAR(255) NOT NULL,
+                  cpf CHAR(11) UNIQUE NOT NULL,
+                  cep VARCHAR(255) NOT NULL,
+                  logradouro VARCHAR(255) NOT NULL,
+                  numero VARCHAR(5) NOT NULL,
+                  bairro VARCHAR(255) NOT NULL,
+                  cidade VARCHAR(255) NOT NULL,
+                  uf VARCHAR(2) NOT NULL
+              );
