@@ -6,7 +6,8 @@ criação da tabela usuario
            senha VARCHAR(255) NOT NULL,
            cpf CHAR(11) UNIQUE NOT NULL,
            grupo VARCHAR(255),
-           ativo BOOLEAN
+           ativo BOOLEAN,
+           CHAVE_AES VARCHAR(500)
        );
 
        ALTER TABLE USUARIO

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="pt-BR">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="java.util.List, model.Tenis, dao.TenisDao" %>
 <%
@@ -28,15 +29,13 @@
         <h2>Nossos Tênis</h2>
         <div class="product-list">
             <c:forEach var="tenis" items="${tenis}">
-                <div class="product-item">
-                    <%--<!-- Exibe a imagem do tênis -->
-                    <img id="imagem" src="/${tenis.imagem}" alt="${tenis.nome}" class="product-image">
-                    <h3 class="product-name">${tenis.nome}</h3>
-                    <p class="product-price">R$ ${tenis.preco}</p>
-                    <!-- Link para os detalhes do produto -->
-                    <a href="detalhes.jsp?id=${tenis.id}" class="product-details">Ver Detalhes</a>--%>
-                </div>
-            </c:forEach>
+                            <div class="product-item">
+                                <img src="${tenis.imagem}" alt="${tenis.nome}" class="product-image">
+                                <h3>${tenis.nome}</h3>
+                                <p>R$ ${tenis.preco}</p>
+                                <a href="detalhes.jsp?id=${tenis.id}">Ver Detalhes</a>
+                            </div>
+                        </c:forEach>
         </div>
     </section>
 
@@ -46,7 +45,7 @@
             <span class="close" onclick="closeUserOptions()">&times;</span>
             <h2>Minha Conta</h2>
             <button onclick="openLoginModal()">Login</button>
-            <button onclick="window.location.href='/cadastro-cliente'">Cadastrar-se</button>
+            <button onclick="window.location.href='/Cadastro-Cliente/cadastro-cliente.jsp'">Cadastrar-se</button>
         </div>
     </div>
 

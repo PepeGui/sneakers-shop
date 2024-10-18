@@ -86,7 +86,7 @@
                                         <a href="/tela-alterarTenis?id=${tenis.id}"><button>Editar</button></a>
 
                                         <!-- Passa o caminho da imagem principal para a função -->
-                                        <button onclick="visualizarTenis('${tenis.imagens[0].caminho}', ${tenis.avaliacao})">Visualizar</button>
+                                        <button onclick="visualizarTenis('${tenis.imagem}', ${tenis.avaliacao})">Visualizar</button>
                                         </td>
             </tr>
         </c:forEach>

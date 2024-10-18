@@ -113,7 +113,6 @@ public class TenisDao {
         return tenisList;
     }
 
-
     public List<Tenis> buscarTenisPorNome(String nome) {
         List<Tenis> tenisList = new ArrayList<>();
         String SQL_SELECT_BY_NAME = "SELECT * FROM TENIS WHERE NOME LIKE ?";

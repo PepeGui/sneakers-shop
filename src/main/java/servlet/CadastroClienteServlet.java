@@ -15,9 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/cadastro-cliente")
-public class CadastroClienteServlet extends HttpServlet {
-    private static final String CHAVE_AES = "sua_chave_aes_aqui_em_base64"; // Substitua pela sua chave em Base64
-
+public class CadastroClienteServlet extends HttpServlet {// Substitua pela sua chave em Base64
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String nome = request.getParameter("nome");
