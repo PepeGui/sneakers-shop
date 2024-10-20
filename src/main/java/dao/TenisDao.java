@@ -209,6 +209,38 @@ public class TenisDao {
         return tenis.getFirst();
     }
 
+    public Tenis getTenisById(int tenisId){
+        Tenis tenis = null;
+        String SQL = "SELECT * FROM TENIS WHERE ID = ?";
+
+        try{
+            Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            System.out.println("success in database connection buscaUsuariosPorID");
+            PreparedStatement preparedStatement = con.prepareStatement(SQL);
+
+            preparedStatement.setInt(1,tenisId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                int id = resultSet.getInt("id");
+                String nome = resultSet.getString("nome");
+                String descricao = resultSet.getString("descricao");
+                double preco = resultSet.getDouble("preco");
+                int estoque = resultSet.getInt("estoque");
+                double avaliacao = resultSet.getDouble("avaliacao");
+                boolean ativo = resultSet.getBoolean("ativo");
+
+                //Cria o objeto tenis
+                tenis = new Tenis(id,nome,preco,estoque,descricao,avaliacao,ativo);
+            }
+
+        } catch (Exception e){
+            System.out.println("Erro ao getTenisByID: " + e.getMessage());
+        }
+        return tenis;
+    }
+
     public List<ImagemTenis> getImagensPorTenisId(int tenisId) {
         List<ImagemTenis> imagens = new ArrayList<>();
         String SQL_SELECT_IMAGENS = "SELECT * FROM IMAGEMTENIS WHERE TENIS_ID = ?";
@@ -220,10 +252,10 @@ public class TenisDao {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     ImagemTenis imagem = new ImagemTenis();
-                    imagem.setId(resultSet.getInt("ID"));
-                    imagem.setTenisId(resultSet.getInt("TENIS_ID"));
-                    imagem.setCaminho(resultSet.getString("CAMINHO"));
-                    imagem.setPrincipal(resultSet.getBoolean("PRINCIPAL"));
+                    imagem.setId(resultSet.getInt("id"));
+                    imagem.setTenisId(resultSet.getInt("tenis_id"));
+                    imagem.setCaminho(resultSet.getString("caminho"));
+                    imagem.setPrincipal(resultSet.getBoolean("principal"));
                     imagens.add(imagem);
                 }
             }

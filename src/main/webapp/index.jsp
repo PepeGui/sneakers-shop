@@ -33,7 +33,7 @@
                                 <img src="${tenis.imagem}" alt="${tenis.nome}" class="product-image">
                                 <h3>${tenis.nome}</h3>
                                 <p>R$ ${tenis.preco}</p>
-                                <a href="detalhes.jsp?id=${tenis.id}">Ver Detalhes</a>
+                                <a href="/Detalhes/detalhes.jsp?id=${tenis.id}">Ver Detalhes</a>
                             </div>
                         </c:forEach>
         </div>

@@ -27,14 +27,14 @@ public class CadastrarTenisServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Recebendo os parâmetros do formulário
+        // Recebe os parâmetros do formulário
         String nome = request.getParameter("nome");
         double avaliacao = Double.parseDouble(request.getParameter("avaliacao"));
         String descricao = request.getParameter("descricao");
         double preco = Double.parseDouble(request.getParameter("preco"));
         int estoque = Integer.parseInt(request.getParameter("estoque"));
 
-        // Cria o objeto tenis com os dados recebidos
+        // Cria o objeto Tenis
         Tenis tenis = new Tenis();
         tenis.setNome(nome);
         tenis.setAvaliacao(avaliacao);
@@ -51,35 +51,39 @@ public class CadastrarTenisServlet extends HttpServlet {
             uploadDir.mkdir();
         }
 
+        // Índice da imagem principal
+        int principalImageIndex = Integer.parseInt(request.getParameter("principalImage"));
+
+        int index = 0;
         for (Part part : request.getParts()) {
             if (part.getName().equals("imagem")) {
                 String fileName = extractFileName(part);
                 String filePath = uploadPath + File.separator + fileName;
                 part.write(filePath);  // Salva a imagem no servidor
 
-                // Define se a imagem é principal com base em um campo do formulário (ex: checkbox)
-                boolean principal = "on".equals(request.getParameter("principalImagem"));
+                // Verifica se essa imagem é a principal
+                boolean principal = (index == principalImageIndex);
 
-                // Adiciona a imagem ao tenis
+                // Adiciona a imagem ao tênis
                 ImagemTenis imagem = new ImagemTenis();
-                // Defina o caminho completo da imagem, incluindo o diretório "uploads"
-                String relativePath = "uploads" + File.separator + fileName;  // Caminho relativo à aplicação
-                imagem.setCaminho(relativePath);  // Salva o caminho com a pasta
-
+                String relativePath = "uploads" + File.separator + fileName;
+                imagem.setCaminho(relativePath);
                 imagem.setPrincipal(principal);
                 imagens.add(imagem);
+
+                index++;
             }
         }
 
         tenis.setImagens(imagens);
 
-        // Salvar o tenis no banco de dados
+        // Salvar o tênis no banco de dados
         boolean sucesso = tenisDao.createTenis(tenis);
 
         if (sucesso) {
             response.sendRedirect("/find-all-tenis");
         } else {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao cadastrar tenis");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao cadastrar tênis");
         }
     }
 

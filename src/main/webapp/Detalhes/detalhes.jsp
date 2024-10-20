@@ -1,13 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="model.Tenis, dao.TenisDao" %>
+<%@ page import="model.Tenis, model.ImagemTenis, dao.TenisDao, java.util.List" %>
 <%
-// Obter o ID do tênis passado pela URL
-int id = Integer.parseInt(request.getParameter("id"));
-TenisDao tenisDao = new TenisDao();
-Tenis tenis = tenisDao.getTenisById(id);  // Busca o tênis pelo ID
-request.setAttribute("tenis", tenis);
+    // Obter o ID do tênis passado pela URL
+    int id = Integer.parseInt(request.getParameter("id"));
+    TenisDao tenisDao = new TenisDao();
+    Tenis tenis = tenisDao.getTenisById(id);  // Busca o tênis pelo ID
+    List<ImagemTenis> imagens = tenisDao.getImagensPorTenisId(id); // Busca as imagens por id do tênis
+    request.setAttribute("tenis", tenis);
+    request.setAttribute("imagens", imagens);
 %>
 <head>
     <meta charset="UTF-8">
@@ -27,9 +30,24 @@ request.setAttribute("tenis", tenis);
 
 <section class="product-details">
     <div class="product-details-container">
+        <!-- Exibe a imagem principal -->
         <div class="product-image-container">
-            <img id="imagem" src="/Img/${tenis.imagem}" alt="${tenis.nome}" class="product-image">
+            <c:forEach var="imagemTenis" items="${imagens}">
+                <c:if test="${imagemTenis.principal}">
+                    <img id="imagemPrincipal" src="/${imagemTenis.caminho}" alt="${tenis.nome}" class="product-image">
+                </c:if>
+            </c:forEach>
         </div>
+
+        <!-- Exibe as outras imagens abaixo -->
+        <div class="secondary-images-container">
+            <c:forEach var="imagemTenis" items="${imagens}">
+                <c:if test="${!imagemTenis.principal}">
+                    <img src="/${imagemTenis.caminho}" alt="${tenis.nome}" class="secondary-image">
+                </c:if>
+            </c:forEach>
+        </div>
+
         <div class="product-info">
             <h2>${tenis.nome}</h2>
             <p class="product-price">R$ ${tenis.preco}</p>
