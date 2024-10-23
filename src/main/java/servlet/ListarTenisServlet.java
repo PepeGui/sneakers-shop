@@ -1,6 +1,7 @@
 package servlet;
 
 import dao.TenisDao;
+import model.ImagemTenis;
 import model.Tenis;
 
 import javax.servlet.ServletException;
@@ -29,6 +30,16 @@ public class ListarTenisServlet extends HttpServlet {
         } else {
             // Busca os tênis por nome
             tenisList.addAll(tenisDao.buscarTenisPorNome(pesquisa));
+        }
+
+        for(Tenis tenis : tenisList){
+            tenis.setImagem(tenis.getImagem().replace("\\", "/"));
+        }
+
+        for(Tenis tenis : tenisList){
+            for(ImagemTenis imagemTenis : tenis.getImagens()) {
+                imagemTenis.setCaminho(tenis.getImagem().replace("\\", "/"));
+            }
         }
 
         // Atribui a lista de tênis à requisição
