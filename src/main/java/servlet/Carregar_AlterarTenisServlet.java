@@ -18,6 +18,7 @@ import java.util.List;
         @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             Tenis tenis = new Tenis();
+            String grupo = request.getParameter("grupo");
             try {
                 System.out.println("passou aqui");
                 String id = request.getParameter("id");
@@ -31,6 +32,7 @@ import java.util.List;
             request.setAttribute("error", "Formato de ID inválido. Por favor, forneça um ID numérico.");
         }
         request.setAttribute("tenis", tenis);
+        request.setAttribute("grupo", grupo);
 
         request.getRequestDispatcher("/AlterarTenis/alterartenis.jsp").forward(request,response);
         }

@@ -12,38 +12,41 @@
 <div class="cadastro-container">
     <h2>Alterar</h2>
     <form action="/alterar-Tenis" method="POST">
-        <div class="input-group">
-            <label for="nome">Nome</label>
-            <input type="text" id="nome" name="nome" value = ${tenis.nome}  required>
-        </div>
-        <div class="input-group">
-            <label for="preco">Preço</label>
-            <input type="number" id="preco" name="preco" value = ${tenis.preco} required>
-        </div>
-        <div class="input-group">
-            <label for="estoque">Estoque</label>
-            <input type="number" id="estoque" name="estoque" value = ${tenis.estoque} required>
-        </div>
-        <div class="input-group">
-                    <label for="descricao">Descrição</label>
-                    <input type="text" id="descricao" name="descricao" value = "${tenis.descricao}" required>
-        </div>
-        <div class="input-group">
-            <label for="avaliacao">Avaliação</label>
-            <input type="text" id="avaliacao" name="avaliacao" value = ${tenis.avaliacao} required>
-        </div>
+        <c:if test="${grupo != 'Admin'}">
+            <div class="input-group">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" value = ${tenis.nome}  required>
+            </div>
+            <div class="input-group">
+                <label for="preco">Preço</label>
+                <input type="number" id="preco" name="preco" value = ${tenis.preco} required>
+            </div>
+        </c:if>
+            <div class="input-group">
+                <label for="estoque">Estoque</label>
+                <input type="number" id="estoque" name="estoque" value = ${tenis.estoque} required>
+            </div>
+        <c:if test="${grupo != 'Admin'}">
+            <div class="input-group">
+                        <label for="descricao">Descrição</label>
+                        <input type="text" id="descricao" name="descricao" value = "${tenis.descricao}" required>
+            </div>
+            <div class="input-group">
+                <label for="avaliacao">Avaliação</label>
+                <input type="text" id="avaliacao" name="avaliacao" value = ${tenis.avaliacao} required>
+            </div>
 
-        <div class="input-group">
+            <div class="input-group">
+                <label for="imagem">Imagens</label>
+                <input type="text" id="imagem" name="imagem" value="${tenis.imagens[0].caminho}" required>
+            </div>
+            <c:if test="${not empty tenis.imagens}">
+            <div class="input-group">
             <label for="imagem">Imagens</label>
             <input type="text" id="imagem" name="imagem" value="${tenis.imagens[0].caminho}" required>
-        </div>
-        <c:if test="${not empty tenis.imagens}">
-        <div class="input-group">
-        <label for="imagem">Imagens</label>
-        <input type="text" id="imagem" name="imagem" value="${tenis.imagens[0].caminho}" required>
-        </div>
+            </div>
+            </c:if>
         </c:if>
-
         <input type="hidden" id="id" name="id" value = ${tenis.id}>
         <button type="submit">Finalizar</button>
     </form>

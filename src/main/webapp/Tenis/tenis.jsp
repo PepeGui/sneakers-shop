@@ -83,9 +83,11 @@
                             </div>
                         </td>
                         <td>
-                            <a href="/tela-alterarTenis?id=${tenis.id}"><button>Editar</button></a>
+                            <a href="/tela-alterarTenis?id=${tenis.id},grupo=${grupo}"><button>Editar</button></a>
                             <!-- Passa o caminho da imagem, nome, avaliação e descrição para a função -->
-                            <button onclick="visualizarTenis('${tenis.imagem}', '${tenis.nome}', '${tenis.avaliacao}', '${tenis.descricao}')">Visualizar</button>
+                            <c:if test="${grupo == 'Admin'}">
+                                <button onclick="visualizarTenis('${tenis.imagem}', '${tenis.nome}', '${tenis.avaliacao}', '${tenis.descricao}')">Visualizar</button>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>

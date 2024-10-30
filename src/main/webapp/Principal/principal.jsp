@@ -10,14 +10,13 @@
 </head>
 <body>
 <div class="login-container">
-    <c:if test="${usuario.grupo eq 'Estoquista'}">
         <div>
             <form action="/find-all-tenis" method="GET">
                 <button type="submit">Listar Produtos</button>
+                <input type="hidden" id="grupo" name="grupo" value="${usuario.grupo}">
+                <input type="hidden" id="id" name="id" value="${usuario.id}">
             </form>
         </div>
-    </c:if>
-
     <c:if test="${usuario.grupo eq 'Admin'}">
         <div>
             <a href="/find-all-usuarios"><button class="submit">Listar Usuários</button></a>
