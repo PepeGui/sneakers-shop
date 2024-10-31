@@ -46,3 +46,10 @@ criação da tabela usuario
                   cidade VARCHAR(255) NOT NULL,
                   uf VARCHAR(2) NOT NULL
               );
+
+       CREATE TABLE Carrinho (
+           id INT PRIMARY KEY AUTO_INCREMENT,
+           tenis_id INT NOT NULL,
+           quantidade INT NOT NULL,
+           FOREIGN KEY (tenis_id) REFERENCES Tenis(id) ON DELETE CASCADE
+       );
