@@ -28,47 +28,56 @@ public class AlterarTenisServlet extends HttpServlet {
         String estoqueStr = request.getParameter("estoque");
         String descricao = request.getParameter("descricao");
         String avaliacaoStr = request.getParameter("avaliacao");
-        String caminhoImagem = request.getParameter("imagem");  // Caminho da imagem no sistema
-        String imagemPrincipalStr = request.getParameter("imagemPrincipal"); // Verifica se é principal
+        //String caminhoImagem = request.getParameter("imagem");  // Caminho da imagem no sistema
+        //String imagemPrincipalStr = request.getParameter("imagemPrincipal"); // Verifica se é principal
+        String grupo = request.getParameter("grupo");
+
 
         // Valida se os parâmetros obrigatórios estão presentes
-        if (idStr == null || nome == null || precoStr == null || estoqueStr == null || avaliacaoStr == null) {
+        if ((idStr == null || nome == null || precoStr == null ||  estoqueStr == null || avaliacaoStr == null) && (grupo == null || !grupo.equals("Estoquista") || estoqueStr == null ) ) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Todos os campos obrigatórios devem ser preenchidos.");
             return;
         }
 
         try {
             // Converte os valores numéricos
+            boolean atualizado;
             int id = Integer.parseInt(idStr);
-            double preco = Double.parseDouble(precoStr);
             int estoque = Integer.parseInt(estoqueStr);
-            double avaliacao = Double.parseDouble(avaliacaoStr);
-            boolean imagemPrincipal = Boolean.parseBoolean(imagemPrincipalStr); // Converte string para booleano
 
-            // Cria um objeto Tênis com as novas informações
-            Tenis tenis = new Tenis();
-            tenis.setId(id);
-            tenis.setNome(nome);
-            tenis.setPreco(preco);
-            tenis.setEstoque(estoque);
-            tenis.setDescricao(descricao);
-            tenis.setAvaliacao(avaliacao);
+            if(grupo != null && grupo.equals("Estoquista"))
+                atualizado = tenisDao.atualizarEstoqueTenis(estoque,id);
+            else{
+                double preco = Double.parseDouble(precoStr);
+                double avaliacao = Double.parseDouble(avaliacaoStr);
+                //boolean imagemPrincipal = Boolean.parseBoolean(imagemPrincipalStr); // Converte string para booleano
 
-            // Cria a lista de imagens e adiciona a imagem recebida
-            List<ImagemTenis> listaImagens = new ArrayList<>();
-            if (caminhoImagem != null && !caminhoImagem.isEmpty()) {
-                ImagemTenis imagemTenis = new ImagemTenis();
-                imagemTenis.setCaminho(caminhoImagem);
-                imagemTenis.setPrincipal(imagemPrincipal);
-                listaImagens.add(imagemTenis);
+                // Cria um objeto Tênis com as novas informações
+                Tenis tenis = new Tenis();
+                tenis.setId(id);
+                tenis.setNome(nome);
+                tenis.setPreco(preco);
+                tenis.setEstoque(estoque);
+                tenis.setDescricao(descricao);
+                tenis.setAvaliacao(avaliacao);
+
+                // Cria a lista de imagens e adiciona a imagem recebida
+                /*List<ImagemTenis> listaImagens = new ArrayList<>();
+                if (caminhoImagem != null && !caminhoImagem.isEmpty()) {
+                    ImagemTenis imagemTenis = new ImagemTenis();
+                    imagemTenis.setCaminho(caminhoImagem);
+                    imagemTenis.setPrincipal(imagemPrincipal);
+                    listaImagens.add(imagemTenis);
+                }
+
+                // Seta a lista de imagens no objeto Tênis
+                tenis.setImagens(listaImagens);
+                */
+
+                // Atualiza o tênis no banco de dados
+
+                atualizado = tenisDao.atualizarTenis(tenis);
             }
-
-            // Seta a lista de imagens no objeto Tênis
-            tenis.setImagens(listaImagens);
-
-            // Atualiza o tênis no banco de dados
-            boolean atualizado = tenisDao.atualizarTenis(tenis);
-
             if (atualizado) {
                 // Redireciona para a página de sucesso ou lista de produtos
                 response.sendRedirect("/find-all-tenis");

@@ -20,13 +20,11 @@ import java.util.List;
             Tenis tenis = new Tenis();
             String grupo = request.getParameter("grupo");
             try {
-                System.out.println("passou aqui");
                 String id = request.getParameter("id");
 
                 tenis.setId(Integer.parseInt(id));
                 TenisDao tenisDao = new TenisDao();
                 tenis = tenisDao.buscaTenisPorID(tenis);
-                System.out.println("passou aqui2");
             }   catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("error", "Formato de ID inválido. Por favor, forneça um ID numérico.");

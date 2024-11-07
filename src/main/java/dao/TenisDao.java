@@ -142,7 +142,7 @@ public class TenisDao {
     }
     public boolean atualizarTenis(Tenis tenis) {
         String sqlTenis = "UPDATE TENIS SET nome = ?, avaliacao = ?, descricao = ?, preco = ?, estoque = ? WHERE id = ?";
-        String sqlImagem = "UPDATE ImagemTenis SET caminho = ?, principal = ? WHERE id = ? AND tenis_id = ?";
+        //String sqlImagem = "UPDATE ImagemTenis SET caminho = ?, principal = ? WHERE id = ? AND tenis_id = ?";
 
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
 
@@ -159,7 +159,7 @@ public class TenisDao {
             }
 
             // Atualizar as imagens associadas ao tênis
-            for (ImagemTenis imagem : tenis.getImagens()) {
+            /*for (ImagemTenis imagem : tenis.getImagens()) {
                 try (PreparedStatement psImagem = con.prepareStatement(sqlImagem)) {
                     psImagem.setString(1, imagem.getCaminho());
                     psImagem.setBoolean(2, imagem.isPrincipal());
@@ -168,6 +168,26 @@ public class TenisDao {
 
                     psImagem.executeUpdate();
                 }
+            }*/
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean atualizarEstoqueTenis(int pEstoque, int pIdTenis) {
+        String sqlTenis = "UPDATE TENIS SET  estoque = ? WHERE id = ?";
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+
+            // Atualizar dados do tênis
+            try (PreparedStatement psProduto = con.prepareStatement(sqlTenis)) {
+                psProduto.setInt(1, pEstoque);
+                psProduto.setInt(2, pIdTenis);
+
+                psProduto.executeUpdate();
             }
 
             return true;

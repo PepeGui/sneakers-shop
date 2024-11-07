@@ -83,9 +83,13 @@
                             </div>
                         </td>
                         <td>
-                            <a href="/tela-alterarTenis?id=${tenis.id},grupo=${grupo}"><button>Editar</button></a>
+                             <form action="/tela-alterarTenis" method="GET">
+                                            <button type="submit">Editar</button>
+                                            <input type="hidden" id="grupo" name="grupo" value="${grupo}">
+                                            <input type="hidden" id="id" name="id" value="${tenis.id}">
+                                        </form>
                             <!-- Passa o caminho da imagem, nome, avaliação e descrição para a função -->
-                            <c:if test="${grupo == 'Admin'}">
+                            <c:if test="${grupo == 'Admin' || grupo == null}">
                                 <button onclick="visualizarTenis('${tenis.imagem}', '${tenis.nome}', '${tenis.avaliacao}', '${tenis.descricao}')">Visualizar</button>
                             </c:if>
                         </td>

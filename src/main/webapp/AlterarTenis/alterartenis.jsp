@@ -12,7 +12,7 @@
 <div class="cadastro-container">
     <h2>Alterar</h2>
     <form action="/alterar-Tenis" method="POST">
-        <c:if test="${grupo != 'Admin'}">
+        <c:if test="${grupo == 'Admin' || grupo == null}">
             <div class="input-group">
                 <label for="nome">Nome</label>
                 <input type="text" id="nome" name="nome" value = ${tenis.nome}  required>
@@ -26,7 +26,7 @@
                 <label for="estoque">Estoque</label>
                 <input type="number" id="estoque" name="estoque" value = ${tenis.estoque} required>
             </div>
-        <c:if test="${grupo != 'Admin'}">
+        <c:if test="${grupo == 'Admin' || grupo == null}">
             <div class="input-group">
                         <label for="descricao">Descrição</label>
                         <input type="text" id="descricao" name="descricao" value = "${tenis.descricao}" required>
@@ -36,18 +36,17 @@
                 <input type="text" id="avaliacao" name="avaliacao" value = ${tenis.avaliacao} required>
             </div>
 
-            <div class="input-group">
+            <%--<div class="input-group">
                 <label for="imagem">Imagens</label>
                 <input type="text" id="imagem" name="imagem" value="${tenis.imagens[0].caminho}" required>
             </div>
-            <c:if test="${not empty tenis.imagens}">
             <div class="input-group">
             <label for="imagem">Imagens</label>
             <input type="text" id="imagem" name="imagem" value="${tenis.imagens[0].caminho}" required>
-            </div>
-            </c:if>
+            </div>--%>
         </c:if>
         <input type="hidden" id="id" name="id" value = ${tenis.id}>
+        <input type="hidden" id="grupo" name="grupo" value="${grupo}">
         <button type="submit">Finalizar</button>
     </form>
 </div>
