@@ -16,6 +16,10 @@ public class Cliente {
     // Construtor padrão
     public Cliente() {}
 
+    public int getId() {
+        return id;
+    }
+
     // Construtor completo
     public Cliente(int id, String nome, String dataNascimento, String genero, String cpf, String email, String senha, List<Endereco> enderecosEntrega) {
         this.id = id;

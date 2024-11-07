@@ -29,13 +29,21 @@
         <h2>Nossos Tênis</h2>
         <div class="product-list">
             <c:forEach var="tenis" items="${tenis}">
-                            <div class="product-item">
-                                <img src="${tenis.imagem}" alt="${tenis.nome}" class="product-image">
-                                <h3>${tenis.nome}</h3>
-                                <p>R$ ${tenis.preco}</p>
-                                <a href="/Detalhes/detalhes.jsp?id=${tenis.id}">Ver Detalhes</a>
-                            </div>
-                        </c:forEach>
+                <div class="product-item">
+                    <img src="${tenis.imagem}" alt="${tenis.nome}" class="product-image">
+                    <h3>${tenis.nome}</h3>
+                    <p>R$ ${tenis.preco}</p>
+                    <a href="/Detalhes/detalhes.jsp?id=${tenis.id}">Ver Detalhes</a>
+
+                    <!-- Formulário para adicionar ao carrinho -->
+                    <form action="/adicionarCarrinho" method="POST" style="margin-top: 10px;">
+                        <input type="hidden" name="id" value="${tenis.id}">
+                        <label for="quantidade-${tenis.id}">Quantidade:</label>
+                        <input type="number" id="quantidade-${tenis.id}" name="quantidade" value="1" min="1" style="width: 60px;">
+                        <button type="submit">Adicionar ao Carrinho</button>
+                    </form>
+                </div>
+            </c:forEach>
         </div>
     </section>
 

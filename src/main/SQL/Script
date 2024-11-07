@@ -34,7 +34,7 @@ criação da tabela usuario
        CREATE TABLE cliente (
                   id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
                   genero VARCHAR(255),
-                  data de nascimento DATE NOT NULL,
+                  data_nascimento DATE NOT NULL,
                   nome VARCHAR(255),
                   email VARCHAR(255) UNIQUE NOT NULL,
                   senha VARCHAR(255) NOT NULL,
@@ -49,7 +49,9 @@ criação da tabela usuario
 
        CREATE TABLE Carrinho (
            id INT PRIMARY KEY AUTO_INCREMENT,
-           tenis_id INT NOT NULL,
-           quantidade INT NOT NULL,
+           cliente_id INT ,
+           tenis_id INT ,
+           quantidade INT ,
+           FOREIGN KEY (cliente_id) REFERENCES Cliente(id) ON DELETE CASCADE,
            FOREIGN KEY (tenis_id) REFERENCES Tenis(id) ON DELETE CASCADE
        );

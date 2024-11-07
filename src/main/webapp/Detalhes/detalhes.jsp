@@ -23,7 +23,7 @@
 <header>
     <h1>Sneaker-Shop</h1>
     <div class="header-icons">
-        <a href="/carrinho.jsp">
+        <a href="/Carrinho/carrinho.jsp">
             <img src="/Img/Carrinho.png" alt="Carrinho" title="Carrinho">
         </a>
         <a href="/minhaConta.jsp">
