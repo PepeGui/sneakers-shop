@@ -23,8 +23,10 @@ public class ClienteDao {
             stmt.setString(5, cliente.getEmail());
             stmt.setString(6, cliente.getSenha());
             stmt.setString(7, cliente.getChaveAES());
+            stmt.execute();
             con.close();
-            return stmt.executeUpdate() > 0;
+
+            return true;
 
         }catch (Exception e){
                 System.out.println("fail in database connection insert usuario");

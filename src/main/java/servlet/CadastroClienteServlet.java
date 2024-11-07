@@ -48,7 +48,7 @@ public class CadastroClienteServlet extends HttpServlet {// Substitua pela sua c
             // Salva no banco.
             ClienteDao clienteDao = new ClienteDao();
             if (clienteDao.cadastrarCliente(cliente)) {
-                response.sendRedirect("login.jsp");
+                response.sendRedirect("/");
             } else {
                 response.sendRedirect("cadastro-cliente.jsp?erro=Erro ao cadastrar cliente.");
             }

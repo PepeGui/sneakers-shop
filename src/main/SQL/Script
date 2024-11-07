@@ -32,20 +32,21 @@ criação da tabela usuario
        );
 
        CREATE TABLE cliente (
-                  id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-                  genero VARCHAR(255),
-                  data_nascimento DATE NOT NULL,
-                  nome VARCHAR(255),
-                  email VARCHAR(255) UNIQUE NOT NULL,
-                  senha VARCHAR(255) NOT NULL,
-                  cpf CHAR(11) UNIQUE NOT NULL,
-                  cep VARCHAR(255) NOT NULL,
-                  logradouro VARCHAR(255) NOT NULL,
-                  numero VARCHAR(5) NOT NULL,
-                  bairro VARCHAR(255) NOT NULL,
-                  cidade VARCHAR(255) NOT NULL,
-                  uf VARCHAR(2) NOT NULL
-              );
+                         id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                         genero VARCHAR(255),
+                         datanascimento DATE ,
+                         nome VARCHAR(255),
+                         email VARCHAR(255) ,
+                         senha VARCHAR(255) ,
+                         cpf CHAR(11),
+                         cep VARCHAR(255),
+                         logradouro VARCHAR(255) ,
+                         numero VARCHAR(5) ,
+                         bairro VARCHAR(255) ,
+                         cidade VARCHAR(255) ,
+                         uf VARCHAR(2),
+                         CHAVEAES VARCHAR(500)
+                     );
 
        CREATE TABLE Carrinho (
            id INT PRIMARY KEY AUTO_INCREMENT,
