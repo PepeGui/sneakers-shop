@@ -26,23 +26,39 @@ public class CarrinhoDao {
              PreparedStatement insertStmt = con.prepareStatement(insertSql);
              PreparedStatement updateStmt = con.prepareStatement(updateSql)) {
 
-            // Tente inserir o item no carrinho
             insertStmt.setInt(1, tenisId);
             insertStmt.setInt(2, quantidade);
 
             try {
                 insertStmt.executeUpdate();
             } catch (SQLException e) {
-                // Se a inserção falhar por duplicação, atualize a quantidade
                 if (e.getErrorCode() == 23505) { // Código de erro para duplicação de chave no H2
                     updateStmt.setInt(1, quantidade);
                     updateStmt.setInt(2, tenisId);
                     updateStmt.executeUpdate(); // Atualize a quantidade
                 } else {
-                    throw e; // Se não for um erro de duplicação, relance a exceção
+                    throw e;
                 }
             }
             return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Método para remover um item do carrinho usando o tenisId
+    public boolean removerItemDoCarrinho(int tenisId) {
+        String deleteSql = "DELETE FROM Carrinho WHERE tenis_id = ?";
+
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement deleteStmt = con.prepareStatement(deleteSql)) {
+
+            deleteStmt.setInt(1, tenisId);
+
+            int rowsAffected = deleteStmt.executeUpdate();
+            return rowsAffected > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,10 +76,8 @@ public class CarrinhoDao {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                // Crie um ItemCarrinho a partir do ResultSet
                 int tenisId = rs.getInt("tenis_id");
                 int quantidade = rs.getInt("quantidade");
-                // Presuma que você tenha um método para obter o tênis pelo ID
                 Tenis tenis = new TenisDao().getTenisById(tenisId);
                 itensCarrinho.add(new ItemCarrinho(tenis, quantidade));
             }

@@ -24,9 +24,8 @@
     <h1>Sneaker-Shop</h1>
     <nav>
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="produtos.html">Produtos</a></li>
-            <li><a href="carrinho.html">Carrinho</a></li>
+            <li><a href="../../index.jsp">Home</a></li>
+            <li><a href="/carrinho.jsp">Carrinho</a></li>
         </ul>
     </nav>
 </header>
@@ -50,9 +49,16 @@
                     <td><input type="number" value="${item.quantidade}" min="1" class="quantity-input"></td>
                     <td>R$ ${df.format(item.tenis.preco)}</td>
                     <td>R$ ${df.format(item.tenis.preco * item.quantidade)}</td>
-                    <td><button class="remove-btn">Remover</button></td>
+                    <td>
+                        <!-- Formulário de remoção do item do carrinho -->
+                        <form action="/removerCarrinho" method="post" style="display: inline;">
+                            <input type="hidden" name="tenisId" value="${item.tenis.id}">
+                            <button type="submit" class="remove-btn">Remover</button>
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
+
         </tbody>
     </table>
 
