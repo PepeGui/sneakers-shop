@@ -14,22 +14,21 @@ public class CarrinhoDao {
 
     // Método para adicionar um ItemCarrinho
     public boolean adicionarItemAoCarrinho(ItemCarrinho itemCarrinho) {
-        return adicionarItemAoCarrinho(itemCarrinho.getCliente().getId() , itemCarrinho.getTenis().getId(), itemCarrinho.getQuantidade());
+        return adicionarItemAoCarrinho(itemCarrinho.getTenis().getId(), itemCarrinho.getQuantidade());
     }
 
-    // Método para adicionar um item ao carrinho usando ID e quantidade
-    public boolean adicionarItemAoCarrinho(int clienteId, int tenisId, int quantidade) {
-        String insertSql = "INSERT INTO Carrinho (cliente_id, tenis_id, quantidade) VALUES (?, ?, ?)";
-        String updateSql = "UPDATE Carrinho SET quantidade = quantidade + ? WHERE cliente_id = ? AND tenis_id = ?";
+    // Método para adicionar um item ao carrinho usando ID e quantidade (sem clienteId)
+    public boolean adicionarItemAoCarrinho(int tenisId, int quantidade) {
+        String insertSql = "INSERT INTO Carrinho (tenis_id, quantidade) VALUES (?, ?)";
+        String updateSql = "UPDATE Carrinho SET quantidade = quantidade + ? WHERE tenis_id = ?";
 
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
              PreparedStatement insertStmt = con.prepareStatement(insertSql);
              PreparedStatement updateStmt = con.prepareStatement(updateSql)) {
 
             // Tente inserir o item no carrinho
-            insertStmt.setInt(1, clienteId);
-            insertStmt.setInt(2, tenisId);
-            insertStmt.setInt(3, quantidade);
+            insertStmt.setInt(1, tenisId);
+            insertStmt.setInt(2, quantidade);
 
             try {
                 insertStmt.executeUpdate();
@@ -37,8 +36,7 @@ public class CarrinhoDao {
                 // Se a inserção falhar por duplicação, atualize a quantidade
                 if (e.getErrorCode() == 23505) { // Código de erro para duplicação de chave no H2
                     updateStmt.setInt(1, quantidade);
-                    updateStmt.setInt(2, clienteId);
-                    updateStmt.setInt(3, tenisId);
+                    updateStmt.setInt(2, tenisId);
                     updateStmt.executeUpdate(); // Atualize a quantidade
                 } else {
                     throw e; // Se não for um erro de duplicação, relance a exceção
@@ -52,11 +50,10 @@ public class CarrinhoDao {
         }
     }
 
-
     // Método para obter os itens do carrinho
     public List<ItemCarrinho> obterItensCarrinho() {
         List<ItemCarrinho> itensCarrinho = new ArrayList<>();
-        String sql = "SELECT * FROM Carrinho"; // Altere conforme necessário
+        String sql = "SELECT * FROM Carrinho";
 
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
              PreparedStatement ps = con.prepareStatement(sql);
