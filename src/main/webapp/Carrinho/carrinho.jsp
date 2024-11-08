@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="dao.CarrinhoDao" %>
 <%@ page import="model.ItemCarrinho" %>
@@ -47,10 +48,9 @@
                 <tr>
                     <td>${item.tenis.nome}</td>
                     <td><input type="number" value="${item.quantidade}" min="1" class="quantity-input"></td>
-                    <td>R$ ${df.format(item.tenis.preco)}</td>
-                    <td>R$ ${df.format(item.tenis.preco * item.quantidade)}</td>
+                    <td> <fmt:formatNumber value="${item.tenis.preco}" type="currency" /></td>
+                    <td> <fmt:formatNumber value="${item.tenis.preco * item.quantidade}" type="currency" /></td>
                     <td>
-                        <!-- Formulário de remoção do item do carrinho -->
                         <form action="/removerCarrinho" method="post" style="display: inline;">
                             <input type="hidden" name="tenisId" value="${item.tenis.id}">
                             <button type="submit" class="remove-btn">Remover</button>
@@ -59,13 +59,14 @@
                 </tr>
             </c:forEach>
 
+
         </tbody>
     </table>
 
     <div class="cart-summary">
-        <p>Subtotal: <span>R$ 0,00</span></p> <!-- Inicialmente zero, será atualizado com JavaScript -->
+        <p>Subtotal: <span> 0,00</span></p> <!-- Inicialmente zero, será atualizado com JavaScript -->
         <p>Frete: <span>R$ 30,00</span></p>
-        <p>Total: <strong>R$ 0,00</strong></p> <!-- Inicialmente zero -->
+        <p>Total: <strong> 0,00</strong></p> <!-- Inicialmente zero -->
         <button class="checkout-btn">Finalizar Compra</button>
     </div>
 </main>
