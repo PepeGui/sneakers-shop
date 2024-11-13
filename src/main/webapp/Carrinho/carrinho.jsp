@@ -11,6 +11,13 @@
     List<ItemCarrinho> itensCarrinho = carrinhoDao.obterItensCarrinho();
     request.setAttribute("itensCarrinho", itensCarrinho);
     DecimalFormat df = new DecimalFormat("#,##0.00");
+    double subtotal = 0.0;
+     for(ItemCarrinho item : itensCarrinho){
+           subtotal += item.getTenis().getPreco() * item.getQuantidade();
+    }
+    double total = subtotal + 30.0;
+    request.setAttribute("subtotal", subtotal);
+    request.setAttribute("total", total);
 %>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -64,9 +71,9 @@
     </table>
 
     <div class="cart-summary">
-        <p>Subtotal: <span> 0,00</span></p> <!-- Inicialmente zero, será atualizado com JavaScript -->
+        <p>Subtotal: <span> ${subtotal}</span></p> <!-- Inicialmente zero, será atualizado com JavaScript -->
         <p>Frete: <span>R$ 30,00</span></p>
-        <p>Total: <strong> 0,00</strong></p> <!-- Inicialmente zero -->
+        <p>Total: <strong> ${total}</strong></p> <!-- Inicialmente zero -->
         <button class="checkout-btn">Finalizar Compra</button>
     </div>
 </main>
@@ -75,24 +82,5 @@
     <p>&copy; 2024 Sneaker-Shop. Todos os direitos reservados.</p>
 </footer>
 
-<script>
-    // Lógica de cálculo do subtotal e total
-    function updateCartSummary() {
-        let subtotal = 0;
-        document.querySelectorAll('.cart-table tbody tr').forEach(row => {
-            const price = parseFloat(row.cells[2].innerText.replace('R$ ', '').replace('.', '').replace(',', '.'));
-            const quantity = parseInt(row.querySelector('.quantity-input').value);
-            subtotal += price * quantity;
-        });
-
-        const shipping = 30.00; // Exemplo de valor de frete fixo
-        const total = subtotal + shipping;
-
-        document.querySelector('.cart-summary span').innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-        document.querySelector('.cart-summary strong').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-    }
-
-    document.addEventListener('DOMContentLoaded', updateCartSummary); // Atualiza o resumo ao carregar a página
-</script>
 </body>
 </html>
