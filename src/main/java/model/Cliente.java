@@ -15,11 +15,6 @@ public class Cliente {
 
     // Construtor padrão
     public Cliente() {}
-
-    public int getId() {
-        return id;
-    }
-
     // Construtor completo
     public Cliente(int id, String nome, String dataNascimento, String genero, String cpf, String email, String senha, List<Endereco> enderecosEntrega) {
         this.id = id;
@@ -31,8 +26,29 @@ public class Cliente {
         this.senha = senha;
         this.enderecosEntrega = enderecosEntrega;
     }
+    public Cliente(int id, String nome,String email,String senha, String cpf, String chaveAES) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.senha = senha;
+        this.chaveAES = chaveAES;
+    }
+
+    public Cliente(String email, String senha) {
+        this.email = email;
+        this.senha = senha;
+    }
 
     // Getters e Setters para os campos
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
