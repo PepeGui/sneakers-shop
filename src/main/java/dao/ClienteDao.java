@@ -93,6 +93,19 @@ public class ClienteDao {
 
         return cliente;
     }
+
+    public void associarEnderecoComCliente(int clienteId, int enderecoId) throws Exception {
+        String sql = "UPDATE endereco SET cliente_id = ? WHERE id = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, clienteId);  // Associando o cliente ao endereço
+            stmt.setInt(2, enderecoId); // ID do endereço a ser atualizado
+
+            stmt.executeUpdate();
+        }
+    }
+
 }
 
     // Feche a conexão quando não for mais necessária

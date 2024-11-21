@@ -20,9 +20,19 @@ public class AdicionarCarrinhoServlet extends HttpServlet {
             int tenisId = Integer.parseInt(request.getParameter("id"));
             int quantidade = Integer.parseInt(request.getParameter("quantidade"));
 
+            // Obtém o clienteId da sessão
+            HttpSession session = request.getSession();
+            Integer clienteId = (Integer) session.getAttribute("clienteId");
+
+            if (clienteId == null) {
+                response.sendRedirect("/Cadastro-Cliente/cadastro-cliente.jsp");
+                return;
+            }
+
+
             // Instancia o DAO e adiciona o item ao carrinho
             CarrinhoDao carrinhoDao = new CarrinhoDao();
-            boolean sucesso = carrinhoDao.adicionarItemAoCarrinho(tenisId, quantidade);
+            boolean sucesso = carrinhoDao.adicionarItemAoCarrinho(clienteId, tenisId, quantidade);
 
             // Redireciona ou exibe erro com base no sucesso
             if (sucesso) {
@@ -39,3 +49,4 @@ public class AdicionarCarrinhoServlet extends HttpServlet {
         }
     }
 }
+

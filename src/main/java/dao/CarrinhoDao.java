@@ -14,28 +14,32 @@ public class CarrinhoDao {
 
     // Método para adicionar um ItemCarrinho
     public boolean adicionarItemAoCarrinho(ItemCarrinho itemCarrinho) {
-        return adicionarItemAoCarrinho(itemCarrinho.getTenis().getId(), itemCarrinho.getQuantidade());
+        return adicionarItemAoCarrinho(itemCarrinho.getTenis().getId(), itemCarrinho.getQuantidade(), itemCarrinho.getCliente().getId());
     }
 
     // Método para adicionar um item ao carrinho usando ID e quantidade (sem clienteId)
-    public boolean adicionarItemAoCarrinho(int tenisId, int quantidade) {
-        String insertSql = "INSERT INTO Carrinho (tenis_id, quantidade) VALUES (?, ?)";
-        String updateSql = "UPDATE Carrinho SET quantidade = quantidade + ? WHERE tenis_id = ?";
+    public boolean adicionarItemAoCarrinho(int clienteId, int tenisId, int quantidade) {
+        String insertSql = "INSERT INTO Carrinho (cliente_id, tenis_id, quantidade) VALUES (?, ?, ?)";
+        String updateSql = "UPDATE Carrinho SET quantidade = quantidade + ? WHERE cliente_id = ? AND tenis_id = ?";
 
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
              PreparedStatement insertStmt = con.prepareStatement(insertSql);
              PreparedStatement updateStmt = con.prepareStatement(updateSql)) {
 
-            insertStmt.setInt(1, tenisId);
-            insertStmt.setInt(2, quantidade);
+            // Configura o SQL de inserção
+            insertStmt.setInt(1, clienteId);
+            insertStmt.setInt(2, tenisId);
+            insertStmt.setInt(3, quantidade);
 
             try {
                 insertStmt.executeUpdate();
             } catch (SQLException e) {
                 if (e.getErrorCode() == 23505) { // Código de erro para duplicação de chave no H2
+                    // Configura o SQL de atualização
                     updateStmt.setInt(1, quantidade);
-                    updateStmt.setInt(2, tenisId);
-                    updateStmt.executeUpdate(); // Atualize a quantidade
+                    updateStmt.setInt(2, clienteId);
+                    updateStmt.setInt(3, tenisId);
+                    updateStmt.executeUpdate(); // Atualiza a quantidade
                 } else {
                     throw e;
                 }
@@ -47,6 +51,7 @@ public class CarrinhoDao {
             return false;
         }
     }
+
 
     // Método para remover um item do carrinho usando o tenisId
     public boolean removerItemDoCarrinho(int tenisId) {

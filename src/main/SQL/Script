@@ -31,22 +31,30 @@ criação da tabela usuario
            FOREIGN KEY (tenis_id) REFERENCES Tenis(id) ON DELETE CASCADE
        );
 
+       -- Criando a tabela cliente com uma relação para a tabela de endereço
        CREATE TABLE cliente (
-                         id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-                         genero VARCHAR(255),
-                         datanascimento DATE ,
-                         nome VARCHAR(255),
-                         email VARCHAR(255) ,
-                         senha VARCHAR(255) ,
-                         cpf CHAR(11),
-                         cep VARCHAR(255),
-                         logradouro VARCHAR(255) ,
-                         numero VARCHAR(5) ,
-                         bairro VARCHAR(255) ,
-                         cidade VARCHAR(255) ,
-                         uf VARCHAR(2),
-                         CHAVEAES VARCHAR(500)
-                     );
+           id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+           genero VARCHAR(255),
+           datanascimento DATE,
+           nome VARCHAR(255),
+           email VARCHAR(255),
+           senha VARCHAR(255),
+           cpf CHAR(11),
+           chaveaes VARCHAR(500),
+           endereco_id INT,
+           FOREIGN KEY (endereco_id) REFERENCES endereco(id)
+       );
+
+       -- Criando a tabela de endereço
+       CREATE TABLE endereco (
+           id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+           cep VARCHAR(255),
+           logradouro VARCHAR(255),
+           numero VARCHAR(5),
+           bairro VARCHAR(255),
+           cidade VARCHAR(255),
+           uf VARCHAR(2)
+       );
 
        CREATE TABLE Carrinho (
            id INT PRIMARY KEY AUTO_INCREMENT,
@@ -56,3 +64,27 @@ criação da tabela usuario
            FOREIGN KEY (cliente_id) REFERENCES Cliente(id) ON DELETE CASCADE,
            FOREIGN KEY (tenis_id) REFERENCES Tenis(id) ON DELETE CASCADE
        );
+
+
+
+CREATE TABLE Pedido (
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    cliente_id INT NOT NULL,
+    data_pedido DATETIME ,
+    status VARCHAR(50) ,
+    valor_total DECIMAL(10, 2) ,
+    endereco_entrega_id INT,
+    FOREIGN KEY (cliente_id) REFERENCES Cliente(id) ON DELETE CASCADE,
+    FOREIGN KEY (endereco_entrega_id) REFERENCES Endereco(id)
+);
+
+
+CREATE TABLE PedidoItem (
+    id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    pedido_id INT NOT NULL,
+    tenis_id INT NOT NULL,
+    quantidade INT ,
+    preco_unitario DECIMAL(10, 2),
+    FOREIGN KEY (pedido_id) REFERENCES Pedido(id) ON DELETE CASCADE,
+    FOREIGN KEY (tenis_id) REFERENCES Tenis(id) ON DELETE CASCADE
+);
