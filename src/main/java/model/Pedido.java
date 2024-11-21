@@ -17,6 +17,14 @@ public class Pedido {
         this.clienteId = clienteId;
     }
 
+    public Pedido(int clienteId, int enderecoEntregaId, double valorTotal, String status, List<PedidoItem> itens) {
+        this.clienteId = clienteId;
+        this.enderecoEntregaId = enderecoEntregaId;
+        this.valorTotal = valorTotal;
+        this.status = status;
+        this.itens = itens;
+    }
+
     public Pedido() {
 
     }

@@ -31,30 +31,31 @@ criação da tabela usuario
            FOREIGN KEY (tenis_id) REFERENCES Tenis(id) ON DELETE CASCADE
        );
 
-       -- Criando a tabela cliente com uma relação para a tabela de endereço
-       CREATE TABLE cliente (
-           id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-           genero VARCHAR(255),
-           datanascimento DATE,
-           nome VARCHAR(255),
-           email VARCHAR(255),
-           senha VARCHAR(255),
-           cpf CHAR(11),
-           chaveaes VARCHAR(500),
-           endereco_id INT,
-           FOREIGN KEY (endereco_id) REFERENCES endereco(id)
-       );
+      -- Criando a tabela cliente
+      CREATE TABLE cliente (
+          id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+          genero VARCHAR(255),
+          datanascimento DATE,
+          nome VARCHAR(255),
+          email VARCHAR(255),
+          senha VARCHAR(255),
+          cpf CHAR(11),
+          chaveaes VARCHAR(500)
+      );
 
-       -- Criando a tabela de endereço
-       CREATE TABLE endereco (
-           id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-           cep VARCHAR(255),
-           logradouro VARCHAR(255),
-           numero VARCHAR(5),
-           bairro VARCHAR(255),
-           cidade VARCHAR(255),
-           uf VARCHAR(2)
-       );
+      -- Criando a tabela de endereço com o cliente_id como coluna
+      CREATE TABLE endereco (
+          id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+          cliente_id INT,
+          cep VARCHAR(255),
+          logradouro VARCHAR(255),
+          numero VARCHAR(5),
+          bairro VARCHAR(255),
+          cidade VARCHAR(255),
+          uf VARCHAR(2),
+          FOREIGN KEY (cliente_id) REFERENCES cliente(id)
+      );
+
 
        CREATE TABLE Carrinho (
            id INT PRIMARY KEY AUTO_INCREMENT,

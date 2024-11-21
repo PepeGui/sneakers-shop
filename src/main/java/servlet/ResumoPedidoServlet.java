@@ -26,38 +26,31 @@ public class ResumoPedidoServlet extends HttpServlet {
         try {
             HttpSession session = req.getSession();
             Integer clienteId = (Integer) session.getAttribute("clienteId");
+
             if (clienteId == null) {
                 resp.sendRedirect("/login-cliente.jsp");
                 return;
             }
 
-            // Busca os endereços do cliente
-            EnderecoDao enderecoDao = new EnderecoDao();
-            List<Endereco> enderecos = enderecoDao.buscarEnderecosPorClienteId(clienteId);
+            // Recupera os dados da sessão
+            List<Endereco> enderecos = (List<Endereco>) session.getAttribute("enderecos");
+            List<ItemCarrinho> itensCarrinho = (List<ItemCarrinho>) session.getAttribute("itensCarrinho");
+            double subtotal = (double) session.getAttribute("subtotal");
+            double frete = (double) session.getAttribute("frete");
+            double total = (double) session.getAttribute("total");
+
+            // Passa os dados para o JSP de resumo
             req.setAttribute("enderecos", enderecos);
-
-            // Busca os itens do carrinho
-            CarrinhoDao carrinhoDao = new CarrinhoDao();
-            List<ItemCarrinho> itensCarrinho = carrinhoDao.obterItensCarrinho();
             req.setAttribute("itensCarrinho", itensCarrinho);
-
-            // Calcula subtotal e total
-            double subtotal = 0.0;
-            for (ItemCarrinho item : itensCarrinho) {
-                subtotal += item.getTenis().getPreco() * item.getQuantidade();
-            }
-            double frete = 30.0;
-            double total = subtotal + frete;
             req.setAttribute("subtotal", subtotal);
             req.setAttribute("frete", frete);
             req.setAttribute("total", total);
 
-            // Redireciona para a página de resumo
             req.getRequestDispatcher("/Resumo-Pedido/resumo-pedido.jsp").forward(req, resp);
 
         } catch (Exception e) {
             e.printStackTrace();
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao buscar dados para o resumo do pedido.");
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao gerar resumo do pedido.");
         }
     }
 
@@ -73,15 +66,15 @@ public class ResumoPedidoServlet extends HttpServlet {
                 return;
             }
 
-            // Recupera o endereço de entrega (selecionado na tela de resumo)
-            Endereco enderecoEntrega = (Endereco) req.getAttribute("enderecoSelecionado"); // Ou de sessão
+            // Recupera o endereço de entrega da sessão
+            Endereco enderecoEntrega = (Endereco) req.getAttribute("enderecoSelecionado");
 
             // Cria o pedido no banco
             PedidoDao pedidoDao = new PedidoDao();
             Pedido pedido = new Pedido(clienteId, enderecoEntrega.getId());
-            int pedidoId = pedidoDao.criarPedido(pedido); // Pedido é inserido e retorna o ID
+            int pedidoId = pedidoDao.criarPedido(pedido);
 
-            // Recupera os itens do carrinho e cria o PedidoItem
+            // Recupera os itens do carrinho e cria os PedidoItems
             CarrinhoDao carrinhoDao = new CarrinhoDao();
             List<ItemCarrinho> itensCarrinho = carrinhoDao.obterItensCarrinho();
             PedidoItemDao pedidoItemDao = new PedidoItemDao();

@@ -18,11 +18,22 @@ public class PedidoItemDao {
     // Adiciona itens ao pedido
     public void adicionarItensAoPedido(List<PedidoItem> itens) throws SQLException {
         String sql = "INSERT INTO PedidoItem (pedido_id, tenis_id, quantidade, preco_unitario) VALUES (?, ?, ?, ?)";
+        String sqlCheckTenis = "SELECT COUNT(*) FROM Tenis WHERE id = ?"; // Verifica se o tenis_id existe
 
         try (Connection conn = getConnection();
+             PreparedStatement stmtCheckTenis = conn.prepareStatement(sqlCheckTenis);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             for (PedidoItem item : itens) {
+                // Verifica se o tenis_id existe
+                stmtCheckTenis.setInt(1, item.getTenisId());
+                try (ResultSet rs = stmtCheckTenis.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) == 0) {
+                        throw new SQLException("O Tenis com ID " + item.getTenisId() + " não existe.");
+                    }
+                }
+
+                // Inserção no PedidoItem
                 stmt.setInt(1, item.getPedidoId());
                 stmt.setInt(2, item.getTenisId());
                 stmt.setInt(3, item.getQuantidade());
@@ -33,6 +44,7 @@ public class PedidoItemDao {
             stmt.executeBatch();
         }
     }
+
 
     // Obtém os itens de um pedido
     public List<PedidoItem> obterItensPorPedido(int pedidoId) throws SQLException {

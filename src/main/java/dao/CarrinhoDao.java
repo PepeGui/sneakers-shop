@@ -91,4 +91,37 @@ public class CarrinhoDao {
         }
         return itensCarrinho;
     }
+
+    public List<ItemCarrinho> obterItensCarrinho(int clienteId) {
+        List<ItemCarrinho> itensCarrinho = new ArrayList<>();
+        String sql = "SELECT c.tenis_id, c.quantidade " +
+                "FROM Carrinho c " +
+                "WHERE c.cliente_id = ?";  // Filtra pelo cliente_id
+
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, clienteId);  // Define o clienteId na consulta
+
+            try (ResultSet rs = ps.executeQuery()) {
+                TenisDao tenisDao = new TenisDao();  // Instancia o TenisDao para buscar os detalhes do tênis
+
+                while (rs.next()) {
+                    int tenisId = rs.getInt("tenis_id");
+                    int quantidade = rs.getInt("quantidade");
+
+                    // Recupera os detalhes do Tenis usando o TenisDao
+                    Tenis tenis = tenisDao.getTenisById(tenisId);
+
+                    if (tenis != null) {
+                        // Adiciona o item ao carrinho
+                        itensCarrinho.add(new ItemCarrinho(tenis, quantidade));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return itensCarrinho;
+    }
 }
