@@ -22,6 +22,7 @@
         <div class="header-icons">
             <img src="/Img/Carrinho.png" alt="Carrinho" title="Carrinho">
             <img src="/Img/User.png" alt="Usuário" title="Minha Conta" class="user-button" onclick="openUserOptions()">
+
         </div>
     </header>
 
@@ -54,6 +55,7 @@
             <h2>Minha Conta</h2>
             <button onclick="openLoginModal()">Login</button>
             <button onclick="window.location.href='/Cadastro-Cliente/cadastro-cliente.jsp'">Cadastrar-se</button>
+            <button onclick="window.location.href='/Area-Cliente/AreaCliente.jsp'">Área do Cliente</button> <!-- Botão Adicionado -->
         </div>
     </div>
 

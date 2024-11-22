@@ -151,7 +151,25 @@ footer {
         .close {
             position: absolute;
             top: 10px;
-            right: 10px;
-            font-size: 18px;
+            right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
             cursor: pointer;
+        }
+        .close:hover {
+            color: red;
+        }
+
+        .area-cliente-btn {
+            margin-left: 10px;
+            padding: 8px 12px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .area-cliente-btn:hover {
+            background-color: #004494;
         }
