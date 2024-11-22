@@ -38,6 +38,15 @@ public class ConfirmarCompraServlet extends HttpServlet {
             CarrinhoDao carrinhoDao = new CarrinhoDao();
             List<ItemCarrinho> itensCarrinho = carrinhoDao.obterItensCarrinho(clienteId);  // Alteração aqui
 
+            // Log para depuração: Verificar o que vem de "obterItensCarrinho"
+            System.out.println("Itens do carrinho para o cliente " + clienteId + ":");
+            for (ItemCarrinho item : itensCarrinho) {
+                System.out.println("ID do Tênis: " + item.getTenis().getId() +
+                        ", Nome: " + item.getTenis().getNome() +
+                        ", Preço: " + item.getTenis().getPreco() +
+                        ", Quantidade: " + item.getQuantidade());
+            }
+
             double subtotal = 0.0;
             for (ItemCarrinho item : itensCarrinho) {
                 subtotal += item.getTenis().getPreco() * item.getQuantidade();
@@ -60,6 +69,7 @@ public class ConfirmarCompraServlet extends HttpServlet {
         }
     }
 
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -76,6 +86,14 @@ public class ConfirmarCompraServlet extends HttpServlet {
             // Passa o clienteId para obter os itens do carrinho
             CarrinhoDao carrinhoDao = new CarrinhoDao();
             List<ItemCarrinho> itensCarrinho = carrinhoDao.obterItensCarrinho(clienteId);  // Alteração aqui
+
+            System.out.println("Itens do carrinho para o cliente " + clienteId + ":");
+            for (ItemCarrinho item : itensCarrinho) {
+                System.out.println("ID do Tênis: " + item.getTenis().getId() +
+                        ", Nome: " + item.getTenis().getNome() +
+                        ", Preço: " + item.getTenis().getPreco() +
+                        ", Quantidade: " + item.getQuantidade());
+            }
 
             double subtotal = 0.0;
             List<PedidoItem> pedidoItems = new ArrayList<>();
