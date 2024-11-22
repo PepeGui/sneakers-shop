@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,8 @@ public class ListarTenisServlet extends HttpServlet {
 
         String pesquisa = req.getParameter("pesquisa");
         String id = req.getParameter("id");
-        String grupo = req.getParameter("grupo");
+        HttpSession session = req.getSession();
+        String usuarioGrupo = (String) session.getAttribute("usuarioGrupo");
 
         // Verifica se a pesquisa está nula ou em branco
         if (pesquisa == null || pesquisa.isBlank()) {
@@ -44,12 +46,12 @@ public class ListarTenisServlet extends HttpServlet {
             }
         }
 
-
+        System.out.println("Grupo"+usuarioGrupo);
 
         // Atribui a lista de tênis à requisição
         req.setAttribute("tenisList", tenisList);
         req.setAttribute("id", id);
-        req.setAttribute("grupo", grupo);
+        req.setAttribute("grupo", usuarioGrupo);
 
         // Redireciona para a página JSP que lista os tênis
         req.getRequestDispatcher("/Tenis/tenis.jsp").forward(req, resp);

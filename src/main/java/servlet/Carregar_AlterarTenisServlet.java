@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,7 +19,8 @@ import java.util.List;
         @Override
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             Tenis tenis = new Tenis();
-            String grupo = request.getParameter("grupo");
+            HttpSession session = request.getSession();
+            String usuarioGrupo = (String) session.getAttribute("usuarioGrupo");
             try {
                 String id = request.getParameter("id");
 
@@ -30,7 +32,7 @@ import java.util.List;
             request.setAttribute("error", "Formato de ID inválido. Por favor, forneça um ID numérico.");
         }
         request.setAttribute("tenis", tenis);
-        request.setAttribute("grupo", grupo);
+        request.setAttribute("grupo", usuarioGrupo);
 
         request.getRequestDispatcher("/AlterarTenis/alterartenis.jsp").forward(request,response);
         }

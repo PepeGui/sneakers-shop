@@ -7,9 +7,9 @@ public class PedidoItem {
     private int quantidade;
     private double precoUnitario;
 
-    public PedidoItem(int pedidoId, int id, int quantidade, double preco) {
+    public PedidoItem(int pedidoId, int tenisId, int quantidade, double preco) {
         this.pedidoId = pedidoId;
-        this.id = id;
+        this.tenisId = tenisId;
         this.quantidade = quantidade;
         this.precoUnitario = preco;
     }

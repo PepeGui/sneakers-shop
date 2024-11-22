@@ -156,6 +156,7 @@ public class UsuarioDao {
                 usuario = new Usuario();
                 usuario.setId(rs.getInt("ID"));
                 usuario.setEmail(rs.getString("EMAIL"));
+                usuario.setNome(rs.getString("NOME"));
                 usuario.setSenha(rs.getString("SENHA"));
                 usuario.setGrupo(rs.getString("GRUPO"));  // Incluindo o grupo (Administrador/Estoquista)
                 // Preencha outros atributos do usuário conforme necessário

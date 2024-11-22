@@ -25,7 +25,12 @@ public class LoginUsuarioServlet extends HttpServlet {
             // Verifica o login
             if (usuarioDao.verificarLogin(usuario)) {
                 usuario = usuarioDao.buscarUsuarioPorEmail(email);
-                req.setAttribute("usuario", usuario);  // Armazena o objeto Usuario na sessão
+                HttpSession session = req.getSession();
+                session.setAttribute("usuarioId", usuario.getId());
+                session.setAttribute("usuarioNome", usuario.getNome());
+                session.setAttribute("usuarioGrupo", usuario.getGrupo());// Armazena o objeto Usuario na sessão
+
+                req.setAttribute("grupo", usuario.getGrupo());
 
                 // Redireciona para a página principal
                 req.getRequestDispatcher("Principal/principal.jsp").forward(req,resp);

@@ -85,7 +85,6 @@
                         <td>
                              <form action="/tela-alterarTenis" method="GET">
                                             <button type="submit">Editar</button>
-                                            <input type="hidden" id="grupo" name="grupo" value="${grupo}">
                                             <input type="hidden" id="id" name="id" value="${tenis.id}">
                                         </form>
                             <!-- Passa o caminho da imagem, nome, avaliação e descrição para a função -->

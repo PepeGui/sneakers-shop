@@ -23,52 +23,6 @@ import java.util.List;
 @WebServlet("/confirmar-compra")
 public class ConfirmarCompraServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            HttpSession session = req.getSession();
-            Integer clienteId = (Integer) session.getAttribute("clienteId");
-
-            if (clienteId == null) {
-                resp.sendRedirect("/login-cliente.jsp");
-                return;
-            }
-
-            // Passa o clienteId para obter os itens do carrinho
-            CarrinhoDao carrinhoDao = new CarrinhoDao();
-            List<ItemCarrinho> itensCarrinho = carrinhoDao.obterItensCarrinho(clienteId);  // Alteração aqui
-
-            // Log para depuração: Verificar o que vem de "obterItensCarrinho"
-            System.out.println("Itens do carrinho para o cliente " + clienteId + ":");
-            for (ItemCarrinho item : itensCarrinho) {
-                System.out.println("ID do Tênis: " + item.getTenis().getId() +
-                        ", Nome: " + item.getTenis().getNome() +
-                        ", Preço: " + item.getTenis().getPreco() +
-                        ", Quantidade: " + item.getQuantidade());
-            }
-
-            double subtotal = 0.0;
-            for (ItemCarrinho item : itensCarrinho) {
-                subtotal += item.getTenis().getPreco() * item.getQuantidade();
-            }
-            double total = subtotal + 30.0;
-
-            req.setAttribute("itensCarrinho", itensCarrinho);
-            req.setAttribute("subtotal", subtotal);
-            req.setAttribute("total", total);
-
-            // Buscar os endereços do cliente
-            EnderecoDao enderecoDao = new EnderecoDao();
-            List<Endereco> enderecos = enderecoDao.buscarEnderecosPorClienteId(clienteId);
-            req.setAttribute("enderecos", enderecos);
-
-            req.getRequestDispatcher("/finalizar-compra.jsp").forward(req, resp);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao carregar os dados do carrinho.");
-        }
-    }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
