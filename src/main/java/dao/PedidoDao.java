@@ -1,6 +1,7 @@
 package dao;
 
 import model.Pedido;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,5 +62,35 @@ public class PedidoDao {
             }
         }
         return pedidos;
+    }
+    public Pedido buscaPedidoPorID(int pId) {
+        List<Pedido> pedidos = new ArrayList<>();
+        String SQL = "SELECT * FROM Pedido WHERE id = ?";
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            System.out.println("success in database connection buscaPedidoPorID");
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setInt(1,pId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Pedido pedido = new Pedido();
+                pedido.setId(resultSet.getInt("id"));
+                pedido.setClienteId(resultSet.getInt("cliente_id"));
+                pedido.setDataPedido(resultSet.getTimestamp("data_pedido"));
+                pedido.setStatus(resultSet.getString("status"));
+                pedido.setValorTotal(resultSet.getDouble("valor_total"));
+                pedido.setEnderecoEntregaId(resultSet.getInt("endereco_entrega_id"));
+                pedidos.add(pedido);
+            }
+            System.out.println("success in buscaPedidoPorID");
+
+        } catch (Exception e) {
+            System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
+        }
+
+        return pedidos.get(0);
     }
 }

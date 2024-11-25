@@ -1,6 +1,7 @@
 package dao;
 
 import model.Endereco;
+import model.Pedido;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -57,5 +58,36 @@ public class EnderecoDao {
             }
         }
         return enderecos;
+    }
+    public Endereco buscaEnderecoPorID(int pId) {
+        List<Endereco> enderecos = new ArrayList<>();
+        String SQL = "SELECT * FROM endereco WHERE id = ?";
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            System.out.println("success in database connection buscaEnderecoPorID");
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setInt(1,pId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Endereco endereco = new Endereco();
+                endereco.setId(resultSet.getInt("id"));
+                endereco.setCep(resultSet.getString("cep"));
+                endereco.setLogradouro(resultSet.getString("logradouro"));
+                endereco.setNumero(resultSet.getString("numero"));
+                endereco.setBairro(resultSet.getString("bairro"));
+                endereco.setCidade(resultSet.getString("cidade"));
+                endereco.setUf(resultSet.getString("uf"));
+                enderecos.add(endereco);
+            }
+            System.out.println("success in buscaEnderecoPorID");
+
+        } catch (Exception e) {
+            System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
+        }
+
+        return enderecos.get(0);
     }
 }

@@ -1,35 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="dao.PedidoDao" %>
-<%@ page import="dao.PedidoItemDao" %>
-<%@ page import="dao.EnderecoDao" %>
-<%@ page import="model.Pedido" %>
-<%@ page import="model.PedidoItem" %>
-<%@ page import="model.Endereco" %>
-<%@ page import="java.util.List" %>
 
-<%
-    // Recupera o ID do pedido passado como parâmetro
-    int pedidoId = Integer.parseInt(request.getParameter("pedidoId"));
-
-    // DAOs para acessar dados
-    PedidoDao pedidoDao = new PedidoDao();
-    PedidoItemDao pedidoItemDao = new PedidoItemDao();
-    EnderecoDao enderecoDao = new EnderecoDao();
-
-    // Obtém os dados do pedido
-    Pedido pedido = pedidoDao.obterPedidoPorId(pedidoId);
-    List<PedidoItem> itensPedido = pedidoItemDao.obterItensPorPedido(pedidoId);
-    Endereco enderecoEntrega = enderecoDao.obterEnderecoPorId(pedido.getEnderecoEntregaId());
-
-    // Calcula o subtotal e o total do pedido
-    double subtotal = 0.0;
-    for (PedidoItem item : itensPedido) {
-        subtotal += item.getPrecoUnitario() * item.getQuantidade();
-    }
-    double total = subtotal + 30.0; // Frete fixo de 30
-%>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -37,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Pedido</title>
-    <link rel="stylesheet" href="AreaCliente.css">
+    <link rel="stylesheet" href="/Area-Cliente/AreaCliente.css">
 </head>
 <body>
 <header>
@@ -75,7 +47,6 @@
         <tbody>
             <c:forEach var="item" items="${itensPedido}">
                 <tr>
-                    <td>${item.tenis.nome}</td>
                     <td>${item.quantidade}</td>
                     <td><fmt:formatNumber value="${item.precoUnitario}" type="currency" /></td>
                     <td><fmt:formatNumber value="${item.precoUnitario * item.quantidade}" type="currency" /></td>
@@ -91,7 +62,6 @@
         <p><strong>Logradouro:</strong> ${enderecoEntrega.logradouro}, ${enderecoEntrega.numero}</p>
         <p><strong>Bairro:</strong> ${enderecoEntrega.bairro}</p>
         <p><strong>Cidade:</strong> ${enderecoEntrega.cidade} - ${enderecoEntrega.uf}</p>
-        <p><strong>Complemento:</strong> ${enderecoEntrega.complemento}</p>
     </div>
 </main>
 

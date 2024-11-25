@@ -1,15 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="java.util.List, model.Pedido, model.PedidoItem, dao.PedidoDao, dao.PedidoItemDao" %>
-
-<%
-    // Simula o ID do cliente logado. Substituir pelo ID dinâmico.
-    int clienteId = 1;
-
-    PedidoDao pedidoDao = new PedidoDao();
-    PedidoItemDao pedidoItemDao = new PedidoItemDao();
-    List<Pedido> pedidos = pedidoDao.obterPedidosPorCliente(clienteId);
-%>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -17,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Área do Cliente</title>
-    <link rel="stylesheet" href="AreaCliente.css">
+    <link rel="stylesheet" href="/Area-Cliente/AreaCliente.css">
 
 </head>
 <body>
@@ -42,7 +32,7 @@
                     <td>${pedido.status}</td>
                     <td>R$ ${pedido.valorTotal}</td>
                     <td>
-                        <form method="GET" action="/detalhes-pedido.jsp">
+                        <form method="GET" action="/detalhes-pedido">
                             <input type="hidden" name="pedidoId" value="${pedido.id}">
                             <button type="submit">Ver Detalhes</button>
                         </form>

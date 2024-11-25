@@ -55,7 +55,7 @@
             <h2>Minha Conta</h2>
             <button onclick="openLoginModal()">Login</button>
             <button onclick="window.location.href='/Cadastro-Cliente/cadastro-cliente.jsp'">Cadastrar-se</button>
-            <button onclick="window.location.href='/Area-Cliente/AreaCliente.jsp'">Área do Cliente</button> <!-- Botão Adicionado -->
+            <button onclick="window.location.href='/area-cliente'">Área do Cliente</button> <!-- Botão Adicionado -->
         </div>
     </div>
 
