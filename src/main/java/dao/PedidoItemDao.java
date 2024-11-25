@@ -24,24 +24,37 @@ public class PedidoItemDao {
              PreparedStatement stmtCheckTenis = conn.prepareStatement(sqlCheckTenis);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            for (PedidoItem item : itens) {
-                // Verifica se o tenis_id existe
-                stmtCheckTenis.setInt(1, item.getTenisId());
-                try (ResultSet rs = stmtCheckTenis.executeQuery()) {
-                    if (rs.next() && rs.getInt(1) == 0) {
-                        throw new SQLException("O Tenis com ID " + item.getTenisId() + " não existe.");
+            // Inicia uma transação
+            conn.setAutoCommit(false); // Desativa auto-commit para controlar a transação manualmente
+
+            try {
+                for (PedidoItem item : itens) {
+                    // Verifica se o tenis_id existe
+                    stmtCheckTenis.setInt(1, item.getTenisId());
+                    try (ResultSet rs = stmtCheckTenis.executeQuery()) {
+                        if (rs.next() && rs.getInt(1) == 0) {
+                            throw new SQLException("O Tenis com ID " + item.getTenisId() + " não existe.");
+                        }
                     }
+
+                    // Inserção no PedidoItem
+                    stmt.setInt(1, item.getPedidoId());
+                    stmt.setInt(2, item.getTenisId());
+                    stmt.setInt(3, item.getQuantidade());
+                    stmt.setDouble(4, item.getPrecoUnitario());
+                    stmt.addBatch();
                 }
 
-                // Inserção no PedidoItem
-                stmt.setInt(1, item.getPedidoId());
-                stmt.setInt(2, item.getTenisId());
-                stmt.setInt(3, item.getQuantidade());
-                stmt.setDouble(4, item.getPrecoUnitario());
-                stmt.addBatch();
-            }
+                // Executa o batch de inserção
+                stmt.executeBatch();
+                conn.commit(); // Confirma a transação
 
-            stmt.executeBatch();
+            } catch (SQLException e) {
+                conn.rollback(); // Em caso de erro, reverte as inserções
+                throw new SQLException("Erro ao adicionar itens ao pedido: " + e.getMessage());
+            } finally {
+                conn.setAutoCommit(true); // Restaura o auto-commit
+            }
         }
     }
 

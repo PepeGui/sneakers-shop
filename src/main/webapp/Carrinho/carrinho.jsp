@@ -74,7 +74,7 @@
         <p>Subtotal: <span> ${subtotal}</span></p> <!-- Inicialmente zero, será atualizado com JavaScript -->
         <p>Frete: <span>R$ 30,00</span></p>
         <p>Total: <strong> ${total}</strong></p> <!-- Inicialmente zero -->
-        <a href="/finalizar-compra" class="checkout-btn">Finalizar Compra</a>
+        <a href="/find-all-enderecos-cliente" class="checkout-btn">Finalizar Compra</a>
 
 
     </div>

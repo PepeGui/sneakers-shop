@@ -1,0 +1,85 @@
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+.btn-cadastrar {
+    display: inline-block;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.btn-cadastrar:hover {
+    background-color: #0056b3;
+}
+
+.enderecos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.enderecos-table, .enderecos-table th, .enderecos-table td {
+    border: 1px solid #ddd;
+}
+
+.enderecos-table th, .enderecos-table td {
+    padding: 8px;
+    text-align: left;
+}
+
+.enderecos-table th {
+    background-color: #f4f4f4;
+}
+
+footer {
+    background-color: #f4f4f4;
+    padding: 10px 20px;
+    text-align: center;
+    margin-top: 20px;
+}

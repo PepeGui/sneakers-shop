@@ -61,7 +61,7 @@ public class FinalizarCompraServlet extends HttpServlet {
             req.setAttribute("total", total);
 
             // Redireciona para o JSP de finalização de compra
-            req.getRequestDispatcher("/Finalizar-Compra/finalizar-compra.jsp").forward(req, resp);
+            req.getRequestDispatcher("/Finalizar-Compra/escolher-endereco-entrega.jsp").forward(req, resp);
 
         } catch (Exception e) {
             e.printStackTrace();

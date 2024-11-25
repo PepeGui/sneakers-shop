@@ -46,7 +46,7 @@ public class CadastrarEnderecoServlet extends HttpServlet {
             clienteDao.associarEnderecoComCliente(clienteId, enderecoId); // Associa o endereço ao cliente
 
             // Redireciona para a página de sucesso
-            resp.sendRedirect("Finalizar-Compra/finalizar-compra.jsp");
+            resp.sendRedirect("/find-all-enderecos-cliente");
         } catch (Exception e) {
             e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao cadastrar o endereço.");
