@@ -278,7 +278,7 @@ public class UsuarioDao {
             for(Usuario usuario : usuarios){
                 SecretKey chaveAES = crip.converterStringParaChave(usuario.getChaveAES(), "AES");
                 String senhaDescriptografada = crip.descriptografar(usuario.getSenha(), chaveAES);
-                if(u.getSenha().equals(senhaDescriptografada))
+                if(u.getSenha().equals(senhaDescriptografada) && usuario.getAtivo() == true)
                     return true;
             }
             return false;

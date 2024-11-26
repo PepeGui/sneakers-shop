@@ -30,7 +30,7 @@ public class ListarTenisServlet extends HttpServlet {
         // Verifica se a pesquisa está nula ou em branco
         if (pesquisa == null || pesquisa.isBlank()) {
             // Adiciona todos os tênis se não houver pesquisa
-            tenisList.addAll(tenisDao.getAllTenis());
+            tenisList.addAll(tenisDao.getAllTenis(false));
         } else {
             // Busca os tênis por nome
             tenisList.addAll(tenisDao.buscarTenisPorNome(pesquisa));
