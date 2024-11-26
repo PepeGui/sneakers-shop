@@ -90,4 +90,21 @@ public class EnderecoDao {
 
         return enderecos.get(0);
     }
+
+    public boolean deleteEnderecoById(int enderecoId){
+        String sql = "DELETE FROM ENDERECO WHERE ID = ?";
+
+        try(Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);){
+
+            preparedStatement.setInt(1,enderecoId);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException err) {
+            err.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -44,6 +44,7 @@
                         <th>Cidade</th>
                         <th>UF</th>
                         <th>Selecionar</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,6 +57,13 @@
                             <td>${endereco.cidade}</td>
                             <td>${endereco.uf}</td>
                             <td><input type="radio" name="enderecoId" value="${endereco.id}" required></td>
+                            <!-- Botão para remover endereço -->
+                            <td>
+                                <form action="/removerEnderecoEntrega" method="POST" style="display:inline;">
+                                    <input type="hidden" name="enderecoId" value="${endereco.id}">
+                                    <button type="submit" class="btn-remover">Remover</button>
+                                </form>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>

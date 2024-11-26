@@ -20,7 +20,8 @@
     <header>
         <h1>Sneaker-Shop</h1>
         <div class="header-icons">
-            <img src="/Img/Carrinho.png" alt="Carrinho" title="Carrinho">
+
+            <a href="/Carrinho/carrinho.jsp"><img src="/Img/Carrinho.png" alt="Carrinho" title="Carrinho"></a>
             <img src="/Img/User.png" alt="Usuário" title="Minha Conta" class="user-button" onclick="openUserOptions()">
 
         </div>
