@@ -73,9 +73,9 @@ public class TenisDao {
         return sucesso;
     }
 
-    public List<Tenis> getAllTenis() {
+    public List<Tenis> getAllTenis(boolean soTenisAtivo) {
         List<Tenis> tenisList = new ArrayList<>();
-        String SQL_SELECT_ALL = "SELECT * FROM TENIS";
+        String SQL_SELECT_ALL = soTenisAtivo != true? "SELECT * FROM TENIS" : "SELECT * FROM TENIS WHERE ATIVO = TRUE";
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_SELECT_ALL);

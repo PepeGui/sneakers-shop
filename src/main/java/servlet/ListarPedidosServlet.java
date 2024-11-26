@@ -27,7 +27,7 @@ public class ListarPedidosServlet extends HttpServlet {
             if(pesquisa == null || pesquisa.isBlank() )
                 pedidos.addAll(pedidoDao.getAllPedidos());
             else
-                pedidos.addAll(pedidoDao.obterPedidosPorCliente(Integer.parseInt(pesquisa)));
+                pedidos.add(pedidoDao.buscaPedidoPorID(Integer.parseInt(pesquisa)));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

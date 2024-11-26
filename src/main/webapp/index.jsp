@@ -6,7 +6,7 @@
 <%
     // Inicializa o TenisDao e carrega a lista de tênis
     TenisDao tenisDao = new TenisDao();
-    List<Tenis> listaTenis = tenisDao.getAllTenis();
+    List<Tenis> listaTenis = tenisDao.getAllTenis(true);
     request.setAttribute("tenis", listaTenis);
 %>
 <head>
