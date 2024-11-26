@@ -83,6 +83,7 @@ public class PedidoDao {
                 pedido.setStatus(resultSet.getString("status"));
                 pedido.setValorTotal(resultSet.getDouble("valor_total"));
                 pedido.setEnderecoEntregaId(resultSet.getInt("endereco_entrega_id"));
+                pedido.setItens(new PedidoItemDao().obterItensPorPedido(pedido.getId()));
                 pedidos.add(pedido);
             }
             System.out.println("success in buscaPedidoPorID");
@@ -92,5 +93,28 @@ public class PedidoDao {
         }
 
         return pedidos.get(0);
+    }
+    public List<Pedido> getAllPedidos() throws SQLException {
+        List<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT * FROM Pedido";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Pedido pedido = new Pedido();
+                    pedido.setId(rs.getInt("id"));
+                    pedido.setClienteId(rs.getInt("cliente_id"));
+                    pedido.setDataPedido(rs.getTimestamp("data_pedido"));
+                    pedido.setStatus(rs.getString("status"));
+                    pedido.setValorTotal(rs.getDouble("valor_total"));
+                    pedido.setEnderecoEntregaId(rs.getInt("endereco_entrega_id"));
+                    pedido.setItens(new PedidoItemDao().obterItensPorPedido(pedido.getId()));
+                    pedidos.add(pedido);
+                }
+            }
+        }
+        return pedidos;
     }
 }

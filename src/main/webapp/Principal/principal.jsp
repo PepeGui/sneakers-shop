@@ -22,9 +22,7 @@
     </c:if>
     <c:if test="${grupo == 'Estoquista'}">
         <div>
-            <form action="/Listar_Pedido/listar_pedido.jsp" method="GET">
-                <button type="submit">Listar Pedidos</button>
-            </form>
+            <a href="/find-all-pedidos"><button class="submit">Listar Pedidos</button></a>
         </div>
     </c:if>
 </div>

@@ -13,30 +13,6 @@
     <link rel="stylesheet" href="/Listar_Pedido/listar_pedido.css">
 </head>
 
-<script src="/ListarPedido/listar_pedido.js"></script>
-<script>
-    function aceitarPedido(id) {
-        const xhr = new XMLHttpRequest();
-        const url = "/aceitarPedido"; // Servlet para processar aceitação do pedido
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    alert("Pedido aceito com sucesso!");
-                    location.reload(); // Atualiza a página
-                } else {
-                    alert("Erro ao aceitar pedido!");
-                }
-            }
-        };
-
-        // Envia o ID do pedido para o backend
-        xhr.send("id=" + id);
-    }
-</script>
-
 <body>
     <header>
         <h1 class="brand-name">Sneakers-Shop</h1>
@@ -63,10 +39,10 @@
                 </tr>
             </thead>
             <tbody>
-                <c:forEach var="pedido" items="${pedidosList}">
+                <c:forEach var="pedido" items="${pedidos}">
                     <tr>
                         <td>${pedido.id}</td>
-                        <td>${pedido.data}</td>
+                        <td>${pedido.dataPedido}</td>
                         <td>${pedido.status}</td>
                         <td>R$ ${pedido.valorTotal}</td>
                         <td>
@@ -77,7 +53,7 @@
                             </form>
 
                             <!-- Botão Visualizar -->
-                            <button onclick="visualizarPedido('${pedido.id}', '${pedido.data}', '${pedido.status}', '${pedido.valorTotal}')">Visualizar</button>
+                            <button onclick="visualizarPedido('${pedido.id}', '${pedido.dataPedido}', '${pedido.status}', '${pedido.valorTotal}')">Visualizar</button>
 
                             <!-- Botão Aceitar Pedido -->
                             <button onclick="aceitarPedido(${pedido.id})" ${pedido.status == 'Aceito' ? 'disabled' : ''}>Aceitar</button>
