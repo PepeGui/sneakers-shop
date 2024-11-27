@@ -2,8 +2,10 @@ package servlet;
 
 import dao.CarrinhoDao;
 import dao.EnderecoDao;
+import model.Endereco;
 import model.ItemCarrinho;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,13 +33,15 @@ public class GerarResumoPedidoServlet extends HttpServlet {
 
             Integer clienteId = (Integer) session.getAttribute("clienteId");
 
-            enderecoDao.buscaEnderecoPorID(enderecoId);
+            Endereco endereco = enderecoDao.buscaEnderecoPorID(enderecoId);
 
             List<ItemCarrinho> itensCarrinho = carrinhoDao.obterItensCarrinho(clienteId);
 
             req.setAttribute("itensCarrinho", itensCarrinho);
+            req.setAttribute("endereco", endereco);
 
-
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/Recumo-Pedido/resumo-pedido.jsp");
+            dispatcher.forward(req,resp);
         } catch (Exception err) {
             err.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,"Erro no gerar resumo");
