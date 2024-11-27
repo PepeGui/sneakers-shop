@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/find-all-enderecos-cliente")
-public class ListarEnderecosCliente extends HttpServlet {
+public class ListarEnderecosClienteServlet extends HttpServlet {
 
     private EnderecoDao enderecoDao = new EnderecoDao();
 

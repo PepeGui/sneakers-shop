@@ -33,7 +33,7 @@
     <!-- Exibir os endereços cadastrados -->
     <h3>Escolha o seu Endereço de Entrega</h3>
     <c:if test="${not empty enderecos}">
-        <form action="/confirmar-compra" method="POST">
+        <form action="/resumo-pedido" method="POST">
             <table class="enderecos-table">
                 <thead>
                     <tr>
