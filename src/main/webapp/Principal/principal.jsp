@@ -10,21 +10,38 @@
 </head>
 <body>
 <div class="login-container">
-        <div>
-            <form action="/find-all-tenis" method="GET">
-                <button type="submit">Listar Produtos</button>
-            </form>
-        </div>
-    <c:if test="${grupo eq 'Admin'}">
+    <!-- Mensagem de boas-vindas com o nome do usuário -->
+    <c:if test="${not empty sessionScope.usuarioNome}">
+        <h1>Bem-vindo(a), ${sessionScope.usuarioNome}!</h1>
+    </c:if>
+
+    <!-- Botão para listar produtos -->
+    <div>
+        <form action="/find-all-tenis" method="GET">
+            <button type="submit">Listar Produtos</button>
+        </form>
+    </div>
+
+    <!-- Exibindo o botão "Listar Usuários" para administradores -->
+    <c:if test="${not empty sessionScope.usuarioGrupo and sessionScope.usuarioGrupo eq 'Admin'}">
         <div>
             <a href="/find-all-usuarios"><button class="submit">Listar Usuários</button></a>
         </div>
     </c:if>
-    <c:if test="${grupo == 'Estoquista'}">
+
+    <!-- Exibindo o botão "Listar Pedidos" para Estoquistas -->
+    <c:if test="${not empty sessionScope.usuarioGrupo and sessionScope.usuarioGrupo eq 'Estoquista'}">
         <div>
             <a href="/find-all-pedidos"><button class="submit">Listar Pedidos</button></a>
         </div>
     </c:if>
+
+    <!-- Botão de Logout -->
+    <div>
+        <form action="/logout-usuario" method="POST">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

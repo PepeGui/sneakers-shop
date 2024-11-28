@@ -53,23 +53,37 @@ public class CarrinhoDao {
     }
 
 
-    // Método para remover um item do carrinho usando o tenisId
-    public boolean removerItemDoCarrinho(int tenisId) {
-        String deleteSql = "DELETE FROM Carrinho WHERE tenis_id = ?";
+    public boolean removerItemDoCarrinho(int clienteId, int tenisId) {
+        String deleteSql = "DELETE FROM Carrinho WHERE cliente_id = ? AND tenis_id = ?";
 
         try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
              PreparedStatement deleteStmt = con.prepareStatement(deleteSql)) {
 
-            deleteStmt.setInt(1, tenisId);
+            // Definindo os parâmetros na consulta SQL
+            deleteStmt.setInt(1, clienteId);
+            deleteStmt.setInt(2, tenisId);
 
+            // Executa a remoção
             int rowsAffected = deleteStmt.executeUpdate();
-            return rowsAffected > 0;
+
+            // Verifica se o item foi removido
+            if (rowsAffected > 0) {
+                System.out.println("Item removido com sucesso para clienteId: " + clienteId + " e tenisId: " + tenisId);
+                return true;
+            } else {
+                System.out.println("Nenhum item removido para clienteId: " + clienteId + " e tenisId: " + tenisId);
+                return false;
+            }
 
         } catch (SQLException e) {
+            System.err.println("Erro ao remover item do carrinho: clienteId = " + clienteId + ", tenisId = " + tenisId);
             e.printStackTrace();
             return false;
         }
     }
+
+
+
 
     // Método para obter os itens do carrinho
     public List<ItemCarrinho> obterItensCarrinho() {

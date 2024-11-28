@@ -18,6 +18,13 @@
         <h1 class="brand-name">Sneakers-Shop</h1>
     </header>
 
+    <!-- Botão para voltar ao menu principal -->
+    <div style="margin: 20px 0;">
+        <a href="/carregar-menu-usuario">
+            <button style="padding: 10px 15px; background-color: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">Voltar ao Menu Principal</button>
+        </a>
+    </div>
+
     <section class="order-search">
         <div class="search-bar">
             <form action="/find-all-pedidos" method="get">
@@ -97,6 +104,5 @@
             document.getElementById("visualizar-modal").style.display = "none";
         }
     </script>
-
 </body>
 </html>

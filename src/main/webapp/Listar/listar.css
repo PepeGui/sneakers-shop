@@ -1,22 +1,31 @@
 @font-face {
-  font-family: 'font-inter';
-  src: url('/Fonts/Inter/Inter-VariableFont_sInt,wght.ttf');
-}
-
-p, h1, h2, h3, h4, a, button {
-  font-family: 'font-inter';
+    font-family: 'font-inter';
+    src: url('/Fonts/Inter/Inter-VariableFont_sInt,wght.ttf');
 }
 
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
     width: 100vw;
-    background-color: #d7d7d7;
+    background-color: #f4f4f4;
     font-family: "Inter", sans-serif;
-    font-size: 28px;
+    font-size: 18px; /* Ajustado para uma leitura mais confortável */
+    padding: 20px;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: left;
+}
+
+.brand-name {
+    margin-left: 20px;
 }
 
 h3 {
@@ -24,39 +33,43 @@ h3 {
     margin-top: 2em;
     font-weight: 600;
 }
+
 .search-container {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .search-container input[type="text"] {
-            padding: 10px;
-            width: 300px;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .search-container button {
-            padding: 10px 20px;
-            margin-left: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .search-container button:hover {
-            background-color: #45a049;
-        }
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-container input[type="text"] {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ddd; /* Mais suave que a borda original */
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.search-container button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.search-container button:hover {
+    background-color: #444;
+}
+
 table {
     background-color: white;
-    width: 80%;
+    width: 100%;
     margin: 2em auto;
     border-radius: 10px;
-    border-collapse: separate;
-    overflow: hidden;
+    border-collapse: collapse;
 }
 
 table tr th {
@@ -64,12 +77,13 @@ table tr th {
     background-color: #a91c1c;
     height: 2em;
     font-weight: 200;
+    padding: 10px;
 }
 
 table tr td {
     height: 4em;
     text-align: center;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #ddd;
     font-size: 16px;
 }
 
@@ -79,8 +93,8 @@ td svg {
 
 .buttons-container {
     display: flex;
-    justify-content: end;
-    width: 80%;
+    justify-content: flex-end;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -92,6 +106,10 @@ button {
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
+}
+
+button:hover {
+    background-color: #f1f1f1; /* Estilo de hover para botões */
 }
 
 .sherek {
@@ -106,56 +124,62 @@ button {
 }
 
 .switch {
-  position: absolute;
-  margin-left: -9999px;
-  visibility: hidden;
+    position: absolute;
+    margin-left: -9999px;
+    visibility: hidden;
 }
 
 .switch + label {
-  display: block;
-  position: relative;
-  cursor: pointer;
-  outline: none;
-  user-select: none;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
 }
 
 .switch--shadow + label {
-  padding: 2px;
-  width: 65px;
-  height: 35px;
-  background-color: #dddddd;
-  border-radius: 60px;
+    padding: 2px;
+    width: 65px;
+    height: 35px;
+    background-color: #ddd;
+    border-radius: 60px;
 }
 
 .switch--shadow + label:before,
 .switch--shadow + label:after {
-  display: block;
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  bottom: 1px;
-  content: '';
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    bottom: 1px;
+    content: '';
 }
 
 .switch--shadow + label:before {
-  right: 1px;
-  background-color: red;
-  border-radius: 60px;
-  transition: all 0.4s;
+    right: 1px;
+    background-color: red;
+    border-radius: 60px;
+    transition: all 0.4s;
 }
 
 .switch--shadow + label:after {
-  width: 44px;
-  background-color: #fff;
-  border-radius: 100%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  transition: all 0.4s;
+    width: 44px;
+    background-color: #fff;
+    border-radius: 100%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s;
 }
 
 .switch--shadow:checked + label:before {
-  background-color: green;
+    background-color: green;
 }
 
 .switch--shadow:checked + label:after {
-  transform: translateX(25px);
+    transform: translateX(25px);
+}
+
+/* Modal styles (caso necessário) */
+.modal {
+    display: none;
+    /* Estilos adicionais para o modal */
 }
