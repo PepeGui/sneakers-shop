@@ -124,4 +124,22 @@ public class CarrinhoDao {
         }
         return itensCarrinho;
     }
+
+    // Método para limpar o carrinho de um cliente
+    public boolean limparCarrinho(int clienteId) {
+        String deleteSql = "DELETE FROM Carrinho WHERE cliente_id = ?";
+
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement deleteStmt = con.prepareStatement(deleteSql)) {
+
+            deleteStmt.setInt(1, clienteId);  // Define o clienteId na consulta
+
+            int rowsAffected = deleteStmt.executeUpdate();
+            return rowsAffected > 0;  // Retorna true se ao menos uma linha foi afetada (itens removidos)
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;  // Retorna false se ocorrer algum erro
+        }
+    }
 }

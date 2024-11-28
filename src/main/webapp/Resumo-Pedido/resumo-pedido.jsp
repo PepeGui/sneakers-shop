@@ -46,12 +46,13 @@
 <h3>Forma de Pagamento</h3>
 <p>${formaPagamento}</p>
 
-<form action="/finalizar-compra" method="POST">
+<form action="${pageContext.request.contextPath}/finalizar-compra" method="POST">
+    <input type="hidden" name="formaPagamento" value="${formaPagamento}">
     <button type="submit">Concluir Compra</button>
 </form>
 
-<form action="/escolher-pagamento" method="GET">
-    <button type="submit">Voltar para Escolher Pagamento</button>
+<form action="/Carrinho/carrinho.jsp" method="GET">
+    <button type="submit">Voltar para o Carrinho</button>
 </form>
 
 </body>

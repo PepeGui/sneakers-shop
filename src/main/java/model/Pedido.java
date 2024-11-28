@@ -11,10 +11,31 @@ public class Pedido {
     private double valorTotal;
     private int enderecoEntregaId;
     private List<PedidoItem> itens;
+    private String formaPagamento;
+
+    public String getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(String formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
+
 
     public Pedido(Integer clienteId, int id) {
         this.id = id;
         this.clienteId = clienteId;
+    }
+
+    public Pedido(int id, int clienteId, Date dataPedido, String status, double valorTotal, int enderecoEntregaId, List<PedidoItem> itens, String formaPagamento) {
+        this.id = id;
+        this.clienteId = clienteId;
+        this.dataPedido = dataPedido;
+        this.status = status;
+        this.valorTotal = valorTotal;
+        this.enderecoEntregaId = enderecoEntregaId;
+        this.itens = itens;
+        this.formaPagamento = formaPagamento;
     }
 
     public Pedido(int clienteId, int enderecoEntregaId, double valorTotal, String status, List<PedidoItem> itens) {

@@ -1,6 +1,7 @@
 package dao;
 
 import model.Pedido;
+import model.PedidoItem;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class PedidoDao {
 
     // Cria um pedido
     public int criarPedido(Pedido pedido) throws SQLException {
-        String sql = "INSERT INTO Pedido (cliente_id, data_pedido, status, valor_total, endereco_entrega_id) VALUES (?, NOW(), ?, ?, ?)";
+        String sql = "INSERT INTO Pedido (cliente_id, data_pedido, status, valor_total, endereco_entrega_id, forma_pagamento) VALUES (?, NOW(), ?, ?, ?, ?)";
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -26,12 +27,13 @@ public class PedidoDao {
             stmt.setString(2, pedido.getStatus());
             stmt.setDouble(3, pedido.getValorTotal());
             stmt.setInt(4, pedido.getEnderecoEntregaId());
+            stmt.setString(5, pedido.getFormaPagamento());
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        return rs.getInt(1);
+                        return rs.getInt(1); // Retorna o ID gerado do pedido
                     }
                 }
             }
@@ -57,21 +59,22 @@ public class PedidoDao {
                     pedido.setStatus(rs.getString("status"));
                     pedido.setValorTotal(rs.getDouble("valor_total"));
                     pedido.setEnderecoEntregaId(rs.getInt("endereco_entrega_id"));
+                    pedido.setFormaPagamento(rs.getString("forma_pagamento"));
                     pedidos.add(pedido);
                 }
             }
         }
         return pedidos;
     }
+
+    // Obtém o pedido por ID, com os itens
     public Pedido buscaPedidoPorID(int pId) {
         List<Pedido> pedidos = new ArrayList<>();
         String SQL = "SELECT * FROM Pedido WHERE id = ?";
         try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-            System.out.println("success in database connection buscaPedidoPorID");
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-
-            preparedStatement.setInt(1,pId);
+            preparedStatement.setInt(1, pId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -83,17 +86,21 @@ public class PedidoDao {
                 pedido.setStatus(resultSet.getString("status"));
                 pedido.setValorTotal(resultSet.getDouble("valor_total"));
                 pedido.setEnderecoEntregaId(resultSet.getInt("endereco_entrega_id"));
+                pedido.setFormaPagamento(resultSet.getString("forma_pagamento"));
+
+                // Obtém os itens do pedido
                 pedido.setItens(new PedidoItemDao().obterItensPorPedido(pedido.getId()));
+
                 pedidos.add(pedido);
             }
-            System.out.println("success in buscaPedidoPorID");
-
         } catch (Exception e) {
             System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
         }
 
-        return pedidos.get(0);
+        return pedidos.isEmpty() ? null : pedidos.get(0); // Retorna o primeiro pedido ou null se não encontrar
     }
+
+    // Obtém todos os pedidos
     public List<Pedido> getAllPedidos() throws SQLException {
         List<Pedido> pedidos = new ArrayList<>();
         String sql = "SELECT * FROM Pedido";
@@ -110,6 +117,7 @@ public class PedidoDao {
                     pedido.setStatus(rs.getString("status"));
                     pedido.setValorTotal(rs.getDouble("valor_total"));
                     pedido.setEnderecoEntregaId(rs.getInt("endereco_entrega_id"));
+                    pedido.setFormaPagamento(rs.getString("forma_pagamento"));
                     pedido.setItens(new PedidoItemDao().obterItensPorPedido(pedido.getId()));
                     pedidos.add(pedido);
                 }
