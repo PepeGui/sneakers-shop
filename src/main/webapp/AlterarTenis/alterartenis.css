@@ -1,0 +1,122 @@
+.image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .image-preview-container img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        .image-preview-container img.selected {
+            border-color: green;
+        }
+
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #000; /* Fundo da página */
+                color: #fff; /* Cor do texto */
+                margin: 0;
+                padding: 0;
+            }
+
+            .cadastro-container {
+                max-width: 600px;
+                margin: 50px auto;
+                padding: 20px;
+                background-color: #1c1c1c; /* Fundo do formulário */
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1); /* Sombra suave */
+            }
+
+            h2 {
+                text-align: center;
+                color: #fff; /* Cor do título */
+            }
+
+            .input-group {
+                margin-bottom: 20px;
+            }
+
+            .input-group label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+
+            .input-group input,
+            .input-group textarea {
+                width: 95%;
+                padding: 10px;
+                border: 1px solid #333;
+                border-radius: 5px;
+                background-color: #2c2c2c; /* Fundo dos campos de entrada */
+                color: #fff; /* Cor do texto dentro dos campos */
+            }
+
+            .input-group textarea {
+                resize: vertical;
+                height: 100px;
+            }
+
+            button {
+                width: 99%;
+                padding: 15px;
+                border: none;
+                border-radius: 5px;
+                background-color: #fff; /* Cor de fundo do botão */
+                color: #000; /* Cor do texto do botão */
+                font-weight: bold;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            button:hover {
+                background-color: #f1f1f1; /* Efeito de hover no botão */
+            }
+
+            .image-preview-container {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            .image-preview-container img {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+                border: 2px solid transparent;
+                cursor: pointer;
+                border-radius: 5px;
+                transition: border-color 0.3s;
+            }
+
+            .image-preview-container img.selected {
+                border-color: #4CAF50; /* Cor de borda verde quando a imagem for selecionada */
+            }
+
+            .back-button {
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            .back-button a {
+                color: #fff;
+                text-decoration: none;
+                font-weight: bold;
+                border: 2px solid #fff; /* Borda do botão voltar */
+                padding: 10px 20px;
+                border-radius: 5px;
+                display: inline-block;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+            .back-button a:hover {
+                background-color: #fff;
+                color: #000; /* Efeito de hover no link voltar */
+            }
+        </style>

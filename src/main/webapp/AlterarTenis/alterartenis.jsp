@@ -6,24 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alterar Produto</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/Novo-Tenis/novo-tenis.css">
-    <style>
-        .image-preview-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .image-preview-container img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border: 2px solid transparent;
-            cursor: pointer;
-        }
-        .image-preview-container img.selected {
-            border-color: green;
-        }
-    </style>
+    <link rel="stylesheet" href="/AlterarTenis/alterartenis.css">
+
 </head>
 <body>
 

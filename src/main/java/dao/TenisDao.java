@@ -6,6 +6,7 @@ import model.Tenis;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -312,6 +313,9 @@ public class TenisDao {
                 psDesmarcarPrincipal.executeUpdate();
             }
 
+            // Remover imagens antigas que não foram reenviadas
+            removerImagensAntigas(con, tenis.getId(), tenis.getImagens());
+
             // Atualizar ou inserir imagens
             for (ImagemTenis imagem : tenis.getImagens()) {
                 if (imagem.getId() > 0) { // Atualizar imagem existente
@@ -339,5 +343,29 @@ public class TenisDao {
             return false;
         }
     }
+
+
+    // Método auxiliar para remover imagens antigas
+    private void removerImagensAntigas(Connection con, int tenisId, List<ImagemTenis> novasImagens) throws SQLException {
+        // Coletar IDs das novas imagens para comparação
+        List<Integer> novosIds = new ArrayList<>();
+        for (ImagemTenis imagem : novasImagens) {
+            if (imagem.getId() > 0) { // Imagem existente, precisa ser mantida
+                novosIds.add(imagem.getId());
+            }
+        }
+
+        // Desassociar as imagens antigas que não foram reenviadas
+        String sqlRemoverImagemAntiga = "DELETE FROM IMAGEMTENIS WHERE tenis_id = ? AND id NOT IN (" + String.join(",", Collections.nCopies(novosIds.size(), "?")) + ")";
+        try (PreparedStatement psRemoverImagemAntiga = con.prepareStatement(sqlRemoverImagemAntiga)) {
+            psRemoverImagemAntiga.setInt(1, tenisId);
+            int index = 2; // Começar a partir do segundo parâmetro
+            for (Integer id : novosIds) {
+                psRemoverImagemAntiga.setInt(index++, id);
+            }
+            psRemoverImagemAntiga.executeUpdate();
+        }
+    }
+
 
 }

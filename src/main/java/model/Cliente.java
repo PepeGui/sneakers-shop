@@ -11,7 +11,27 @@ public class Cliente {
     private String email;
     private String senha; // A senha será armazenada encriptada.
     private String chaveAES;
-    private List<Endereco> enderecosEntrega;
+    private int id_faturamento;
+
+    public int getId_faturamento() {
+        return id_faturamento;
+    }
+
+    public void setId_faturamento(int id_faturamento) {
+        this.id_faturamento = id_faturamento;
+    }
+
+    public Cliente(int id, String nome, String dataNascimento, String genero, String cpf, String email, String senha, String chaveAES, int id_faturamento) {
+        this.id = id;
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.genero = genero;
+        this.cpf = cpf;
+        this.email = email;
+        this.senha = senha;
+        this.chaveAES = chaveAES;
+        this.id_faturamento = id_faturamento;
+    }
 
     // Construtor padrão
     public Cliente() {}
@@ -24,7 +44,8 @@ public class Cliente {
         this.cpf = cpf;
         this.email = email;
         this.senha = senha;
-        this.enderecosEntrega = enderecosEntrega;
+
+
     }
     public Cliente(int id, String nome,String email,String senha, String cpf, String chaveAES) {
         this.id = id;
@@ -104,14 +125,6 @@ public class Cliente {
 
     public void setChaveAES(String chaveAES) {
         this.chaveAES = chaveAES;
-    }
-
-    public List<Endereco> getEnderecosEntrega() {
-        return enderecosEntrega;
-    }
-
-    public void setEnderecosEntrega(List<Endereco> enderecosEntrega) {
-        this.enderecosEntrega = enderecosEntrega;
     }
 
     @Override
