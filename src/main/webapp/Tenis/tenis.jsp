@@ -41,10 +41,18 @@
         <h1 class="brand-name">Sneakers-Shop</h1>
     </header>
 
+        <!-- Botão para voltar ao menu principal -->
+            <div style="margin: 20px 0;">
+                <a href="/carregar-menu-usuario">
+                    <button style="padding: 10px 15px; background-color: #333; color: white; border: none; border-radius: 5px; cursor: pointer;">Voltar ao Menu Principal</button>
+                </a>
+            </div>
     <section class="product-search">
         <div class="add-product">
             <a href="/Novo-Tenis/novo-tenis.jsp"><button>Novo Produto</button></a>
         </div>
+
+
         <div class="search-bar">
             <form action="/find-all-tenis" method="get">
                 <input type="text" name="pesquisa" placeholder="Pesquisar tênis...">

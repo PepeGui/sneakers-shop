@@ -44,11 +44,20 @@ public class Carregar_AlterarTenisServlet extends HttpServlet {
             request.setAttribute("error", "Formato de ID inválido. Por favor, forneça um ID numérico.");
         }
 
-        // Adicionar o objeto tenis e o grupo de usuário à requisição
-        request.setAttribute("tenis", tenis);
-        request.setAttribute("grupo", usuarioGrupo);
-
-        // Encaminhar para o JSP de alteração
-        request.getRequestDispatcher("/AlterarTenis/alterartenis.jsp").forward(request, response);
+        // Verificar o grupo do usuário e redirecionar conforme o caso
+        if ("Admin".equals(usuarioGrupo)) {
+            // Se o grupo for Admin, continua normalmente e encaminha para a página de alteração
+            request.setAttribute("tenis", tenis);
+            request.setAttribute("grupo", usuarioGrupo);
+            request.getRequestDispatcher("/AlterarTenis/alterartenis.jsp").forward(request, response);
+        } else if ("Estoquista".equals(usuarioGrupo)) {
+            // Se o grupo for Estoquista, mantém os dados e encaminha para a página de Alterar Estoque
+            request.setAttribute("tenis", tenis);
+            request.getRequestDispatcher("/AlterarEstoque/alterar-estoque.jsp").forward(request, response);
+        } else {
+            // Caso o grupo não seja reconhecido, pode redirecionar para uma página de erro ou login
+            response.sendRedirect("/login");
+        }
     }
 }
+
