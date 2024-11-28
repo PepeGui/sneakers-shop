@@ -2,6 +2,8 @@ package dao;
 
 import controller.Criptografia;
 import model.Cliente;
+import model.Endereco;
+import model.Usuario;
 
 import javax.crypto.SecretKey;
 import java.sql.*;
@@ -103,6 +105,62 @@ public class ClienteDao {
             stmt.setInt(2, enderecoId); // ID do endereço a ser atualizado
 
             stmt.executeUpdate();
+        }
+    }
+    public Cliente buscaClientesPorID(Cliente pCliente) {
+        String SQL = "SELECT * FROM CLIENTE WHERE ID = ?";
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            System.out.println("success in database connection buscaClientesPorID");
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setInt(1, pCliente.getId());
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                pCliente.setId(resultSet.getInt("id"));
+                pCliente.setNome(resultSet.getString("nome"));
+                pCliente.setEmail(resultSet.getString("email"));
+                pCliente.setSenha(resultSet.getString("senha"));
+                pCliente.setDataNascimento(resultSet.getString("datanascimento"));
+                pCliente.setCpf(resultSet.getString("cpf"));
+                pCliente.setGenero(resultSet.getString("genero"));
+                pCliente.setChaveAES(resultSet.getString("chaveaes"));
+                pCliente.setEnderecosEntrega(new EnderecoDao().buscarEnderecosPorClienteId(pCliente.getId()));
+            }
+            System.out.println("success in buscaClientesPorID");
+
+        } catch (Exception e) {
+            System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
+        }
+
+        return pCliente;
+    }
+    public boolean alterarCliente(Cliente cliente) throws Exception {
+        String sql = "UPDATE CLIENTE SET nome = ?, datanascimento = ?, genero = ?, cpf = ?, email = ?, senha = ?, chaveaes = ? WHERE ID = ?";
+
+        try {
+            Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, cliente.getNome());
+            stmt.setString(2, cliente.getDataNascimento());
+            stmt.setString(3, cliente.getGenero());
+            stmt.setString(4, cliente.getCpf());
+            stmt.setString(5, cliente.getEmail());
+            stmt.setString(6, cliente.getSenha());
+            stmt.setString(7, cliente.getChaveAES());
+            stmt.setInt(8, cliente.getId());
+            stmt.executeUpdate();
+            con.close();
+
+            return true;
+
+        }catch (Exception e){
+            System.out.println("fail in database connection insert usuario");
+            e.getMessage();
+            e.getStackTrace();
+            return false;
         }
     }
 

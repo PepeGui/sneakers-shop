@@ -57,7 +57,7 @@
             <button onclick="openLoginModal()">Login</button>
             <button onclick="window.location.href='/Cadastro-Cliente/cadastro-cliente.jsp'">Cadastrar-se</button>
             <button onclick="window.location.href='/area-cliente'">Área do Cliente</button>
-            <button onclick="window.location.href='/Alterar-Cliente/alterar-cliente.jsp'">Alterar Usuário</button>
+            <button onclick="window.location.href='/tela-alterarPedido'">Alterar Usuário</button>
 
             <!-- Botão de Logout -->
             <form action="/logout-cliente" method="POST" style="margin-top: 10px;">
