@@ -46,17 +46,22 @@
                         <td>${pedido.status}</td>
                         <td>R$ ${pedido.valorTotal}</td>
                         <td>
-                            <!-- Botão Editar -->
-                            <form action="/tela-alterarPedido" method="GET" style="display:inline;">
-                                <button type="submit">Editar</button>
-                                <input type="hidden" name="id" value="${pedido.id}">
-                            </form>
-
                             <!-- Botão Visualizar -->
                             <button onclick="visualizarPedido('${pedido.id}', '${pedido.dataPedido}', '${pedido.status}', '${pedido.valorTotal}')">Visualizar</button>
 
                             <!-- Botão Aceitar Pedido -->
-                            <button onclick="aceitarPedido(${pedido.id})" ${pedido.status == 'Aceito' ? 'disabled' : ''}>Aceitar</button>
+                            <form action="/alterarStatusPedido" method="POST" style="display:inline;">
+                                <c:choose>
+                                    <c:when test="${pedido.status == 'Pedido concluido'}">
+                                        <button type="submit" disabled>Mudar Status</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button type="submit">Mudar Status</button>
+                                    </c:otherwise>
+                                </c:choose>
+                                <input type="hidden" name="id" value="${pedido.id}">
+                                <input type="hidden" name="status" value="${pedido.status}">
+                            </form>
                         </td>
                     </tr>
                 </c:forEach>

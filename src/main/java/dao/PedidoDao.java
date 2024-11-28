@@ -1,7 +1,6 @@
 package dao;
 
 import model.Pedido;
-import model.PedidoItem;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,15 +11,10 @@ public class PedidoDao {
     private static final String DB_USERNAME = "sa";
     private static final String DB_PASSWORD = "sa";
 
-    // Conecta ao banco de dados
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-    }
-
     // Cria um pedido
     public int criarPedido(Pedido pedido) throws SQLException {
         String sql = "INSERT INTO Pedido (cliente_id, data_pedido, status, valor_total, endereco_entrega_id, forma_pagamento) VALUES (?, NOW(), ?, ?, ?, ?)";
-        try (Connection conn = getConnection();
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setInt(1, pedido.getClienteId());
@@ -46,7 +40,7 @@ public class PedidoDao {
         List<Pedido> pedidos = new ArrayList<>();
         String sql = "SELECT * FROM Pedido WHERE cliente_id = ?";
 
-        try (Connection conn = getConnection();
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, clienteId);
 
@@ -74,7 +68,8 @@ public class PedidoDao {
         try {
             Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
             PreparedStatement preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, pId);
+
+            preparedStatement.setInt(1,pId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -90,9 +85,10 @@ public class PedidoDao {
 
                 // Obtém os itens do pedido
                 pedido.setItens(new PedidoItemDao().obterItensPorPedido(pedido.getId()));
-
                 pedidos.add(pedido);
             }
+            System.out.println("success in buscaPedidoPorID");
+
         } catch (Exception e) {
             System.out.println("Erro ao acessar o banco de dados: " + e.getMessage());
         }
@@ -105,7 +101,7 @@ public class PedidoDao {
         List<Pedido> pedidos = new ArrayList<>();
         String sql = "SELECT * FROM Pedido";
 
-        try (Connection conn = getConnection();
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -124,5 +120,24 @@ public class PedidoDao {
             }
         }
         return pedidos;
+    }
+    public boolean alterarStatus(Pedido pedido) {
+        String SQL = "UPDATE PEDIDO SET STATUS = ? WHERE ID = ?";
+        boolean sucesso = false;
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement preparedStatement = conn.prepareStatement(SQL)) {
+
+            preparedStatement.setString(1, pedido.getStatus());  // Usa o status booleano do objeto
+            preparedStatement.setInt(2, pedido.getId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            sucesso = (rowsAffected > 0);
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Log para depuração
+        }
+
+        return sucesso;
     }
 }
