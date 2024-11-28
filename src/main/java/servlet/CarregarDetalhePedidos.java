@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
-@WebServlet("/detalhes-pedido")
+@WebServlet("/detalhes-pedido-wilson")
 public class CarregarDetalhePedidos extends HttpServlet {
 
     @Override

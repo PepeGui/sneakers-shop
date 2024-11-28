@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -17,7 +16,7 @@
     <nav>
         <ul>
             <li><a href="../../index.jsp">Home</a></li>
-            <li><a href="/Area-Cliente/area-cliente.jsp">Meus Pedidos</a></li>
+            <li><a href="/area-cliente">Meus Pedidos</a></li>
         </ul>
     </nav>
 </header>
@@ -30,7 +29,7 @@
         <p><strong>ID do Pedido:</strong> ${pedido.id}</p>
         <p><strong>Data do Pedido:</strong> <fmt:formatDate value="${pedido.dataPedido}" pattern="dd/MM/yyyy HH:mm" /></p>
         <p><strong>Status:</strong> ${pedido.status}</p>
-        <p><strong>Total:</strong> <fmt:formatNumber value="${total}" type="currency" /></p>
+        <p><strong>Total do Pedido:</strong> <fmt:formatNumber value="${pedido.valorTotal}" type="currency" /></p>
     </div>
 
     <!-- Itens do Pedido -->
@@ -46,12 +45,13 @@
         </thead>
         <tbody>
             <c:forEach var="item" items="${itensPedido}">
-                <tr>
-                    <td>${item.quantidade}</td>
-                    <td><fmt:formatNumber value="${item.precoUnitario}" type="currency" /></td>
-                    <td><fmt:formatNumber value="${item.precoUnitario * item.quantidade}" type="currency" /></td>
-                </tr>
-            </c:forEach>
+                    <tr>
+                        <td>${item.tenis.nome}</td> <!-- Exibe o nome do tênis -->
+                        <td>${item.quantidade}</td>
+                        <td><fmt:formatNumber value="${item.precoUnitario}" type="currency" /></td>
+                        <td><fmt:formatNumber value="${item.precoUnitario * item.quantidade}" type="currency" /></td>
+                    </tr>
+                </c:forEach>
         </tbody>
     </table>
 

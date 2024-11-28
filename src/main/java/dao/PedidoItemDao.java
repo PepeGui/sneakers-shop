@@ -1,6 +1,8 @@
 package dao;
 
 import model.PedidoItem;
+import model.Tenis;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,4 +84,41 @@ public class PedidoItemDao {
         }
         return itens;
     }
+
+    public List<PedidoItem> obterItensPorPedidoComTenis(int pedidoId) throws SQLException {
+        List<PedidoItem> itens = new ArrayList<>();
+        String sql = "SELECT pi.*, t.id AS tenis_id, t.nome AS tenis_nome, t.preco AS tenis_preco " +
+                "FROM PedidoItem pi " +
+                "JOIN Tenis t ON pi.tenis_id = t.id " +
+                "WHERE pi.pedido_id = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, pedidoId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    PedidoItem item = new PedidoItem();
+                    item.setId(rs.getInt("id"));
+                    item.setPedidoId(rs.getInt("pedido_id"));
+                    item.setTenisId(rs.getInt("tenis_id"));
+                    item.setQuantidade(rs.getInt("quantidade"));
+                    item.setPrecoUnitario(rs.getDouble("preco_unitario"));
+
+                    // Preencher o objeto Tenis
+                    Tenis tenis = new Tenis();
+                    tenis.setId(rs.getInt("tenis_id"));
+                    tenis.setNome(rs.getString("tenis_nome"));
+                    tenis.setPreco(rs.getDouble("tenis_preco"));
+
+                    // Associar o objeto Tenis ao PedidoItem
+                    item.setTenis(tenis);
+
+                    itens.add(item);
+                }
+            }
+        }
+        return itens;
+    }
+
 }

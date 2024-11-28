@@ -6,6 +6,7 @@ public class PedidoItem {
     private int tenisId;
     private int quantidade;
     private double precoUnitario;
+    private Tenis tenis;
 
     public PedidoItem(int pedidoId, int tenisId, int quantidade, double preco) {
         this.pedidoId = pedidoId;
@@ -57,5 +58,13 @@ public class PedidoItem {
 
     public void setPrecoUnitario(double precoUnitario) {
         this.precoUnitario = precoUnitario;
+    }
+
+    public Tenis getTenis() {
+        return tenis;
+    }
+
+    public void setTenis(Tenis tenis) {
+        this.tenis = tenis;
     }
 }
