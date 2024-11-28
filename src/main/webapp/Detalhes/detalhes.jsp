@@ -39,9 +39,6 @@
         <a href="/Carrinho/carrinho.jsp">
             <img src="/Img/Carrinho.png" alt="Carrinho" title="Carrinho">
         </a>
-        <a href="/minhaConta.jsp">
-            <img src="/Img/User.png" alt="Usuário" title="Minha Conta">
-        </a>
     </div>
 </header>
 

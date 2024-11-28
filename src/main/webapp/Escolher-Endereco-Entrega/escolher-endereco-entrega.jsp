@@ -17,7 +17,7 @@
     <nav>
         <ul>
             <li><a href="../../index.jsp">Home</a></li>
-            <li><a href="/Carrinho/carrinho.jsp">Carrinho</a></li>
+            <li><a href="/carrinho">Carrinho</a></li>
         </ul>
     </nav>
 </header>

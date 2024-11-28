@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Área do Cliente</title>
     <link rel="stylesheet" href="/Area-Cliente/AreaCliente.css">
-
 </head>
 <body>
 <h2>Meus Pedidos</h2>
@@ -46,5 +45,13 @@
 <c:if test="${empty pedidos}">
     <p>Você ainda não fez nenhum pedido.</p>
 </c:if>
+
+<!-- Botão para voltar à página inicial -->
+<div style="margin-top: 20px;">
+    <form action="/index.jsp" method="GET">
+        <button type="submit">Voltar ao Início</button>
+    </form>
+</div>
+
 </body>
 </html>

@@ -132,3 +132,35 @@ footer {
     background-color: #333;
     color: white;
 }
+
+.update-cart-btn {
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.update-cart-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+
+
+.update-cart-btn:active {
+    background-color: #004085;
+    transform: scale(0.98);
+}
+
+
+@media (max-width: 768px) {
+    .update-cart-btn {
+        width: 100%;
+        padding: 15px 0;
+        font-size: 18px;
+    }
+}
+

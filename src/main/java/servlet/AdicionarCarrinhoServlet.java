@@ -36,7 +36,7 @@ public class AdicionarCarrinhoServlet extends HttpServlet {
 
             // Redireciona ou exibe erro com base no sucesso
             if (sucesso) {
-                response.sendRedirect("/Carrinho/carrinho.jsp");
+                response.sendRedirect("/carrinho");
             } else {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao adicionar item ao carrinho.");
             }

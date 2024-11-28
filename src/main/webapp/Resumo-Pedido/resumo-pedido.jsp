@@ -51,7 +51,7 @@
     <button type="submit">Concluir Compra</button>
 </form>
 
-<form action="/Carrinho/carrinho.jsp" method="GET">
+<form action="/carrinho" method="GET">
     <button type="submit">Voltar para o Carrinho</button>
 </form>
 

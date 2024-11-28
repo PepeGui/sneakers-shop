@@ -142,4 +142,25 @@ public class CarrinhoDao {
             return false;  // Retorna false se ocorrer algum erro
         }
     }
+
+    // Método para atualizar a quantidade de um item no carrinho
+    public boolean atualizarQuantidade(int tenisId, int clienteId, int novaQuantidade) {
+        String sql = "UPDATE Carrinho SET quantidade = ? WHERE cliente_id = ? AND tenis_id = ?";
+
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, novaQuantidade);  // Define a nova quantidade
+            ps.setInt(2, clienteId);        // Define o clienteId
+            ps.setInt(3, tenisId);          // Define o tenisId
+
+            int rowsAffected = ps.executeUpdate();  // Executa a atualização
+            return rowsAffected > 0;  // Retorna true se a quantidade foi atualizada
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;  // Retorna false em caso de erro
+        }
+    }
+
 }
