@@ -65,9 +65,6 @@
                     <label for="numeroEntrega-<%= i %>">Número:</label>
                     <input type="text" id="numeroEntrega-<%= i %>" name="numeroEntrega[]" value="<%= endereco.getNumero() %>" required>
 
-                    <label for="complementoEntrega-<%= i %>">Complemento:</label>
-                    <input type="text" id="complementoEntrega-<%= i %>" name="complementoEntrega[]" value="<%= endereco.getComplemento() %>">
-
                     <label for="bairroEntrega-<%= i %>">Bairro:</label>
                     <input type="text" id="bairroEntrega-<%= i %>" name="bairroEntrega[]" value="<%= endereco.getBairro() %>" required>
 

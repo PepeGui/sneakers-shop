@@ -2,7 +2,6 @@ package servlet;
 
 import dao.TenisDao;
 import model.Tenis;
-import model.ImagemTenis;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,29 +10,45 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
+@WebServlet("/tela-alterarTenis")
+public class Carregar_AlterarTenisServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Tenis tenis = new Tenis();
+        HttpSession session = request.getSession();
+        String usuarioGrupo = (String) session.getAttribute("usuarioGrupo");
 
-    @WebServlet("/tela-alterarTenis")
-    public class Carregar_AlterarTenisServlet extends HttpServlet {
-        @Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            Tenis tenis = new Tenis();
-            HttpSession session = request.getSession();
-            String usuarioGrupo = (String) session.getAttribute("usuarioGrupo");
-            try {
-                String id = request.getParameter("id");
+        try {
+            // Recuperar o parâmetro de ID da requisição
+            String id = request.getParameter("id");
 
+            // Verificar se o ID é válido
+            if (id != null && !id.isEmpty()) {
                 tenis.setId(Integer.parseInt(id));
+
                 TenisDao tenisDao = new TenisDao();
+
+                // Buscar o tênis pelo ID
                 tenis = tenisDao.buscaTenisPorID(tenis);
-            }   catch (NumberFormatException e) {
+
+                // Verificar se o tênis foi encontrado
+                if (tenis == null) {
+                    request.setAttribute("error", "Tênis não encontrado.");
+                }
+            } else {
+                request.setAttribute("error", "ID do tênis não fornecido.");
+            }
+        } catch (NumberFormatException e) {
             e.printStackTrace();
             request.setAttribute("error", "Formato de ID inválido. Por favor, forneça um ID numérico.");
         }
+
+        // Adicionar o objeto tenis e o grupo de usuário à requisição
         request.setAttribute("tenis", tenis);
         request.setAttribute("grupo", usuarioGrupo);
 
-        request.getRequestDispatcher("/AlterarTenis/alterartenis.jsp").forward(request,response);
-        }
+        // Encaminhar para o JSP de alteração
+        request.getRequestDispatcher("/AlterarTenis/alterartenis.jsp").forward(request, response);
     }
+}

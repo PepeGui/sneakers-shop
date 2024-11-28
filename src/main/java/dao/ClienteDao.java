@@ -106,6 +106,35 @@ public class ClienteDao {
         }
     }
 
+    public Cliente getClienteById(int clienteId) {
+        Cliente cliente = null;
+        String sql = "SELECT * FROM cliente WHERE id = ?";
+
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, clienteId); // Define o ID do cliente na consulta
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                cliente = new Cliente();
+                cliente.setId(rs.getInt("id"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setDataNascimento(rs.getString("dataNascimento"));
+                cliente.setGenero(rs.getString("genero"));
+                cliente.setCpf(rs.getString("cpf"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setSenha(rs.getString("senha"));
+                cliente.setChaveAES(rs.getString("chaveAES"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar cliente por ID: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return cliente;
+    }
+
 }
 
     // Feche a conexão quando não for mais necessária

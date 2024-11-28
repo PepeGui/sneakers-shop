@@ -56,11 +56,16 @@
             <h2>Minha Conta</h2>
             <button onclick="openLoginModal()">Login</button>
             <button onclick="window.location.href='/Cadastro-Cliente/cadastro-cliente.jsp'">Cadastrar-se</button>
-            <button onclick="window.location.href='/area-cliente'">Área do Cliente</button> <!-- Botão Adicionado -->
+            <button onclick="window.location.href='/area-cliente'">Área do Cliente</button>
             <button onclick="window.location.href='/Alterar-Cliente/alterar-cliente.jsp'">Alterar Usuário</button>
 
+            <!-- Botão de Logout -->
+            <form action="/logout-cliente" method="POST" style="margin-top: 10px;">
+                <button type="submit">Logout</button>
+            </form>
         </div>
     </div>
+
 
     <!-- Modal para login -->
     <div id="loginModal" class="modal">

@@ -287,4 +287,57 @@ public class TenisDao {
         return imagens;
     }
 
+    public boolean atualizarTenisComImagens(Tenis tenis) {
+        String sqlTenis = "UPDATE TENIS SET nome = ?, avaliacao = ?, descricao = ?, preco = ?, estoque = ? WHERE id = ?";
+        String sqlInserirImagem = "INSERT INTO IMAGEMTENIS (tenis_id, caminho, principal) VALUES (?, ?, ?)";
+        String sqlAtualizarImagem = "UPDATE IMAGEMTENIS SET caminho = ?, principal = ? WHERE id = ? AND tenis_id = ?";
+        String sqlDesmarcarPrincipal = "UPDATE IMAGEMTENIS SET principal = false WHERE tenis_id = ?";
+
+        try (Connection con = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+
+            // Atualizar dados do tênis
+            try (PreparedStatement psTenis = con.prepareStatement(sqlTenis)) {
+                psTenis.setString(1, tenis.getNome());
+                psTenis.setDouble(2, tenis.getAvaliacao());
+                psTenis.setString(3, tenis.getDescricao());
+                psTenis.setDouble(4, tenis.getPreco());
+                psTenis.setInt(5, tenis.getEstoque());
+                psTenis.setInt(6, tenis.getId());
+                psTenis.executeUpdate();
+            }
+
+            // Desmarcar qualquer imagem existente como principal
+            try (PreparedStatement psDesmarcarPrincipal = con.prepareStatement(sqlDesmarcarPrincipal)) {
+                psDesmarcarPrincipal.setInt(1, tenis.getId());
+                psDesmarcarPrincipal.executeUpdate();
+            }
+
+            // Atualizar ou inserir imagens
+            for (ImagemTenis imagem : tenis.getImagens()) {
+                if (imagem.getId() > 0) { // Atualizar imagem existente
+                    try (PreparedStatement psAtualizarImagem = con.prepareStatement(sqlAtualizarImagem)) {
+                        psAtualizarImagem.setString(1, imagem.getCaminho());
+                        psAtualizarImagem.setBoolean(2, imagem.isPrincipal());
+                        psAtualizarImagem.setInt(3, imagem.getId());
+                        psAtualizarImagem.setInt(4, tenis.getId());
+                        psAtualizarImagem.executeUpdate();
+                    }
+                } else { // Inserir nova imagem
+                    try (PreparedStatement psInserirImagem = con.prepareStatement(sqlInserirImagem)) {
+                        psInserirImagem.setInt(1, tenis.getId());
+                        psInserirImagem.setString(2, imagem.getCaminho());
+                        psInserirImagem.setBoolean(3, imagem.isPrincipal());
+                        psInserirImagem.executeUpdate();
+                    }
+                }
+            }
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
