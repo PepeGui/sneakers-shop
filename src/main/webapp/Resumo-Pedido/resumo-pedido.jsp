@@ -7,14 +7,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resumo do Pedido</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/Resumo-Pedido/resumo-pedido.css">
 </head>
 <body>
 
 <h2>Resumo do Pedido</h2>
 
 <h3>Endereço de Entrega</h3>
-<p>${enderecoSelecionado.endereco}</p>
+<p>${enderecoSelecionado.logradouro}, ${enderecoSelecionado.numero} - ${enderecoSelecionado.bairro}, ${enderecoSelecionado.cidade} - ${enderecoSelecionado.uf}</p>
+<p>CEP: ${enderecoSelecionado.cep}</p>
 
 <h3>Produtos</h3>
 <table>

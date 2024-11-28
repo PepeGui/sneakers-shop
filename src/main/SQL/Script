@@ -71,13 +71,17 @@ criação da tabela usuario
 CREATE TABLE Pedido (
     id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     cliente_id INT NOT NULL,
-    data_pedido DATETIME ,
-    status VARCHAR(50) ,
-    valor_total DECIMAL(10, 2) ,
+    data_pedido DATETIME,
+    status VARCHAR(50),
+    valor_total DECIMAL(10, 2),
     endereco_entrega_id INT,
+    forma_pagamento VARCHAR(50),
     FOREIGN KEY (cliente_id) REFERENCES Cliente(id) ON DELETE CASCADE,
     FOREIGN KEY (endereco_entrega_id) REFERENCES Endereco(id)
 );
+
+ALTER TABLE Pedido
+ADD COLUMN forma_pagamento VARCHAR(50);
 
 
 CREATE TABLE PedidoItem (

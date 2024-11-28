@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/cadastrar-endereco")
-public class CadastrarEnderecoServlet extends HttpServlet {
+public class CadastrarEnderecoEntregaClienteServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
